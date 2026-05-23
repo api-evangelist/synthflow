@@ -1,0 +1,131 @@
+aid: synthflow
+name: Synthflow
+description: >-
+  Synthflow is an enterprise-ready no-code Voice AI platform for automating
+  phone conversations at scale. The product combines a visual agent designer
+  with in-house telephony, sub-100ms latency, and a 99.99% uptime guarantee,
+  so businesses can build, deploy, and operate voice agents without
+  third-party carriers. Synthflow exposes a REST Platform API for assistants,
+  calls, phone numbers, knowledge bases, and custom actions, with bearer
+  token authentication. The platform claims more than 200 integrations
+  including HubSpot, Salesforce, Cal.com, Zapier, and CCaaS systems, plus
+  custom webhook actions. Compliance covers SOC 2, HIPAA, PCI DSS, and GDPR
+  with end-to-end encryption and audit logging.
+type: Index
+position: Provider
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Voice
+  - Voice Agents
+  - No-Code
+  - Telephony
+  - Phone
+  - Outbound
+  - Inbound
+  - CRM
+  - Webhooks
+  - Custom Actions
+  - HIPAA
+  - SOC 2
+url: https://raw.githubusercontent.com/api-evangelist/synthflow/refs/heads/main/apis.yml
+created: '2026-05-23'
+modified: '2026-05-23'
+specificationVersion: '0.20'
+apis:
+  - aid: synthflow:platform-api
+    name: Synthflow Platform API
+    description: >-
+      The Synthflow Platform API provides REST endpoints to manage assistants,
+      phone numbers, calls, knowledge bases, and custom actions for no-code
+      voice AI agents. Authentication is via bearer tokens and the API is
+      available in multiple regions.
+    humanURL: https://docs.synthflow.ai
+    baseURL: https://api.synthflow.ai
+    tags:
+      - Assistants
+      - Calls
+      - Phone Numbers
+      - Knowledge Bases
+      - Actions
+      - REST
+    properties:
+      - type: Documentation
+        url: https://docs.synthflow.ai
+      - type: GettingStarted
+        url: https://docs.synthflow.ai/getting-started-with-your-api
+      - type: SignUp
+        url: https://app.synthflow.ai
+      - type: APIReference
+        url: https://synthflow.readme.io/reference/getting-started-with-your-api
+      - type: Pricing
+        url: https://synthflow.ai/pricing
+      - type: Authentication
+        url: https://docs.synthflow.ai/getting-started-with-your-api
+    features:
+      - name: Assistants Management
+        description: Create, configure, and manage AI voice assistants via API.
+      - name: Inbound and Outbound Calls
+        description: Manage inbound call routing and trigger outbound calls programmatically.
+      - name: Phone Number Provisioning
+        description: Provision and manage phone numbers across regions.
+      - name: Knowledge Bases
+        description: Create knowledge bases that ground agent responses in your content.
+      - name: Custom Actions
+        description: Define webhook-based custom actions that agents can call during conversations.
+      - name: In-House Telephony
+        description: Native telephony stack with sub-100ms latency and 99.99% uptime.
+      - name: Multi-Region Deployment
+        description: Deploy assistants in the region that fits your workload and compliance needs.
+      - name: Compliance
+        description: SOC 2, HIPAA, PCI DSS, and GDPR with end-to-end encryption and audit logs.
+    useCases:
+      - name: Inbound Call Automation
+        description: Automate inbound support, reception, and qualification calls.
+      - name: Outbound Campaigns
+        description: Run outbound calling campaigns for sales, surveys, and reminders.
+      - name: Appointment Setting
+        description: Book and confirm appointments with calendar integrations.
+      - name: Lead Qualification
+        description: Qualify and route leads to sales reps with CRM updates.
+      - name: Healthcare Workflows
+        description: Run HIPAA-aligned voice workflows for patient outreach and intake.
+    integrations:
+      - name: HubSpot
+      - name: Salesforce
+      - name: Cal.com
+      - name: Calendly
+      - name: Zapier
+      - name: Make
+      - name: Twilio
+      - name: Google Sheets
+      - name: Slack
+      - name: Webhooks
+      - name: OpenAI
+      - name: Anthropic
+      - name: ElevenLabs
+      - name: Cartesia
+      - name: Deepgram
+    authentication:
+      - type: API Key
+        description: HTTP Bearer authentication using an API key generated in the Synthflow dashboard.
+common:
+  - type: Website
+    url: https://synthflow.ai
+  - type: Documentation
+    url: https://docs.synthflow.ai
+  - type: Blog
+    url: https://synthflow.ai/blog
+  - type: Pricing
+    url: https://synthflow.ai/pricing
+  - type: TermsOfService
+    url: https://synthflow.ai/terms-of-service
+  - type: PrivacyPolicy
+    url: https://synthflow.ai/privacy-policy
+  - type: X
+    url: https://x.com/synthflowai
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/synthflowai
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
