@@ -126,6 +126,8 @@ common:
     url: https://x.com/synthflowai
   - type: LinkedIn
     url: https://www.linkedin.com/company/synthflowai
+  - type: LLMsTxt
+    url: https://docs.synthflow.ai/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
