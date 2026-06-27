@@ -54,7 +54,7 @@ apis:
         url: https://docs.synthflow.ai
       - type: GettingStarted
         url: https://docs.synthflow.ai/getting-started-with-your-api
-      - type: SignUp
+      - type: Signup
         url: https://app.synthflow.ai
       - type: APIReference
         url: https://synthflow.readme.io/reference/getting-started-with-your-api
@@ -126,7 +126,7 @@ common:
     url: https://x.com/synthflowai
   - type: LinkedIn
     url: https://www.linkedin.com/company/synthflowai
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.synthflow.ai/llms.txt
 maintainers:
   - FN: Kin Lane
