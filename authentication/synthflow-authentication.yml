@@ -1,0 +1,12 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/synthflow-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: sec0
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/synthflow-openapi.json
