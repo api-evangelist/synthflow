@@ -110,6 +110,8 @@ apis:
       - type: API Key
         description: HTTP Bearer authentication using an API key generated in the Synthflow dashboard.
 common:
+  - type: AgenticAccess
+    url: agentic-access/synthflow-agentic-access.yml
   - type: DomainSecurity
     url: security/synthflow-domain-security.yml
   - type: Authentication
