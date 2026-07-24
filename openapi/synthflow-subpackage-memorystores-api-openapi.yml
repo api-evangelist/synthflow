@@ -1,0 +1,78 @@
+openapi: 3.1.0
+info:
+  title: Platform subpackage_memoryStores API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+- url: https://api.us.synthflow.ai/v2
+- url: https://api.eu.synthflow.ai/v2
+tags:
+- name: subpackage_memoryStores
+paths:
+  /memory_stores:
+    post:
+      operationId: create-a-memory-store
+      summary: Create a memory store
+      description: ''
+      tags:
+      - subpackage_memoryStores
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memory-stores_create-a-memory-store_Response_200'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Memory store name.
+                description:
+                  type: string
+                  description: Memory store description.
+components:
+  schemas:
+    MemoryStoresPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        workspace_id:
+          type: string
+        number_of_contacts:
+          type: integer
+        number_of_agents:
+          type: integer
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      title: MemoryStoresPostResponsesContentApplicationJsonSchemaResponse
+    Memory-stores_create-a-memory-store_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/MemoryStoresPostResponsesContentApplicationJsonSchemaResponse'
+      title: Memory-stores_create-a-memory-store_Response_200
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

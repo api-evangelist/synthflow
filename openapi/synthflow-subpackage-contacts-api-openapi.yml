@@ -1,0 +1,134 @@
+openapi: 3.1.0
+info:
+  title: Platform subpackage_contacts API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+- url: https://api.us.synthflow.ai/v2
+- url: https://api.eu.synthflow.ai/v2
+tags:
+- name: subpackage_contacts
+paths:
+  /contacts:
+    post:
+      operationId: create-a-contact
+      summary: Create a contact
+      description: ''
+      tags:
+      - subpackage_contacts
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_create-a-contact_Response_200'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The contact's name.
+                phone_number:
+                  type: string
+                  description: The contact's phone number.
+                email:
+                  type: string
+                  description: The contact's email address.
+                contact_metadata:
+                  $ref: '#/components/schemas/ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata'
+                  description: Additional metadata for the contact.
+              required:
+              - name
+              - phone_number
+  /contacts/{contact_id}:
+    patch:
+      operationId: update-a-contact
+      summary: Update a contact
+      description: ''
+      tags:
+      - subpackage_contacts
+      parameters:
+      - name: contact_id
+        in: path
+        description: The contact's ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contacts_update-a-contact_Response_200'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The contact's name.
+                phone_number:
+                  type: string
+                  description: The contact's phone number.
+                email:
+                  type: string
+                  description: The contact's email.
+                contact_metadata:
+                  $ref: '#/components/schemas/ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata'
+components:
+  schemas:
+    ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata:
+      type: object
+      properties:
+        company:
+          type: string
+      description: Additional metadata for the contact.
+      title: ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata
+    ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata:
+      type: object
+      properties: {}
+      title: ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata
+    Contacts_create-a-contact_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaResponse'
+      title: Contacts_create-a-contact_Response_200
+    ContactsPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        id:
+          type: string
+      title: ContactsPostResponsesContentApplicationJsonSchemaResponse
+    Contacts_update-a-contact_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: Contacts_update-a-contact_Response_200
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

@@ -1,0 +1,426 @@
+openapi: 3.1.0
+info:
+  title: Platform subpackage_phoneNumbers API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+- url: https://api.us.synthflow.ai/v2
+- url: https://api.eu.synthflow.ai/v2
+tags:
+- name: subpackage_phoneNumbers
+paths:
+  /numbers:
+    get:
+      operationId: get-numbers
+      summary: List phone numbers
+      description: Lists all phone numbers assigned to a workspace.
+      tags:
+      - subpackage_phoneNumbers
+      parameters:
+      - name: workspace
+        in: query
+        description: Workspace ID.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Phone numbers displayed per page.
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: offset
+        in: query
+        description: Index of the first phone number to be returned.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: is_available
+        in: query
+        description: 'Filters phone numbers by inbound availability.
+
+          - `true`: only numbers not assigned to inbound agents
+
+          - `false`: only numbers assigned to inbound agents
+
+          '
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_get-numbers_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-numbersRequestBadRequestError'
+  /numbers/{phone_number_slug}:
+    get:
+      operationId: get-phone-number
+      summary: Get a phone number
+      description: Retrieves detailed information about a specific phone number.
+      tags:
+      - subpackage_phoneNumbers
+      parameters:
+      - name: phone_number_slug
+        in: path
+        description: The phone number slug (phone number without the leading +).
+        required: true
+        schema:
+          type: string
+      - name: workspace
+        in: query
+        description: Workspace ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_get-phone-number_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-phone-numberRequestBadRequestError'
+    patch:
+      operationId: update-phone-number
+      summary: Update a phone number
+      description: Updates the configuration of a phone number.
+      tags:
+      - subpackage_phoneNumbers
+      parameters:
+      - name: phone_number_slug
+        in: path
+        description: The phone number slug (phone number without the leading +).
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_update-phone-number_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-phone-numberRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                friendly_name:
+                  type: string
+                  description: A human-readable name for the phone number.
+                sip_auth_username:
+                  type: string
+                  description: SIP authentication username.
+                sip_outbound_proxy:
+                  type: string
+                  description: SIP outbound proxy.
+                sip_term_uri:
+                  type: string
+                  description: SIP termination URI.
+    delete:
+      operationId: delete-phone-number
+      summary: Delete a phone number
+      description: Deletes a phone number from your workspace. This will detach the phone number from any agents it is linked to. For phone numbers purchased through Synthflow, this also cancels the monthly subscription.
+      tags:
+      - subpackage_phoneNumbers
+      parameters:
+      - name: phone_number_slug
+        in: path
+        description: The phone number slug (phone number without the leading +).
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_delete-phone-number_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete-phone-numberRequestBadRequestError'
+  /custom-numbers:
+    post:
+      operationId: create-custom-number
+      summary: Import phone number
+      description: Imports a custom phone number into your workspace. This is useful for direct SIP dialing scenarios where your telephony provider does not offer elastic SIP trunking.
+      tags:
+      - subpackage_phoneNumbers
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_create-custom-number_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create-custom-numberRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                workspace_id:
+                  type: string
+                  description: The workspace ID to associate the phone number with.
+                phone_number:
+                  type: string
+                  description: The phone number to import.
+                friendly_name:
+                  type: string
+                  description: A human-readable name for the phone number.
+                trunk_username:
+                  type: string
+                  description: Optional SIP trunk username for authentication.
+                trunk_pwd:
+                  type: string
+                  description: Optional SIP trunk password for authentication.
+              required:
+              - workspace_id
+              - phone_number
+components:
+  schemas:
+    Create-custom-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-custom-numberRequestBadRequestError
+    CustomNumbersPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        key:
+          type: string
+          format: uuid
+          description: Unique identifier for the custom phone number.
+        phone_number:
+          type: string
+          description: The imported phone number.
+      title: CustomNumbersPostResponsesContentApplicationJsonSchemaResponse
+    Phone-Numbers_create-custom-number_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/CustomNumbersPostResponsesContentApplicationJsonSchemaResponse'
+      title: Phone-Numbers_create-custom-number_Response_200
+    NumbersGetResponsesContentApplicationJsonSchemaResponsePagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+          description: Total number of phone numbers.
+        limit:
+          type: integer
+          description: Number of phone numbers per page.
+        offset:
+          type: integer
+          description: Index of the first phone number returned.
+      title: NumbersGetResponsesContentApplicationJsonSchemaResponsePagination
+    Update-phone-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-phone-numberRequestBadRequestError
+    Get-numbersRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-numbersRequestBadRequestError
+    Phone-Numbers_get-phone-number_Response_200:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: The phone number slug (phone number without the leading +).
+        address_requirement:
+          type: string
+          description: Address requirement for the phone number.
+        phone_number:
+          type: string
+          description: The full phone number in E.164 format.
+        friendly_name:
+          type: string
+          description: A human-readable name for the phone number.
+        is_sms_capable:
+          type: boolean
+          description: Whether the phone number can send and receive SMS.
+        is_voice_capable:
+          type: boolean
+          description: Whether the phone number can make and receive voice calls.
+        iso_country:
+          type: string
+          description: ISO country code for the phone number.
+        locality:
+          type: string
+          description: The locality or city associated with the phone number.
+        sip_auth_username:
+          type:
+          - string
+          - 'null'
+          description: SIP authentication username, if configured.
+        sip_outbound_proxy:
+          type:
+          - string
+          - 'null'
+          description: SIP outbound proxy, if configured.
+        sip_term_uri:
+          type: string
+          description: SIP termination URI.
+        sid:
+          type: string
+          description: Phone number SID from the provider.
+        provider_name:
+          type: string
+          description: Name of the telephony provider.
+        region:
+          type: string
+          description: The region associated with the phone number.
+        is_available:
+          type: boolean
+          description: Whether the number is available for inbound assignment.
+        agency_workspace_id:
+          type:
+          - string
+          - 'null'
+          description: Agency workspace ID, if applicable.
+        workspace_id:
+          type: string
+          description: The workspace ID the phone number belongs to.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the phone number was created.
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the phone number was last updated.
+        assistants:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of assistant IDs attached to this phone number.
+      title: Phone-Numbers_get-phone-number_Response_200
+    Phone-Numbers_get-numbers_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/NumbersGetResponsesContentApplicationJsonSchemaResponse'
+      title: Phone-Numbers_get-numbers_Response_200
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    NumbersGetResponsesContentApplicationJsonSchemaResponsePhoneNumbersItems:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Phone number.
+        sid:
+          type:
+          - string
+          - 'null'
+          description: Phone number SID. May be null for custom numbers.
+        is_available:
+          type: boolean
+          description: Whether the number is available for inbound assignment.
+      title: NumbersGetResponsesContentApplicationJsonSchemaResponsePhoneNumbersItems
+    Phone-Numbers_delete-phone-number_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: Phone-Numbers_delete-phone-number_Response_200
+    Delete-phone-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-phone-numberRequestBadRequestError
+    Phone-Numbers_update-phone-number_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: Phone-Numbers_update-phone-number_Response_200
+    Get-phone-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-phone-numberRequestBadRequestError
+    NumbersGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/NumbersGetResponsesContentApplicationJsonSchemaResponsePagination'
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/NumbersGetResponsesContentApplicationJsonSchemaResponsePhoneNumbersItems'
+      title: NumbersGetResponsesContentApplicationJsonSchemaResponse
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer
