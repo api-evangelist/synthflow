@@ -12,9 +12,22 @@ description: >-
   custom webhook actions. Compliance covers SOC 2, HIPAA, PCI DSS, and GDPR
   with end-to-end encryption and audit logging.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Provider
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/synthflow.png
 tags:
   - Voice
   - Voice Agents
@@ -33,82 +46,154 @@ created: '2026-05-23'
 modified: '2026-05-23'
 specificationVersion: '0.20'
 apis:
-  - aid: synthflow:platform-api
-    name: Synthflow Platform API
-    description: >-
-      The Synthflow Platform API provides REST endpoints to manage assistants,
-      phone numbers, calls, knowledge bases, and custom actions for no-code
-      voice AI agents. Authentication is via bearer tokens and the API is
-      available in multiple regions.
-    humanURL: https://docs.synthflow.ai
-    baseURL: https://api.synthflow.ai
-    tags:
-      - Assistants
-      - Calls
-      - Phone Numbers
-      - Knowledge Bases
-      - Actions
-      - REST
-    properties:
-      - type: Documentation
-        url: https://docs.synthflow.ai
-      - type: GettingStarted
-        url: https://docs.synthflow.ai/getting-started-with-your-api
-      - type: Signup
-        url: https://app.synthflow.ai
-      - type: APIReference
-        url: https://synthflow.readme.io/reference/getting-started-with-your-api
-      - type: Pricing
-        url: https://synthflow.ai/pricing
-      - type: Authentication
-        url: https://docs.synthflow.ai/getting-started-with-your-api
-    features:
-      - name: Assistants Management
-        description: Create, configure, and manage AI voice assistants via API.
-      - name: Inbound and Outbound Calls
-        description: Manage inbound call routing and trigger outbound calls programmatically.
-      - name: Phone Number Provisioning
-        description: Provision and manage phone numbers across regions.
-      - name: Knowledge Bases
-        description: Create knowledge bases that ground agent responses in your content.
-      - name: Custom Actions
-        description: Define webhook-based custom actions that agents can call during conversations.
-      - name: In-House Telephony
-        description: Native telephony stack with sub-100ms latency and 99.99% uptime.
-      - name: Multi-Region Deployment
-        description: Deploy assistants in the region that fits your workload and compliance needs.
-      - name: Compliance
-        description: SOC 2, HIPAA, PCI DSS, and GDPR with end-to-end encryption and audit logs.
-    useCases:
-      - name: Inbound Call Automation
-        description: Automate inbound support, reception, and qualification calls.
-      - name: Outbound Campaigns
-        description: Run outbound calling campaigns for sales, surveys, and reminders.
-      - name: Appointment Setting
-        description: Book and confirm appointments with calendar integrations.
-      - name: Lead Qualification
-        description: Qualify and route leads to sales reps with CRM updates.
-      - name: Healthcare Workflows
-        description: Run HIPAA-aligned voice workflows for patient outreach and intake.
-    integrations:
-      - name: HubSpot
-      - name: Salesforce
-      - name: Cal.com
-      - name: Calendly
-      - name: Zapier
-      - name: Make
-      - name: Twilio
-      - name: Google Sheets
-      - name: Slack
-      - name: Webhooks
-      - name: OpenAI
-      - name: Anthropic
-      - name: ElevenLabs
-      - name: Cartesia
-      - name: Deepgram
-    authentication:
-      - type: API Key
-        description: HTTP Bearer authentication using an API key generated in the Synthflow dashboard.
+- aid: synthflow:platform-api
+  name: Synthflow Platform API
+  description: >-
+    The Synthflow Platform API provides REST endpoints to manage assistants, phone numbers, calls, knowledge
+    bases, and custom actions for no-code voice AI agents. Authentication is via bearer tokens and the
+    API is available in multiple regions.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Assistants
+  - Calls
+  - Phone Numbers
+  - Knowledge Bases
+  - Actions
+  - REST
+  properties:
+  - type: Documentation
+    url: https://docs.synthflow.ai
+  - type: GettingStarted
+    url: https://docs.synthflow.ai/getting-started-with-your-api
+  - type: Signup
+    url: https://app.synthflow.ai
+  - type: APIReference
+    url: https://synthflow.readme.io/reference/getting-started-with-your-api
+  - type: Pricing
+    url: https://synthflow.ai/pricing
+  - type: Authentication
+    url: https://docs.synthflow.ai/getting-started-with-your-api
+  features:
+  - name: Assistants Management
+    description: Create, configure, and manage AI voice assistants via API.
+  - name: Inbound and Outbound Calls
+    description: Manage inbound call routing and trigger outbound calls programmatically.
+  - name: Phone Number Provisioning
+    description: Provision and manage phone numbers across regions.
+  - name: Knowledge Bases
+    description: Create knowledge bases that ground agent responses in your content.
+  - name: Custom Actions
+    description: Define webhook-based custom actions that agents can call during conversations.
+  - name: In-House Telephony
+    description: Native telephony stack with sub-100ms latency and 99.99% uptime.
+  - name: Multi-Region Deployment
+    description: Deploy assistants in the region that fits your workload and compliance needs.
+  - name: Compliance
+    description: SOC 2, HIPAA, PCI DSS, and GDPR with end-to-end encryption and audit logs.
+  useCases:
+  - name: Inbound Call Automation
+    description: Automate inbound support, reception, and qualification calls.
+  - name: Outbound Campaigns
+    description: Run outbound calling campaigns for sales, surveys, and reminders.
+  - name: Appointment Setting
+    description: Book and confirm appointments with calendar integrations.
+  - name: Lead Qualification
+    description: Qualify and route leads to sales reps with CRM updates.
+  - name: Healthcare Workflows
+    description: Run HIPAA-aligned voice workflows for patient outreach and intake.
+  integrations:
+  - name: HubSpot
+  - name: Salesforce
+  - name: Cal.com
+  - name: Calendly
+  - name: Zapier
+  - name: Make
+  - name: Twilio
+  - name: Google Sheets
+  - name: Slack
+  - name: Webhooks
+  - name: OpenAI
+  - name: Anthropic
+  - name: ElevenLabs
+  - name: Cartesia
+  - name: Deepgram
+  authentication:
+  - type: API Key
+    description: HTTP Bearer authentication using an API key generated in the Synthflow dashboard.
+- aid: synthflow:synthflow-default-api
+  name: Synthflow Default API
+  description: The Default API from Synthflow — 49 operation(s) for default.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Default
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-default-api-openapi.yml
+- aid: synthflow:synthflow-subpackage-chat-api
+  name: Synthflow subpackage_chat API
+  description: The subpackage_chat API from Synthflow — 4 operation(s) for subpackage_chat.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - subpackage_chat
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-subpackage-chat-api-openapi.yml
+- aid: synthflow:synthflow-subpackage-contacts-api
+  name: Synthflow subpackage_contacts API
+  description: The subpackage_contacts API from Synthflow — 2 operation(s) for subpackage_contacts.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - subpackage_contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-subpackage-contacts-api-openapi.yml
+- aid: synthflow:synthflow-subpackage-mcp-api
+  name: Synthflow subpackage_mcp API
+  description: The subpackage_mcp API from Synthflow — 3 operation(s) for subpackage_mcp.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - subpackage_mcp
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-subpackage-mcp-api-openapi.yml
+- aid: synthflow:synthflow-subpackage-memorystores-api
+  name: Synthflow subpackage_memoryStores API
+  description: >-
+    The subpackage_memoryStores API from Synthflow — 1 operation(s) for subpackage_memorystores.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - subpackage_memoryStores
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-subpackage-memorystores-api-openapi.yml
+- aid: synthflow:synthflow-subpackage-phonenumbers-api
+  name: Synthflow subpackage_phoneNumbers API
+  description: >-
+    The subpackage_phoneNumbers API from Synthflow — 3 operation(s) for subpackage_phonenumbers.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - subpackage_phoneNumbers
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-subpackage-phonenumbers-api-openapi.yml
+- aid: synthflow:synthflow-subpackage-webhooklogs-api
+  name: Synthflow subpackage_webhookLogs API
+  description: >-
+    The subpackage_webhookLogs API from Synthflow — 2 operation(s) for subpackage_webhooklogs.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - subpackage_webhookLogs
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-subpackage-webhooklogs-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/synthflow-agentic-access.yml
