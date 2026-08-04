@@ -1,0 +1,26 @@
+{
+  "provider": "synthflow",
+  "sources": [
+    "synthflow-default-api-openapi.yml",
+    "synthflow-subpackage-chat-api-openapi.yml",
+    "synthflow-subpackage-contacts-api-openapi.yml",
+    "synthflow-subpackage-mcp-api-openapi.yml",
+    "synthflow-subpackage-memorystores-api-openapi.yml",
+    "synthflow-subpackage-phonenumbers-api-openapi.yml",
+    "synthflow-subpackage-webhooklogs-api-openapi.yml"
+  ],
+  "outputs": [
+    "synthflow-default-api-openapi.yml",
+    "synthflow-subpackage-chat-api-openapi.yml",
+    "synthflow-subpackage-contacts-api-openapi.yml",
+    "synthflow-subpackage-mcp-api-openapi.yml",
+    "synthflow-subpackage-memorystores-api-openapi.yml",
+    "synthflow-subpackage-phonenumbers-api-openapi.yml",
+    "synthflow-subpackage-webhooklogs-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
