@@ -13,18 +13,24 @@ description: >-
   with end-to-end encryption and audit logging.
 type: Index
 accessModel:
-  pricing: free
-  onboarding: self-serve
+  pricing: enterprise
+  onboarding: sales
   trial: false
-  try_now: true
+  try_now: false
   public: false
-  label: Free · Self-serve signup
+  label: Enterprise · Contact sales
   confidence: high
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-08-13'
+  method: searched
+  note: >-
+    Corrected 2026-08-13. https://synthflow.ai/pricing publishes a single Enterprise tier
+    starting at $30,000 annually with a Contact Sales call to action; the earlier
+    self-serve/free reading came from a scaffolded plans file. Synthflow's own concurrency
+    docs confirm the former Pro, Growth and Agency self-serve plans are retired and closed
+    to new subscriptions.
 position: Provider
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/synthflow.png
@@ -41,9 +47,15 @@ tags:
   - Custom Actions
   - HIPAA
   - SOC 2
+  - MCP
+  - Agent Skills
+  - Conversational AI
+  - SIP
+  - Simulations
+  - Knowledge Base
 url: https://raw.githubusercontent.com/api-evangelist/synthflow/refs/heads/main/apis.yml
 created: '2026-05-23'
-modified: '2026-05-23'
+modified: '2026-08-13'
 specificationVersion: '0.20'
 apis:
 - aid: synthflow:platform-api
@@ -69,7 +81,11 @@ apis:
   - type: Signup
     url: https://app.synthflow.ai
   - type: APIReference
-    url: https://synthflow.readme.io/reference/getting-started-with-your-api
+    url: https://docs.synthflow.ai/api-reference/platform-api
+  - type: MCPServer
+    url: https://mcp.synthflow.ai/mcp
+  - type: RateLimits
+    url: https://docs.synthflow.ai/concurrency-calling-limits
   - type: Pricing
     url: https://synthflow.ai/pricing
   - type: Authentication
@@ -219,6 +235,69 @@ common:
     url: https://www.linkedin.com/company/synthflowai
   - type: LlmsText
     url: https://docs.synthflow.ai/llms.txt
+  - type: LLMsTxt
+    url: llms/synthflow-llms.txt
+  - type: DeveloperPortal
+    url: https://docs.synthflow.ai
+  - type: APIReference
+    url: https://docs.synthflow.ai/api-reference/platform-api
+  - type: GettingStarted
+    url: https://docs.synthflow.ai/getting-started
+  - type: GitHubOrganization
+    url: https://github.com/SynthFlowAI
+  - type: Roadmap
+    url: https://feedback.synthflow.ai/roadmap
+  - type: Support
+    url: mailto:support@synthflow.ai
+  - type: SignUp
+    url: https://app.synthflow.ai
+  - type: StatusPage
+    url: https://status.synthflow.ai/
+  - type: Compliance
+    url: https://security.synthflow.ai/
+  - type: TrustCenter
+    url: security/synthflow-trust-center.yml
+  - type: MCPServer
+    url: mcp/synthflow-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/synthflow-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: WellKnown
+    url: well-known/synthflow-well-known.yml
+  - type: Packages
+    url: packages/synthflow-packages.yml
+  - type: Webhooks
+    url: asyncapi/synthflow-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/synthflow-problem-types.yml
+  - type: Conventions
+    url: conventions/synthflow-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/synthflow-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/synthflow-changelog.yml
+  - type: Conformance
+    url: conformance/synthflow-conformance.yml
+  - type: OAuthScopes
+    url: scopes/synthflow-scopes.yml
+  - type: Sandbox
+    url: sandbox/synthflow-sandbox.yml
+  - type: DataModel
+    url: data-model/synthflow-data-model.yml
+  - type: Components
+    url: components/synthflow-components.yml
+  - type: Overlay
+    url: overlays/synthflow-default-api-overlay.yaml
+  - type: Plans
+    url: plans/synthflow-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/synthflow-rate-limits.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 34
+  pass: local-v1
