@@ -1,0 +1,83 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/SynthFlowAI/synthflow-skills
+description: >-
+  Synthflow publishes its own Agent Skills. These files are the provider's, saved
+  VERBATIM from the SynthFlowAI/synthflow-skills repository — nothing here was generated
+  or derived by API Evangelist. The repo follows the Agent Skills specification
+  (agentskills.io/specification) and ships a Claude Code plugin marketplace manifest
+  alongside .mcp.json / .cursor/mcp.json / .vscode/mcp.json configs that preconfigure
+  Synthflow's documentation MCP server.
+publisher:
+  name: Synthflow
+  email: support@synthflow.ai
+  repository: https://github.com/SynthFlowAI/synthflow-skills
+  spec: https://agentskills.io/specification
+  plugin:
+    marketplace: SynthFlowAI/synthflow-skills
+    plugin_name: synthflow-voice-ai
+    version: '1.0.0'
+install:
+  - 'npx skills add SynthFlowAI/synthflow-skills'
+  - 'npx skills add SynthFlowAI/synthflow-skills --skill create-assistant'
+  - '/plugin marketplace add SynthFlowAI/synthflow-skills'
+  - '/plugin install synthflow-voice-ai@synthflow-skills'
+supported_agents: [Claude Code, Cursor, VS Code Copilot, Gemini CLI]
+api:
+  base_url: https://api.synthflow.ai/v2
+  auth: 'Authorization: Bearer $SYNTHFLOW_API_KEY'
+skills:
+  - file: synthflow-voice-ai.md
+    name: synthflow-voice-ai
+    description: >-
+      Umbrella skill covering the full workflow — API key setup, assistant creation,
+      action management, making calls, simulations and evaluations.
+    api: openapi/_original/synthflow-openapi.json
+    operations: [create-assistant, list-assistant, get-assistant, update-assistant, delete-assistant, voice-call, list-calls, get-phone-call]
+    source: https://github.com/SynthFlowAI/synthflow-skills/blob/main/SKILL.md
+  - file: synthflow-setup-api-key.md
+    name: setup-api-key
+    description: Guide through obtaining and configuring a Synthflow API key.
+    api: openapi/_original/synthflow-openapi.json
+    operations: [list-assistant]
+    source: https://github.com/SynthFlowAI/synthflow-skills/blob/main/setup-api-key/SKILL.md
+  - file: synthflow-create-assistant.md
+    name: create-assistant
+    description: Create AI voice assistants with LLMs, voices, prompts and advanced settings.
+    api: openapi/_original/synthflow-openapi.json
+    operations: [create-assistant, update-assistant, get-assistant, get-voices]
+    source: https://github.com/SynthFlowAI/synthflow-skills/blob/main/create-assistant/SKILL.md
+  - file: synthflow-create-call.md
+    name: create-call
+    description: Initiate outbound phone calls through AI agents.
+    api: openapi/_original/synthflow-openapi.json
+    operations: [voice-call, list-calls, get-phone-call]
+    source: https://github.com/SynthFlowAI/synthflow-skills/blob/main/create-call/SKILL.md
+  - file: synthflow-manage-actions.md
+    name: manage-actions
+    description: >-
+      Create, update and attach actions — transfers, SMS, webhooks, booking, extraction
+      and evaluations.
+    api: openapi/_original/synthflow-openapi.json
+    operations: [list-actions, create-action, initialize-action, update-action, delete-action, get-action, attach-action, detach-action]
+    source: https://github.com/SynthFlowAI/synthflow-skills/blob/main/manage-actions/SKILL.md
+  - file: synthflow-create-simulation.md
+    name: create-simulation
+    description: Create and run simulation test suites to evaluate agent behavior.
+    api: openapi/_original/synthflow-openapi.json
+    operations: [create-simulation-suite, list-simulation-suites, create-simulation-case, execute-simulation-suite, list-simulations, get-simulation-session]
+    source: https://github.com/SynthFlowAI/synthflow-skills/blob/main/create-simulation/SKILL.md
+  - file: synthflow-create-eval.md
+    name: create-eval
+    description: Define custom evaluations to score call quality and outcomes.
+    api: openapi/_original/synthflow-openapi.json
+    operations: [create-action, update-action, get-assistant]
+    source: https://github.com/SynthFlowAI/synthflow-skills/blob/main/create-eval/SKILL.md
+notes:
+  - >-
+    The skills repo embeds a PostHog telemetry pixel in its README and instructs agents to
+    POST an anonymous `skill_used` event after completing a workflow. Synthflow documents
+    this and honours DO_NOT_TRACK / DISABLE_TELEMETRY opt-out environment variables.
+  - >-
+    SKILL.md tells agents to install a Python CLI with `pip install synthflow`. The PyPI
+    package named `synthflow` is NOT Synthflow's — see packages/synthflow-packages.yml.

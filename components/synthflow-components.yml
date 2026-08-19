@@ -1,0 +1,80 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.synthflow.ai/launch-chat-agents + https://docs.synthflow.ai/ws-media-integration
+description: >-
+  Client-side and embeddable surfaces Synthflow ships for putting an agent inside a
+  customer's own website or app. These are distinct from the server-side API: two of the
+  three are drop-in embeds Synthflow hosts and manages, and the third is a raw audio
+  transport a developer wires up themselves.
+
+components:
+  - family: Chat
+    name: Embeddable Chat Widget
+    kind: hosted-embed
+    docs: https://docs.synthflow.ai/launch-chat-agents
+    distribution: 'Embed code copied from the dashboard and pasted into the site or app.'
+    managed_by: Synthflow
+    loader_library: null
+    versioning: 'Not published — the embed is fully managed by Synthflow, so the customer does not pin a version.'
+    description: >-
+      Out-of-the-box chat widget for a website or app. Synthflow describes it as fully
+      managed, "making it easy to add conversational AI to your site with minimal setup".
+    availability: all regions
+    related_entry_mode: 'api (widget chats report entry_mode `api`, the same as direct API chats)'
+  - family: Voice
+    name: Widget agent type
+    kind: agent-type
+    docs: https://docs.synthflow.ai/create-an-agent
+    description: >-
+      `widget` is one of the three first-class agent types (alongside inbound and
+      outbound) set at create-assistant time — the agent configuration that backs an
+      embedded web experience rather than a phone number.
+    operations: [create-assistant, update-assistant]
+  - family: Voice
+    name: WebSocket media integration
+    kind: transport
+    docs: https://docs.synthflow.ai/ws-media-integration
+    operations: [start-ws-media-call, get-ws-media-base-url]
+    description: >-
+      Start a voice call and stream audio over a WebSocket with a single API request, with
+      no WebRTC signaling on the client. This is a protocol-level integration for building
+      an in-browser or in-app voice experience, not a prebuilt UI component — the customer
+      supplies the interface.
+    shipped: '2026-07-08 (changelog: "WebSocket media for websites and apps")'
+    availability: 'Environment-gated — returns 503 "WebSocket media is not enabled in this environment" where not enabled.'
+    loader_library: null
+  - family: Chat
+    name: WhatsApp and SMS channels
+    kind: channel
+    docs: https://docs.synthflow.ai/launch-chat-agents
+    description: 'Chat agents delivered through WhatsApp and SMS rather than an embed.'
+    availability: >-
+      US-region workspaces only. Synthflow states EU support is blocked because Twilio does
+      not offer EU data residency for the WhatsApp and SMS Conversations APIs, which is
+      required for GDPR data processing and storage.
+    entry_mode: omnichannel
+  - family: Voice
+    name: WhatsApp Business Calling
+    kind: channel
+    docs: https://docs.synthflow.ai/whatsapp-business-calling
+    description: 'Voice agents receive calls inside WhatsApp.'
+
+agency_white_label:
+  docs: https://docs.synthflow.ai/custom-domain
+  capabilities:
+    - 'Custom domain for an agency workspace, with DNS configuration and page metadata control'
+    - 'Branding: agency name, logo, colour and support details on customer-facing workspaces'
+  note: 'A white-label surface rather than a component library, but it is the other way Synthflow renders in someone else''s brand.'
+
+notes:
+  - >-
+    No versioned front-end package is published — there is no npm element library, no
+    CDN-pinned script and no web-component bundle. The widget is distributed as
+    dashboard-generated embed code, so a consumer cannot pin or diff what they are
+    loading. Recorded as a finding, not a gap in the probe.
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://docs.synthflow.ai/launch-chat-agents.md', status: 200}
+    - {url: 'https://docs.synthflow.ai/ws-media-integration.md', status: 200}

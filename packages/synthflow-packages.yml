@@ -1,0 +1,88 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  npm registry search + registry.npmjs.org metadata, pypi.org/pypi/*/json, the
+  SynthFlowAI GitHub organization, and https://docs.synthflow.ai
+description: >-
+  Synthflow publishes no first-party server-side SDK in any language. The docs teach the
+  Platform API with raw curl/requests examples in seven languages rather than a client
+  library. The only first-party npm artifact is an n8n community node. A first-party
+  Python CLI is claimed in Synthflow's own published Agent Skill, but no such package
+  exists on PyPI under that name — see discrepancies below.
+
+packages:
+  - language: javascript
+    registry: npm
+    name: '@synthflow-ai/n8n-nodes-synthflow'
+    url: https://www.npmjs.com/package/@synthflow-ai/n8n-nodes-synthflow
+    install: npm install @synthflow-ai/n8n-nodes-synthflow
+    repository: https://github.com/SynthFlowAI/n8n-synthflow-node
+    official: true
+    kind: workflow-node
+    version: 0.2.3
+    published: '2025-11-21'
+    note: >-
+      n8n community node for Synthflow AI, scoped to the @synthflow-ai npm org and built
+      from a repo in the SynthFlowAI GitHub org, so first-party. Its published
+      description covers only the "Make a Call" endpoint, i.e. it wraps one operation
+      (voice-call), not the API. Last release 2025-11-21 — roughly nine months before
+      this probe, during which the Platform API grew to 100 operations and added phone
+      books, memory stores, simulations and webhook logs.
+  - language: null
+    registry: github
+    name: SynthFlowAI/synthflow-skills
+    url: https://github.com/SynthFlowAI/synthflow-skills
+    install: npx skills add SynthFlowAI/synthflow-skills
+    official: true
+    kind: agent-skills
+    version: '1.0.0'
+    published: null
+    note: >-
+      Distributed from GitHub, not a package registry, so there is no registry metadata
+      endpoint to date. Version 1.0.0 is read from the plugin marketplace manifest
+      (.claude-plugin/marketplace.json); no release tag or dated publication is exposed,
+      so `published` is honestly null. Saved verbatim under skills/.
+
+sdks:
+  first_party_count: 0
+  note: >-
+    No first-party client library on npm, PyPI, Maven Central, NuGet, pkg.go.dev,
+    RubyGems, Packagist or crates.io. The Authentication and API Reference pages ship
+    copy-paste snippets for curl, Python (requests), Go (net/http), Ruby (net/http),
+    Java (Unirest), C# (RestSharp) and Swift (URLSession) — generated request samples,
+    not a supported SDK. Integration is therefore raw HTTP, the n8n node, the MCP server,
+    or the Agent Skills.
+
+discrepancies:
+  - claim: '`pip install synthflow` installs a first-party Synthflow CLI'
+    claimed_in: https://github.com/SynthFlowAI/synthflow-skills/blob/main/SKILL.md
+    claimed_commands: ['synthflow auth login', 'synthflow assistants create', 'synthflow calls make', 'synthflow contacts list', 'synthflow voices list']
+    finding: not-first-party
+    evidence:
+      - {url: 'https://pypi.org/pypi/synthflow/json', status: 200, detail: 'synthflow 0.1.0 — "A library for generating high-quality synthetic data for AI development", author 3rror_py, uploaded 2025-06-13, no project URLs, unrelated to Synthflow.ai'}
+      - {url: 'https://pypi.org/pypi/synthflow-cli/json', status: 404}
+      - {url: 'https://pypi.org/pypi/synthflow-sdk/json', status: 404}
+      - {url: 'https://pypi.org/pypi/synthflow-ai/json', status: 404}
+      - {url: 'https://pypi.org/pypi/synthflowai/json', status: 404}
+    impact: >-
+      An agent following Synthflow's own published skill would install an unrelated
+      third-party package from PyPI and then fail on every documented command. Because no
+      first-party CLI could be verified in any registry or in the SynthFlowAI GitHub org,
+      no cli/ artifact and no CLI pointer were emitted for this provider.
+
+registries_checked:
+  - {registry: npm, result: '1 first-party package (@synthflow-ai scope); third-party @estros/synthflow-mcp-tool and @pipedream/synthflow excluded as not first-party'}
+  - {registry: pypi, result: 'no first-party package; the name `synthflow` is held by an unrelated project'}
+  - {registry: maven-central, result: none}
+  - {registry: nuget, result: none}
+  - {registry: pkg.go.dev, result: none}
+  - {registry: rubygems, result: none}
+  - {registry: packagist, result: none}
+  - {registry: crates.io, result: none}
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://registry.npmjs.org/@synthflow-ai/n8n-nodes-synthflow', status: 200}
+    - {url: 'https://pypi.org/pypi/synthflow/json', status: 200}
+    - {url: 'https://github.com/orgs/SynthFlowAI/repositories?type=all', status: 200}

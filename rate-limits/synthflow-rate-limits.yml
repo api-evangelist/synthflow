@@ -3,61 +3,104 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Synthflow
 providerId: synthflow
+generated: '2026-08-13'
+method: searched
+source: https://docs.synthflow.ai/concurrency-calling-limits
 created: '2026-05-22'
-modified: '2026-05-22'
+modified: '2026-08-13'
 tags:
-- Voice
-- Voice Agents
-- No-Code
-- Telephony
-- Phone
-- Outbound
-- Inbound
-- CRM
-- Webhooks
-- Custom Actions
-- HIPAA
-- SOC 2
-- Rate Limiting
-- Quotas
-- Throttling
-description: Scaffolded rate limit definitions for the Synthflow API surface. Captures per-tier quotas, burst behavior, response
-  signaling, and recovery semantics. Defaults are scaffold values to be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  - Rate Limiting
+  - Concurrency
+  - CAPS
+  - Telephony
+description: >-
+  Synthflow documents two throttles, and both are call-shaped rather than
+  request-shaped: Concurrent Active Calls (how many calls can be live at once) and CAPS,
+  Call Attempts Per Second (how fast new calls can be started through the Make a Phone
+  Call endpoint). Neither has a published number — both are scoped per account or shown in
+  workspace/account terms. There is no documented general HTTP request rate limit for the
+  other 99 operations, and no rate-limit response headers are published.
+
+limit_count: 2
+numeric_limits_published: false
+headers_published: false
+
+limits:
+  - name: Concurrent Active Calls
+    scope: workspace
+    metric: concurrent_calls
+    limit: null
+    limit_disclosure: 'Enterprise or account-managed deployments: scoped with Synthflow. Existing legacy workspaces: shown in workspace or account terms.'
+    timeFrame: instantaneous
+    applies:
+      - https://api.synthflow.ai/v2
+      - https://api.us.synthflow.ai/v2
+      - https://api.eu.synthflow.ai/v2
+    description: >-
+      Caps how many live calls can run simultaneously. When one call ends another can
+      begin. Legacy Pro/Growth/Agency plans carried fixed concurrency limits and remain
+      supported for existing customers.
+  - name: CAPS (Call Attempts Per Second)
+    scope: workspace
+    metric: call_attempts_per_second
+    limit: null
+    limit_disclosure: 'Enterprise or account-managed deployments: scoped with Synthflow. Existing legacy workspaces: shown in workspace or account terms.'
+    timeFrame: second
+    applies_to_operations: [voice-call]
+    endpoint: POST /v2/calls
+    description: >-
+      Caps how frequently new outbound calls can be initiated, independent of how many are
+      active. Provider example: at CAPS 2, sending 10 call requests in one second exceeds
+      the limit and some are rejected or queued.
+
+general_api_rate_limit:
+  published: false
+  note: >-
+    No documented per-key or per-endpoint request rate limit covering the non-calling
+    operations (agents, actions, knowledge bases, contacts, memory stores, simulations,
+    webhook logs). An integrator cannot size a bulk read against a published budget.
+
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-- tier: free
-  name: Free Tier Default
-  scope: api-key
-  metric: requests_per_minute
-  limit: 10
-  burst: 20
-  timeFrame: minute
-  applies:
-  - https://api.synthflow.ai
-  description: Default per-token request rate for the free tier. Bursts above the limit return HTTP 429 with Retry-After.
-- tier: pro
-  name: Pro Tier Default
-  scope: api-key
-  metric: requests_per_minute
-  limit: 120
-  burst: 240
-  timeFrame: minute
-  applies:
-  - https://api.synthflow.ai
-  description: Higher rate envelope for paid plans; reconcile against published commercial terms.
+  note: >-
+    "Depending on your account setup, excess calls can return a 429 HTTP error or be queued
+    briefly." The behaviour is account-dependent, so 429 is not a guaranteed signal — a
+    caller may instead observe added latency. 429 is declared on ZERO of the 100 operations
+    in openapi/_original/synthflow-openapi.json.
+
+headers:
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  note: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header contract is published anywhere in
+    the documentation, and no rate-limit header is declared in the OpenAPI. This is the
+    material gap: an agent gets no runtime budget signal and can only discover the ceiling
+    by hitting it.
+
 recoveryStrategies:
-- name: Exponential Backoff
-  description: Wait Retry-After seconds (or back off exponentially up to 60s) before retrying.
-- name: Queue and Retry
-  description: Submit bulk work in batches under the burst envelope.
+  - name: Client-side pacing
+    description: >-
+      Because no Retry-After is published, pace outbound call creation below the
+      contracted CAPS rather than reacting to a 429.
+  - name: Exponential backoff
+    description: 'Back off on 429 and retry. Note there is no idempotency key, so a retry of voice-call risks placing a duplicate call — see conventions/synthflow-conventions.yml.'
+
+custom_limits:
+  available: true
+  process: 'Enterprise and account-managed customers can request custom concurrency or CAPS limits.'
+  contact: https://synthflow.ai/talk-to-sales
+
 notes:
-- Replace scaffold values with the provider's published rate limit policy.
+  - >-
+    This file replaces a scaffold that asserted 10 req/min free and 120 req/min pro tiers
+    with X-RateLimit-* headers. None of those values or headers are published by Synthflow.
+  - 'Related telephony guidance: https://docs.synthflow.ai/telephony-quality-and-performance'
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://docs.synthflow.ai/concurrency-calling-limits.md', status: 200}
+    - {url: 'https://docs.synthflow.ai/cuncurrency-calling-limits.md', status: 200, detail: 'legacy misspelled slug, now a not-found page that redirects readers to the correct page'}

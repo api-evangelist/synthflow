@@ -1,0 +1,131 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.synthflow.ai/authentication + https://docs.synthflow.ai/concurrency-calling-limits + https://docs.synthflow.ai/security
+derived_from: openapi/_original/synthflow-openapi.json
+description: >-
+  Cross-cutting request/response semantics for the Synthflow Platform API, read from the
+  docs and cross-checked against all 100 operations in the OpenAPI.
+
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <SYNTHFLOW_API_KEY>'
+  scheme_name: sec0
+  scheme_type: http/bearer
+  key_management: 'Admin -> Workspace Settings -> API Keys'
+  scoping: workspace
+  rotation: 'Provider advises periodic rotation and deletion of unused keys.'
+  prerequisite: 'Where the workspace mandates 2FA, a user must have 2FA enabled to create or view API keys.'
+  docs: https://docs.synthflow.ai/authentication
+  note: >-
+    Authorization is modelled as an explicit header PARAMETER on 98 of 100 operations in
+    addition to the securityScheme, which is redundant but harmless.
+
+base_url:
+  global: https://api.synthflow.ai/v2
+  united_states: https://api.us.synthflow.ai/v2
+  european_union: https://api.eu.synthflow.ai/v2
+  note: >-
+    Region is a hard partition, not a routing hint. The workspace's region determines
+    which host — and which MCP host — will answer; a mismatch fails.
+  docs: https://docs.synthflow.ai/customer-region
+
+versioning:
+  scheme: uri-path
+  current: v2
+  header_negotiation: false
+  date_versioning: false
+  note: >-
+    /v2 is the only version in every published server URL. No version header, no dated
+    version pinning, and no documented policy for how a v3 would be introduced.
+
+idempotency:
+  supported: false
+  header: null
+  evidence: >-
+    No Idempotency-Key (or equivalent) header parameter exists on any of the 100
+    operations — the only header parameter declared anywhere in the spec is Authorization
+    — and the docs never mention idempotency, request keys or safe retry.
+  consequence: >-
+    voice-call (POST /calls) places a real, billable phone call. With no idempotency key,
+    a client that retries after a timeout cannot distinguish "the call was never placed"
+    from "the call was placed and the response was lost", and a naive retry dials the
+    person twice. This is the single largest agent-safety gap in the surface.
+  note: >-
+    No Idempotency pointer is emitted in apis.yml, because none is earned.
+
+pagination:
+  styles:
+    - style: limit-offset
+      params: [limit, offset]
+      used_by: 8 operations (limit), 7 operations (offset)
+    - style: page-number
+      params: [page_number, page_size]
+      used_by: 6 operations
+  consistency: mixed
+  note: >-
+    Two incompatible pagination idioms coexist in one API. A client must know per-endpoint
+    which pair applies. No cursor pagination, and no documented response envelope field
+    carrying a total count or next-page token.
+  filtering:
+    common_params: [search, status, start_date, end_date, from_date, to_date, model_id, agent_id, workspace, target_agent_id]
+    date_formats: 'YYYY-MM-DD or epoch milliseconds (documented for the calls list)'
+
+response_envelope:
+  success_shape: '{"status": <int>, "response": { ... }}'
+  note: >-
+    Synthflow's own skill examples read results as response.json()["response"]["model_id"]
+    and ["response"]["call_id"], so the payload is wrapped in a `response` object rather
+    than returned at the top level.
+  content_type: application/json
+  content_types_in_spec: ['application/json (207 declared response bodies — the only media type in the surface)']
+
+error_envelope:
+  see: errors/synthflow-problem-types.yml
+  rfc9457: false
+  shapes: ['{"detail": "..."}', '{"error": "...", "message": "..."}']
+
+rate_limit_signaling:
+  see: rate-limits/synthflow-rate-limits.yml
+  response_code: 429
+  headers_published: false
+  note: >-
+    Synthflow documents that exceeding CAPS or concurrency "can return a 429 HTTP error or
+    be queued briefly" but publishes no RateLimit-*/X-RateLimit-*/Retry-After header
+    contract, and declares 429 on no operation. There is no runtime budget signal.
+
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id / correlation-id header is documented or declared. For webhook traffic
+    specifically, delivery is traceable after the fact through the webhook log API
+    (ListWebhookLogs / GetWebhookLogDetail).
+
+field_expansion:
+  supported: false
+metadata:
+  supported: true
+  mechanism: >-
+    custom_variables[] ({key, value} pairs) on a call request, and metadata fields on
+    contacts. Collected variables come back on the post-call webhook.
+
+webhook_conventions:
+  see: asyncapi/synthflow-webhooks.yml
+  signature_header: HTTP_SYNTHFLOW_SIGNATURE
+  algorithm: HMAC-SHA256 over call_id, base64
+
+data_handling:
+  pii_redaction:
+    field: redact_pii
+    set_on: [create-assistant, update-assistant]
+    scope: 'transcripts, post-call webhook payloads, internal logs'
+    docs: https://docs.synthflow.ai/security-and-compliance
+  retention_control: 'Optional 30-day auto-delete of transcripts, recordings and caller IDs.'
+  recording_toggle: is_recording
+
+cross_links:
+  errors: errors/synthflow-problem-types.yml
+  lifecycle: lifecycle/synthflow-lifecycle.yml
+  authentication: authentication/synthflow-authentication.yml
+  rate_limits: rate-limits/synthflow-rate-limits.yml
+  webhooks: asyncapi/synthflow-webhooks.yml
+  sandbox: sandbox/synthflow-sandbox.yml

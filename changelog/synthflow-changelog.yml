@@ -1,0 +1,112 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.synthflow.ai/changelog
+feed: https://docs.synthflow.ai/changelog.rss
+description: >-
+  Synthflow runs a continuously-shipped, date-stamped changelog on the documentation host,
+  filterable by category (API Changes, Product Updates, Deprecation Notices) and published
+  as an RSS feed. 77 dated entries were present in the feed at capture time. Entries are
+  dated, not versioned — there is no release number to pin to.
+
+scheme: date-based
+current_version: v2
+current_version_scheme: uri-path
+categories: [API Changes, Product Updates, Deprecation Notices]
+feed_format: RSS 2.0
+feed_item_count: 77
+subscribe: 'Subscribe via RSS link on the changelog page'
+window_captured: '2026-07-03 .. 2026-08-05'
+
+entries:
+  - date: '2026-08-05'
+    categories: [API Changes]
+    highlights:
+      - title: 'Phone numbers API: Five9, RingCX, and required SIP domain'
+        detail: >-
+          Five9 and RingCX numbers can now be imported through POST /custom-numbers. For
+          all other providers on that endpoint, termination_uri (SIP domain) is now
+          REQUIRED. Five9, RingCX and Zoom are unaffected — Synthflow still sets their SIP
+          domain automatically.
+        breaking: true
+        operations: [create-custom-number]
+  - date: '2026-08-04'
+    categories: [Product Updates]
+    highlights:
+      - title: 'Analytics across your subaccounts'
+        detail: >-
+          The analytics dashboard now covers managed subaccounts; an "All accounts" filter
+          compares total minutes, calls and average duration across every subaccount.
+        breaking: false
+      - title: 'Pin Aurora conversations'
+        detail: 'Conversations can be pinned in Aurora so pinned threads stay at the top of the list.'
+        breaking: false
+  - date: '2026-07-30'
+    categories: [Product Updates, API Changes]
+    highlights:
+      - title: 'Official Claude connector and plugin'
+        detail: >-
+          Synthflow shipped an official Claude connector and plugin — the distribution
+          channel for the hosted MCP server and the published Agent Skills.
+        breaking: false
+      - title: 'Phone numbers API: SIP registration'
+        detail: 'SIP registration support added to the phone numbers API.'
+        breaking: false
+  - date: '2026-07-29'
+    categories: [Deprecation Notices]
+    highlights:
+      - title: 'Stripe-based reselling is ending'
+        detail: 'The Stripe-based agency reselling/rebilling path is being retired.'
+        breaking: true
+        deprecation: true
+  - date: '2026-07-23'
+    categories: [Product Updates]
+    highlights:
+      - title: 'Background audio on running actions'
+        breaking: false
+  - date: '2026-07-16'
+    categories: [Product Updates]
+    highlights:
+      - title: 'Improved System Status page'
+        detail: 'Rework of https://status.synthflow.ai/.'
+        breaking: false
+  - date: '2026-07-15'
+    categories: [Product Updates]
+    highlights:
+      - title: 'Five9 Handoff action'
+        breaking: false
+  - date: '2026-07-14'
+    categories: [Product Updates]
+    highlights:
+      - title: 'Rename Aurora conversations'
+        breaking: false
+  - date: '2026-07-08'
+    categories: [API Changes, Product Updates]
+    highlights:
+      - title: 'WebSocket media for websites and apps'
+        detail: >-
+          Start a voice call and stream audio over WebSocket with a single API request,
+          with no WebRTC signaling on the client.
+        breaking: false
+        operations: [start-ws-media-call, get-ws-media-base-url]
+      - title: 'Hebrew available'
+        breaking: false
+  - date: '2026-07-03'
+    categories: [Product Updates]
+    highlights:
+      - title: 'Sidebar control'
+        breaking: false
+
+notes:
+  - >-
+    API Changes are a first-class, filterable category, and breaking changes such as the
+    2026-08-05 required termination_uri appear there. There is still no version bump or
+    runtime header accompanying a breaking change — see lifecycle/synthflow-lifecycle.yml.
+  - >-
+    RSS items are titled by date rather than by change, so the feed is a good freshness
+    signal but a weak machine-readable diff.
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://docs.synthflow.ai/changelog', status: 200}
+    - {url: 'https://docs.synthflow.ai/changelog.rss', status: 200}

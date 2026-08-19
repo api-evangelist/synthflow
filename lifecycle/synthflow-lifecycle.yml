@@ -1,0 +1,102 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.synthflow.ai/changelog + https://status.synthflow.ai/ + https://synthflow.ai/pricing
+description: >-
+  Versioning, deprecation, status and support posture for the Synthflow Platform API.
+  Synthflow runs a continuous, dated changelog that carries an explicit "Deprecation
+  Notices" category, and a real Statuspage with per-component health. It publishes no
+  numeric SLA target outside an enterprise contract, and no Sunset/Deprecation header
+  support.
+
+versioning:
+  scheme: uri-path
+  current: v2
+  docs: https://docs.synthflow.ai/api-reference/platform-api
+  header_negotiation: false
+  policy_published: false
+  note: >-
+    Every published server URL is /v2. There is no documented policy for how a breaking
+    change is introduced, how long a prior version is supported, or how a caller pins one.
+
+deprecation:
+  policy_url: null
+  policy_published: false
+  announcement_channel: https://docs.synthflow.ai/changelog
+  changelog_category: Deprecation Notices
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  observed_notices:
+    - {date: '2026-07-29', title: 'Stripe-based reselling is ending', category: Deprecation Notices}
+  note: >-
+    Deprecations ARE announced, and are tagged as their own filterable category on the
+    changelog — that is a real, working deprecation communication channel. What is missing
+    is a written policy (notice period, support window) and runtime signalling: no Sunset
+    or Deprecation response headers, and no operation in the OpenAPI is marked
+    `deprecated: true`.
+
+deprecated_operations: []
+deprecated_operations_note: >-
+  Zero of the 100 operations in openapi/_original/synthflow-openapi.json carry
+  `deprecated: true`.
+
+breaking_change_signalling:
+  in_changelog: true
+  example:
+    date: '2026-08-05'
+    title: 'Phone numbers API: Five9, RingCX, and required SIP domain'
+    change: >-
+      termination_uri (SIP domain) became REQUIRED on POST /custom-numbers for all
+      providers except Five9, RingCX and Zoom.
+    breaking: true
+    note: >-
+      A required-field addition on an existing operation, announced in the changelog but
+      not versioned and not surfaced through any header. Callers find out by reading the
+      changelog or by failing.
+
+status_page:
+  url: https://status.synthflow.ai/
+  provider: Atlassian Statuspage
+  api: https://status.synthflow.ai/api/v2/summary.json
+  machine_readable: true
+  components: ['End to End calling', 'Synthflow Dashboard', 'Synthflow API', 'Synthflow Website']
+  observed_status: 'All Systems Operational'
+  observed_at: '2026-08-13'
+  note: >-
+    The API is broken out as its own component, separate from the dashboard and the
+    website, and the Statuspage v2 JSON API is reachable unauthenticated — a subscribable,
+    agent-readable health signal. The changelog records an "Improved System Status page"
+    entry on 2026-07-16.
+
+sla:
+  url: null
+  uptime_target_marketing: '99.99%'
+  contractual: 'Enterprise SLA and support terms are scoped in contract.'
+  source: https://synthflow.ai/pricing
+  note: >-
+    99.99% is a marketing claim on the product surface, not a published SLA document with
+    remedies. The pricing page states SLA and support terms are scoped per enterprise
+    contract.
+
+support:
+  contact: support@synthflow.ai
+  feedback_portal: https://feedback.synthflow.ai/
+  roadmap: https://feedback.synthflow.ai/roadmap
+  sales: https://synthflow.ai/talk-to-sales
+  academy: https://academy.synthflow.ai/
+  academy_note: 'Returned HTTP 403 to an unauthenticated probe on 2026-08-13.'
+
+early_access:
+  docs: https://docs.synthflow.ai/early-access
+  note: 'A named Early Access programme lets selected customers test features before general release.'
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://status.synthflow.ai/', status: 200}
+    - {url: 'https://status.synthflow.ai/api/v2/summary.json', status: 200}
+    - {url: 'https://docs.synthflow.ai/changelog', status: 200}
+    - {url: 'https://docs.synthflow.ai/changelog.rss', status: 200}
+    - {url: 'https://feedback.synthflow.ai/roadmap', status: 200}
+    - {url: 'https://synthflow.ai/pricing', status: 200}
+    - {url: 'https://academy.synthflow.ai/', status: 403}

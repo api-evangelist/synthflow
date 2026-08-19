@@ -1,0 +1,956 @@
+{
+  "item": [
+    {
+      "id": "e82cb8d5-0fd0-49f1-acaf-13b4c9e12c20",
+      "name": "subpackage_chat",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a9253814-7182-454e-a803-d81e0a7ee5b9",
+          "name": "Create a chat",
+          "request": {
+            "name": "Create a chat",
+            "description": {
+              "content": "Create a new chat session with an agent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat",
+                ":chat_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "chat_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model_id\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dfdff496-b467-44e0-a7eb-0d328963c845",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    ":chat_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "chat_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model_id\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"response\": {\n    \"chat_id\": \"9d4be637-04ea-94fd-093b-7d1ab62ff53d\",\n    \"chat_status\": \"ongoing\",\n    \"conversation_history\": [\n      {\n        \"agent_id\": \"string\",\n        \"current_state\": \"string\",\n        \"message\": \"string\",\n        \"timestamp\": \"1996-03-14T18:06:45.552Z\",\n        \"turn_number\": 9032\n      },\n      {\n        \"agent_id\": \"string\",\n        \"current_state\": \"string\",\n        \"message\": \"string\",\n        \"timestamp\": \"1988-08-30T19:19:54.007Z\",\n        \"turn_number\": 1917\n      }\n    ],\n    \"start_timestamp\": \"2008-01-05T18:15:59.775Z\",\n    \"transcript\": \"string\",\n    \"initial_message\": {\n      \"agent_message\": \"string\",\n      \"current_state\": \"string\",\n      \"timestamp\": \"1971-03-19T12:36:42.399Z\",\n      \"turn_number\": 8290\n    },\n    \"fsm_log\": {\n      \"key_0\": {\n        \"current_state\": \"string\",\n        \"current_turn\": \"string\",\n        \"event_summary\": {\n          \"key_0\": 4473,\n          \"key_1\": 8499\n        },\n        \"events\": [\n          {\n            \"event_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_id\": \"string\",\n            \"timestamp\": 7056,\n            \"details\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_3\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"event_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_id\": \"string\",\n            \"timestamp\": 5506,\n            \"details\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"execution_stats\": {\n          \"commands_executed\": 9245,\n          \"state_transitions\": 6822,\n          \"total_events\": 5567\n        },\n        \"fsm_metadata\": {\n          \"name\": \"string\"\n        },\n        \"variables\": {\n          \"key_0\": {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"collected\": false\n          }\n        },\n        \"state_path\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5a23971-4c03-47dc-b781-829658fac734",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    ":chat_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "chat_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model_id\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e61085e6-f853-480a-8782-0389ee30c611",
+          "name": "Get a chat",
+          "request": {
+            "name": "Get a chat",
+            "description": {
+              "content": "Retrieve details of a specific chat session.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat",
+                ":chat_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "chat_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4beac06f-6379-457a-94a9-7520e64d697a",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    ":chat_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "chat_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"response\": {\n    \"chat_id\": \"d9c73467-8319-4e80-8bd5-5deb1894d1ec\",\n    \"chat_status\": \"ongoing\",\n    \"conversation_history\": [\n      {\n        \"agent_id\": \"string\",\n        \"current_state\": \"string\",\n        \"message\": \"string\",\n        \"timestamp\": \"2011-09-10T23:18:21.516Z\",\n        \"turn_number\": 8596\n      },\n      {\n        \"agent_id\": \"string\",\n        \"current_state\": \"string\",\n        \"message\": \"string\",\n        \"timestamp\": \"1984-02-26T09:51:23.284Z\",\n        \"turn_number\": 1366\n      }\n    ],\n    \"start_timestamp\": \"2023-03-08T03:40:53.085Z\",\n    \"transcript\": \"string\",\n    \"initial_message\": {\n      \"agent_message\": \"string\",\n      \"current_state\": \"string\",\n      \"timestamp\": \"1958-06-13T08:02:39.021Z\",\n      \"turn_number\": 5842\n    },\n    \"fsm_log\": {\n      \"key_0\": {\n        \"current_state\": \"string\",\n        \"current_turn\": \"string\",\n        \"event_summary\": {\n          \"key_0\": 7222\n        },\n        \"events\": [\n          {\n            \"event_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_id\": \"string\",\n            \"timestamp\": 2827,\n            \"details\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"event_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_id\": \"string\",\n            \"timestamp\": 2327,\n            \"details\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_3\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"execution_stats\": {\n          \"commands_executed\": 8244,\n          \"state_transitions\": 4648,\n          \"total_events\": 3614\n        },\n        \"fsm_metadata\": {\n          \"name\": \"string\"\n        },\n        \"variables\": {\n          \"key_0\": {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"collected\": true\n          }\n        },\n        \"state_path\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"key_1\": {\n        \"current_state\": \"string\",\n        \"current_turn\": \"string\",\n        \"event_summary\": {\n          \"key_0\": 9679,\n          \"key_1\": 5680,\n          \"key_2\": 2160,\n          \"key_3\": 8021\n        },\n        \"events\": [\n          {\n            \"event_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_id\": \"string\",\n            \"timestamp\": 8038,\n            \"details\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"event_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_id\": \"string\",\n            \"timestamp\": 8877,\n            \"details\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"execution_stats\": {\n          \"commands_executed\": 5908,\n          \"state_transitions\": 6649,\n          \"total_events\": 2106\n        },\n        \"fsm_metadata\": {\n          \"name\": \"string\"\n        },\n        \"variables\": {\n          \"key_0\": {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"collected\": false\n          },\n          \"key_1\": {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"collected\": false\n          }\n        },\n        \"state_path\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"key_2\": {\n        \"current_state\": \"string\",\n        \"current_turn\": \"string\",\n        \"event_summary\": {\n          \"key_0\": 5290,\n          \"key_1\": 4344\n        },\n        \"events\": [\n          {\n            \"event_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_id\": \"string\",\n            \"timestamp\": 3593,\n            \"details\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"event_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"state_id\": \"string\",\n            \"timestamp\": 1186,\n            \"details\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"execution_stats\": {\n          \"commands_executed\": 9965,\n          \"state_transitions\": 1536,\n          \"total_events\": 9645\n        },\n        \"fsm_metadata\": {\n          \"name\": \"string\"\n        },\n        \"variables\": {\n          \"key_0\": {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"collected\": true\n          },\n          \"key_1\": {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"collected\": true\n          }\n        },\n        \"state_path\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b1e9239-e40e-4e24-b97d-59be3d0e24ae",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    ":chat_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "chat_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1abd7867-ca95-4c28-a0f9-439bdfb779f4",
+          "name": "Delete a chat",
+          "request": {
+            "name": "Delete a chat",
+            "description": {
+              "content": "Delete a chat session.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat",
+                ":chat_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "chat_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c6f8ca8-10a5-43b9-866c-725af1b1e69e",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    ":chat_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "chat_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dc55484-6ee8-4ce0-bc82-239e3108a2b6",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    ":chat_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "chat_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc377b91-1cc8-467e-b44b-0de7037b800d",
+          "name": "List chats",
+          "request": {
+            "name": "List chats",
+            "description": {
+              "content": "Retrieve a list of chats, optionally filtered by agent ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "agent_id",
+                  "value": "<string>",
+                  "description": "Filter chats by agent ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Limit the number of chats to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Cursor to start from."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "51bb8d6a-8ffd-49ad-ab60-7a0633cbf4ec",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "agent_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"response\": {\n    \"chats\": [\n      {\n        \"chat_id\": \"a3997091-f5b4-8f7e-b611-ce58ab030902\",\n        \"chat_status\": \"cancelled\",\n        \"start_timestamp\": \"1988-03-06T12:54:02.270Z\"\n      },\n      {\n        \"chat_id\": \"dc6d4d00-e7d6-7ab2-f8a8-d705d8ef4e52\",\n        \"chat_status\": \"ongoing\",\n        \"start_timestamp\": \"1969-12-07T22:34:40.634Z\"\n      }\n    ],\n    \"has_more\": false,\n    \"next_cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42fc419e-7792-4a4f-b1da-4c5d33c7285a",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "agent_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "13f03d2f-54a5-48b3-97d7-5430b5e3c581",
+          "name": "Send a message in a chat",
+          "request": {
+            "name": "Send a message in a chat",
+            "description": {
+              "content": "Send a message to an agent within an existing chat session.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat",
+                ":chat_id",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "chat_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9774f605-343b-4ee5-a130-7523e216e2e7",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    ":chat_id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "chat_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"response\": {\n    \"agent_message\": \"string\",\n    \"current_state\": \"string\",\n    \"timestamp\": \"1994-06-11T10:04:13.141Z\",\n    \"turn_number\": 9767\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1036aff2-ece4-4f86-8435-62390907d940",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    ":chat_id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "chat_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "67dc8157-bbb2-43d8-9fc1-9ed188265d86",
+          "name": "Start an outbound chat conversation",
+          "request": {
+            "name": "Start an outbound chat conversation",
+            "description": {
+              "content": "Create a new outbound WhatsApp or SMS conversation for a chat agent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat",
+                "outbound"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agent_id\": \"<uuid>\",\n  \"channel\": \"<string>\",\n  \"to_number\": \"<string>\",\n  \"from_number\": \"<string>\",\n  \"initial_message\": \"<string>\",\n  \"template\": {\n    \"content_sid\": \"<string>\",\n    \"variables\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {},\n      \"key_3\": {}\n    }\n  },\n  \"custom_variables\": {\n    \"key_0\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cd77454a-ca32-4f82-a31a-7942cbd99954",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "outbound"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent_id\": \"<uuid>\",\n  \"channel\": \"whatsapp\",\n  \"to_number\": \"<string>\",\n  \"from_number\": \"<string>\",\n  \"initial_message\": \"<string>\",\n  \"template\": {\n    \"content_sid\": \"string\",\n    \"variables\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  },\n  \"custom_variables\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"response\": {\n    \"conversation_id\": \"92b7ede0-f491-be15-e346-debcec4e0174\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a30f3eb5-a4de-47e7-9551-176811ae7eae",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "outbound"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent_id\": \"<uuid>\",\n  \"channel\": \"whatsapp\",\n  \"to_number\": \"<string>\",\n  \"from_number\": \"<string>\",\n  \"initial_message\": \"<string>\",\n  \"template\": {\n    \"content_sid\": \"string\",\n    \"variables\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  },\n  \"custom_variables\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.synthflow.ai/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4e34e2c6-3ab2-4f69-8131-0f22f3b26758",
+    "name": "Platform subpackage_chat API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -3,55 +3,101 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Synthflow
 providerId: synthflow
+generated: '2026-08-13'
+method: searched
+source: https://synthflow.ai/pricing
 created: '2026-05-22'
-modified: '2026-05-22'
+modified: '2026-08-13'
 tags:
-- Voice
-- Voice Agents
-- No-Code
-- Telephony
-- Phone
-- Outbound
-- Inbound
-- CRM
-- Webhooks
-- Custom Actions
-- HIPAA
-- SOC 2
-description: Machine-readable plans scaffold for the Synthflow API surface. Conforms to the API Commons Plans schema. Tier
-  limits and prices are scaffold defaults; replace with provider-published values.
+  - Voice
+  - Voice Agents
+  - Telephony
+  - Enterprise
+  - Pricing
+description: >-
+  Synthflow publishes exactly one commercial tier: Enterprise, sold through sales, with a
+  stated floor of $30,000 annually. There is no self-serve plan, no free tier and no
+  published per-minute or per-call rate card on the pricing page. Everything that would
+  normally be a plan limit — call volume, concurrency, CAPS, telephony setup, integrations,
+  security requirements and launch support — is described as scoped per contract rather
+  than published as a number.
+
+plan_count: 1
+self_serve: false
+free_tier: false
+trial: false
+published_rate_card: false
+
 plans:
-- id: synthflow-free
-  name: Free
-  type: freemium
-  description: Free entry tier for the Synthflow API surface. Intended for evaluation, prototyping, and low-volume integrations.
-    Real limits and pricing must be reconciled with the provider's published plan documentation.
-  entries:
-  - label: API Requests
-    description: Monthly API request quota across all included endpoints
-    name: api_requests
-    type: quota
-    metric: requests
-    limit: 1000
-    timeFrame: month
-    geo: global
-    domains:
-    - https://api.synthflow.ai
-    unit: 1
-    price: '0.00'
-    userMultiplied: false
-  - label: Rate Limit
-    description: Maximum requests per minute on the free tier
-    name: rate_limit
-    type: rate
-    metric: requests_per_minute
-    limit: 10
-    timeFrame: minute
-    geo: global
-    domains:
-    - https://api.synthflow.ai
-    unit: 1
-    price: '0.00'
+  - id: synthflow-enterprise
+    name: Enterprise
+    type: enterprise
+    availability: sales-only
+    price:
+      amount: 30000
+      currency: USD
+      period: year
+      qualifier: 'starts at'
+      note: >-
+        "Enterprise contracts start at $30,000 annually. Final pricing is scoped around
+        call volume, concurrency, telephony setup, integrations, security needs, and
+        launch support." Quoted verbatim from the pricing page.
+    cta:
+      label: Contact Sales
+      url: https://synthflow.ai/talk-to-sales
+    included:
+      - 'Enterprise SLA and support terms scoped in contract'
+      - 'Synthflow Native Telephony, SIP trunking, or approved enterprise telephony'
+      - 'Custom concurrency planning, routing, escalation paths, handoffs, and fallback logic'
+      - 'CRM, calendar, contact-center stack, webhook, API, and knowledge-source integrations'
+      - 'MSA/DPA support, data handling review, workspace controls, and enterprise security review'
+      - 'Implementation, onboarding, testing, training, launch support, and ongoing optimization'
+    limits:
+      concurrent_active_calls: contract-scoped
+      caps_call_attempts_per_second: contract-scoped
+      api_requests: not-published
+      note: 'See rate-limits/synthflow-rate-limits.yml.'
+
+legacy_plans:
+  status: retired
+  names: [Pro, Growth, Agency]
+  source: https://docs.synthflow.ai/concurrency-calling-limits
+  note: >-
+    Synthflow's concurrency documentation states that earlier Pro, Growth and Agency plans
+    were issued with fixed concurrency limits, are no longer available for new
+    subscriptions, and remain supported for existing customers whose limits are shown in
+    their workspace or account terms. The self-serve tiers this catalog previously carried
+    as a scaffold no longer exist as purchasable plans.
+
+related:
+  agency_rebilling:
+    docs: https://docs.synthflow.ai/set-up-pricing-and-rebilling
+    status: being-retired
+    note: >-
+      Agencies could set their own pricing plans and rebill subaccounts through Stripe. The
+      changelog entry of 2026-07-29 ("Stripe-based reselling is ending") deprecates this.
+  roi_calculator: https://synthflow.ai/pricing
+  marketplace: https://synthflow.ai/marketplace
+
+notes:
+  - >-
+    This file replaces a scaffold that asserted a free tier with 1,000 requests/month and
+    a paid tier — values that were never published by Synthflow and are contradicted by
+    the current pricing page.
+  - >-
+    apis.yml accessModel currently records pricing "free" and self-serve onboarding. The
+    pricing page is enterprise/contact-sales only; app.synthflow.ai still accepts signups,
+    so a product trial may exist outside the published plan set, but no free PLAN is
+    published.
+
 references:
-- name: Synthflow API Documentation
-  url: https://raw.githubusercontent.com/api-evangelist/synthflow/refs/heads/main/apis.yml
+  - name: Synthflow Pricing
+    url: https://synthflow.ai/pricing
+  - name: Concurrency and CAPS limits
+    url: https://docs.synthflow.ai/concurrency-calling-limits
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://synthflow.ai/pricing', status: 200}
+    - {url: 'https://docs.synthflow.ai/concurrency-calling-limits.md', status: 200}

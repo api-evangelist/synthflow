@@ -1,0 +1,2204 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Platform  API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/assistants",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an agent"
+        },
+        {
+          "info": {
+            "name": "Get an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/assistants/:model_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an agent"
+        },
+        {
+          "info": {
+            "name": "Update an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/assistants/:model_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to update an agent's name, phone number, or other parameters. \n Only the provided parameters will be updated, and others won't be removed or changed."
+        },
+        {
+          "info": {
+            "name": "Delete an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/assistants/:model_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to delete an agent."
+        },
+        {
+          "info": {
+            "name": "List agents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/assistants/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Agents displayed per page."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first agent to be returned."
+              }
+            ]
+          },
+          "docs": "Lists all agents you have in your account."
+        },
+        {
+          "info": {
+            "name": "Attach phone numbers to an outbound agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/assistants/:model_id/phone_numbers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Attach multiple outbound phone numbers to an agent by phone numbers or by slugs."
+        },
+        {
+          "info": {
+            "name": "Detach phone number from an outbound agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/assistants/:model_id/phone_numbers/:phone_number_slug",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "phone_number_slug",
+                "value": "",
+                "type": "path",
+                "description": "Phone number slug to remove from the agent."
+              }
+            ]
+          },
+          "docs": "Remove one attached outbound phone number from an agent."
+        },
+        {
+          "info": {
+            "name": "List calls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/calls",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "query",
+                "description": "The calls for the specified model ID will be returned"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "How many calls will be displayed in every page, default is 20"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first call to be returned."
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Begin timestamp (milliseconds since epoch) of the call. Available after the call starts. Example: 1732546200000"
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "End timestamp (milliseconds since epoch) of the call. Available after the call ends. Example: 1732546200000"
+              },
+              {
+                "name": "call_status",
+                "value": "",
+                "type": "query",
+                "description": "Status of call."
+              },
+              {
+                "name": "duration_min",
+                "value": "",
+                "type": "query",
+                "description": "Only retrieve calls with duration greater than or equal to this value (seconds)."
+              },
+              {
+                "name": "duration_max",
+                "value": "",
+                "type": "query",
+                "description": "Only retrieve calls with duration less than or equal to this value (seconds)."
+              },
+              {
+                "name": "lead_phone_number",
+                "value": "",
+                "type": "query",
+                "description": "Phone number of the caller or callee (E.164 format preferred) and URL-encode the leading \"+\" (e.g. %2B14155552671)"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of calls for the specified model. You can optionally filter by time window, status, duration range, or phone number."
+        },
+        {
+          "info": {
+            "name": "Make a call",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/calls",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a real-time phone call through the AI agent."
+        },
+        {
+          "info": {
+            "name": "Get a call",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/calls/:call_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "call_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the transcript and other metadata for a phone call."
+        },
+        {
+          "info": {
+            "name": "List simulation cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulation_cases",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_number",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term for simulation case names."
+              },
+              {
+                "name": "simulation_case_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by simulation case type."
+              },
+              {
+                "name": "suite_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by simulation suite ID."
+              }
+            ]
+          },
+          "docs": "List simulation cases with pagination and optional filtering."
+        },
+        {
+          "info": {
+            "name": "Create a simulation case",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/simulation_cases",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new simulation case for a workspace."
+        },
+        {
+          "info": {
+            "name": "Get a simulation case",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulation_cases/:simulation_case_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "simulation_case_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation case ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a simulation case by ID."
+        },
+        {
+          "info": {
+            "name": "Update a simulation case",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/simulation_cases/:simulation_case_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "simulation_case_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation case ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing simulation case."
+        },
+        {
+          "info": {
+            "name": "Delete a simulation case",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/simulation_cases/:simulation_case_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "simulation_case_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation case ID."
+              }
+            ]
+          },
+          "docs": "Delete a simulation case by ID."
+        },
+        {
+          "info": {
+            "name": "Generate test cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/simulation_cases/generate",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate test cases for an agent. Supports both custom prompt and flow designer agents. You can optionally specify scenarios to ensure the generated tests cover specific situations. The response is streamed as NDJSON, providing progress and results incrementally."
+        },
+        {
+          "info": {
+            "name": "List simulation cases by agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulation_cases/by_agent",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "query",
+                "description": "Agent ID whose cases to list."
+              }
+            ]
+          },
+          "docs": "List all simulation cases created for a specific agent."
+        },
+        {
+          "info": {
+            "name": "List simulation suites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulation_suites",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_number",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term for simulation suite names."
+              },
+              {
+                "name": "model_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by list of model IDs."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter by created_at >= start_date (ISO format)."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter by created_at <= end_date (ISO format)."
+              }
+            ]
+          },
+          "docs": "List simulation suites with pagination and optional filtering."
+        },
+        {
+          "info": {
+            "name": "Create a simulation suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/simulation_suites",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new simulation suite attached to a specific agent. The suite can only be executed on the agent specified by model_id."
+        },
+        {
+          "info": {
+            "name": "Get a simulation suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulation_suites/:suite_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "suite_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation suite ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a simulation suite by ID."
+        },
+        {
+          "info": {
+            "name": "Update a simulation suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/simulation_suites/:suite_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "suite_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation suite ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing simulation suite."
+        },
+        {
+          "info": {
+            "name": "Delete a simulation suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/simulation_suites/:suite_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "suite_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation suite ID."
+              }
+            ]
+          },
+          "docs": "Delete a simulation suite by ID."
+        },
+        {
+          "info": {
+            "name": "Execute a simulation suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/simulation_suites/:suite_id/execute",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "suite_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation suite ID."
+              },
+              {
+                "name": "target_agent_id",
+                "value": "",
+                "type": "query",
+                "description": "Target agent ID. Must match the suite's model_id."
+              },
+              {
+                "name": "max_turns",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of turns per simulation."
+              }
+            ]
+          },
+          "docs": "Execute all test cases in a suite. The suite runs on the agent it was created for (determined by the suite's model_id)."
+        },
+        {
+          "info": {
+            "name": "List simulation scenarios",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulation_scenarios",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_number",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term for simulation scenario names."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter by created_at >= start_date (ISO format)."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter by created_at <= end_date (ISO format)."
+              }
+            ]
+          },
+          "docs": "List simulation scenarios with pagination and optional filtering."
+        },
+        {
+          "info": {
+            "name": "Create a simulation scenario",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/simulation_scenarios",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new simulation scenario. Scenarios are templates used when generating test cases to ensure coverage of specific situations."
+        },
+        {
+          "info": {
+            "name": "Get a simulation scenario",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulation_scenarios/:scenario_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scenario_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation scenario ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a simulation scenario by ID."
+        },
+        {
+          "info": {
+            "name": "Update a simulation scenario",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/simulation_scenarios/:scenario_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scenario_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation scenario ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing simulation scenario."
+        },
+        {
+          "info": {
+            "name": "Delete a simulation scenario",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/simulation_scenarios/:scenario_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scenario_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation scenario ID."
+              }
+            ]
+          },
+          "docs": "Delete a simulation scenario by ID."
+        },
+        {
+          "info": {
+            "name": "List simulations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_number",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "simulation_session_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by simulation session ID."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by simulation status."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter by simulation created_at >= start_date (ISO 8601)."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter by simulation created_at <= end_date (ISO 8601)."
+              },
+              {
+                "name": "target_agent_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target agent ID."
+              }
+            ]
+          },
+          "docs": "List simulations with pagination and optional filters."
+        },
+        {
+          "info": {
+            "name": "Start a simulation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/simulations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a new simulation using a simulation case."
+        },
+        {
+          "info": {
+            "name": "List simulation sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulations/sessions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_number",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "target_agent_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target agent ID."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter by simulation created_at >= start_date (ISO 8601)."
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter by simulation created_at <= end_date (ISO 8601)."
+              }
+            ]
+          },
+          "docs": "List simulation sessions with pagination and optional filters."
+        },
+        {
+          "info": {
+            "name": "Get a simulation session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulations/session/:simulation_session_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "simulation_session_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation session ID."
+              }
+            ]
+          },
+          "docs": "Retrieve simulation session details by ID."
+        },
+        {
+          "info": {
+            "name": "Get a simulation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/simulations/:simulation_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "simulation_id",
+                "value": "",
+                "type": "path",
+                "description": "Simulation ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a simulation by ID."
+        },
+        {
+          "info": {
+            "name": "List actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/actions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Actions displayed per page."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first action to be returned."
+              }
+            ]
+          },
+          "docs": "List actions"
+        },
+        {
+          "info": {
+            "name": "Create an action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/actions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an action"
+        },
+        {
+          "info": {
+            "name": "Initialize a custom action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/actions/initialize",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initialize a custom action"
+        },
+        {
+          "info": {
+            "name": "Get an action",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/actions/:action_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "action_id",
+                "value": "",
+                "type": "path",
+                "description": "To find an action's ID, go to its page in your Synthflow dashboard."
+              }
+            ]
+          },
+          "docs": "Retrieves metadata about an action."
+        },
+        {
+          "info": {
+            "name": "Update an action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/actions/:action_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "action_id",
+                "value": "",
+                "type": "path",
+                "description": "To find an action's ID, go to its page in your Synthflow dashboard."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an action"
+        },
+        {
+          "info": {
+            "name": "Delete an action",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/actions/:action_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "action_id",
+                "value": "",
+                "type": "path",
+                "description": "To find an action's ID, go to its page in your Synthflow dashboard."
+              }
+            ]
+          },
+          "docs": "Delete an action"
+        },
+        {
+          "info": {
+            "name": "Attach an action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/actions/attach",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Attach an action"
+        },
+        {
+          "info": {
+            "name": "Detach an action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/actions/detach",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Detach an action"
+        },
+        {
+          "info": {
+            "name": "Export analytics data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/analytics/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "The start date and time for the date range for which you want to export analytics data. If you don't specify the date range, it'll default to the past 7 days. The maximum date range is 120 days. Example: 2025-11-25T14:30:00Z"
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "The end date and time for the date range for which you want to export analytics data. Example: 2025-11-25T14:30:00Z"
+              },
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "query",
+                "description": "If you want to export data for a specific agent, use its model ID. You can find it on the agent's page in your dashboard."
+              },
+              {
+                "name": "type_of_call",
+                "value": "",
+                "type": "query",
+                "description": "Filter calls by agent type (`inbound`, `outbound` or `widget`)."
+              }
+            ]
+          },
+          "docs": "Export analytics programmatically for blending with your BI dashboards or internal reporting tools.\n### Troubleshooting\n* If you are not seeing data for a specific agent, double-check the model_id you are using. Make sure the agent is active.\n* Date range errors: limit the query to a maximum of 120 days.\n* Unauthorized API access: double-check your API key."
+        },
+        {
+          "info": {
+            "name": "Get voices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/voices",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Workspace ID. You can find it in your dashboard."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Voices displayed per page."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first voice to be returned."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search voices by name."
+              },
+              {
+                "name": "provider",
+                "value": "",
+                "type": "query",
+                "description": "Voice provider to filter by."
+              }
+            ]
+          },
+          "docs": "Lists all the voices assigned to a workspace."
+        },
+        {
+          "info": {
+            "name": "List knowledge bases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/knowledge_base",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of knowledge bases to return per page."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first knowledge base to return."
+              }
+            ]
+          },
+          "docs": "Retrieves knowledge bases for the workspace."
+        },
+        {
+          "info": {
+            "name": "Create a knowledge base",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/knowledge_base",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new knowledge base and returns its ID."
+        },
+        {
+          "info": {
+            "name": "Get a knowledge base",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/knowledge_base/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the knowledge base's name and use condition."
+        },
+        {
+          "info": {
+            "name": "Update a knowledge base",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/knowledge_base/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a knowledge base"
+        },
+        {
+          "info": {
+            "name": "Delete a knowledge base",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/knowledge_base/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a knowledge base"
+        },
+        {
+          "info": {
+            "name": "Attach a knowledge base",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/knowledge_base/:knowledge_base_id/attach",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "knowledge_base_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "query",
+                "description": "id of the agent to which knowledge base needs to be attached"
+              }
+            ]
+          },
+          "docs": "Attach a knowledge base"
+        },
+        {
+          "info": {
+            "name": "Detach a knowledge base",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/knowledge_base/:knowledge_base_id/detach",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "knowledge_base_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Detach a knowledge base"
+        },
+        {
+          "info": {
+            "name": "List knowledge base sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/knowledge_base/:knowledge_base_id/sources",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "knowledge_base_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of sources to return per page."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of sources to skip before starting to return results."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of sources for the specified knowledge base."
+        },
+        {
+          "info": {
+            "name": "Add a knowledge base source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/knowledge_base/:knowledge_base_id/sources",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "knowledge_base_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a knowledge base source"
+        },
+        {
+          "info": {
+            "name": "Update a knowledge base source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/knowledge_base/:knowledge_base_id/sources/:source_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "knowledge_base_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "source_id",
+                "value": "",
+                "type": "path",
+                "description": "Source ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing knowledge base source by source ID. The updatable fields depend on the existing source type:\n\n- `link` / `file`: `url`\n- `text`: `content`\n\nYou can always update `name`.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a knowledge base source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/knowledge_base/:knowledge_base_id/sources/:source_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "knowledge_base_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "source_id",
+                "value": "",
+                "type": "path",
+                "description": "Source ID."
+              }
+            ]
+          },
+          "docs": "Delete a knowledge base source"
+        },
+        {
+          "info": {
+            "name": "List phone books",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/phonebooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List all phone books in your workspace."
+        },
+        {
+          "info": {
+            "name": "Create a phone book",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/phonebooks",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a phone book"
+        },
+        {
+          "info": {
+            "name": "Delete a phone book",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/phonebooks/:phone_book_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phone_book_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the phone book you want to delete."
+              }
+            ]
+          },
+          "docs": "Delete a phone book"
+        },
+        {
+          "info": {
+            "name": "Create a phone book entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/phonebooks/:phone_book_id/entries",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phone_book_id",
+                "value": "",
+                "type": "path",
+                "description": "Phone book ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a phone book entry"
+        },
+        {
+          "info": {
+            "name": "Delete a phone book entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/phonebooks/:phone_book_id/entries/:entry_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phone_book_id",
+                "value": "",
+                "type": "path",
+                "description": "Phone book ID."
+              },
+              {
+                "name": "entry_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the phone book entry you want to delete."
+              }
+            ]
+          },
+          "docs": "Delete a phone book entry"
+        },
+        {
+          "info": {
+            "name": "Create a subaccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/subaccounts",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a subaccount"
+        },
+        {
+          "info": {
+            "name": "Get a subaccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/subaccounts/:subaccount_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "subaccount_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves detailed metadata about a specific subaccount by ID."
+        },
+        {
+          "info": {
+            "name": "Update a subaccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/subaccounts/:subaccount_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "subaccount_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a subaccount"
+        },
+        {
+          "info": {
+            "name": "Delete a subaccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/subaccounts/:subaccount_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "subaccount_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a subaccount by ID."
+        },
+        {
+          "info": {
+            "name": "List subaccounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/subaccounts/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List subaccounts"
+        },
+        {
+          "info": {
+            "name": "List contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/contacts",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "The contact's phone number."
+              }
+            ]
+          },
+          "docs": "List contacts"
+        },
+        {
+          "info": {
+            "name": "Get a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/contacts/:contact_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a contact"
+        },
+        {
+          "info": {
+            "name": "Delete a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/contacts/:contact_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a contact"
+        },
+        {
+          "info": {
+            "name": "List memory stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/memory_stores",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "The memory store's title."
+              }
+            ]
+          },
+          "docs": "List memory stores"
+        },
+        {
+          "info": {
+            "name": "Get a memory store",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/memory_stores/:memory_store_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "memory_store_id",
+                "value": "",
+                "type": "path",
+                "description": "The memory store's ID."
+              }
+            ]
+          },
+          "docs": "Get a memory store"
+        },
+        {
+          "info": {
+            "name": "Update a memory store",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.synthflow.ai/v2/memory_stores/:memory_store_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "memory_store_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a memory store"
+        },
+        {
+          "info": {
+            "name": "Delete a memory store",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/memory_stores/:memory_store_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "memory_store_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a memory store"
+        },
+        {
+          "info": {
+            "name": "Attach a memory store to an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/memory_stores/:memory_store_id/assistants/:assistant_id/attach",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "memory_store_id",
+                "value": "",
+                "type": "path",
+                "description": "The memory store ID."
+              },
+              {
+                "name": "assistant_id",
+                "value": "",
+                "type": "path",
+                "description": "The agent's model ID."
+              }
+            ]
+          },
+          "docs": "Attach a memory store to an agent"
+        },
+        {
+          "info": {
+            "name": "Detach a memory store from an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/memory_stores/:memory_store_id/assistants/:assistant_id/detach",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "memory_store_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "assistant_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Detach a memory store from an agent"
+        },
+        {
+          "info": {
+            "name": "Get data for a specific memory store and contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/memory_stores/:memory_store_id/contacts/:contact_id/memory_data",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "memory_store_id",
+                "value": "",
+                "type": "path",
+                "description": "The memory store ID."
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "The contact ID."
+              }
+            ]
+          },
+          "docs": "Get data for a specific memory store and contact"
+        },
+        {
+          "info": {
+            "name": "Attach a contact to a memory store",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/memory_stores/:memory_store_id/contacts/:contact_id/attach",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "memory_store_id",
+                "value": "",
+                "type": "path",
+                "description": "The memory store ID."
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "The contact ID."
+              }
+            ]
+          },
+          "docs": "Attach a contact to a memory store"
+        },
+        {
+          "info": {
+            "name": "Detach a contact from a memory store",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/memory_stores/:memory_store_id/contacts/:contact_id/detach",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "memory_store_id",
+                "value": "",
+                "type": "path",
+                "description": "The memory store ID."
+              },
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "The contact ID."
+              }
+            ]
+          },
+          "docs": "Detach a contact from a memory store"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

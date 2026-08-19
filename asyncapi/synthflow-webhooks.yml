@@ -1,0 +1,107 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.synthflow.ai/webhooks
+docs:
+  webhooks: https://docs.synthflow.ai/webhooks
+  security: https://docs.synthflow.ai/security#webhook-security
+  logs: https://docs.synthflow.ai/logs
+spec_type: none
+asyncapi_published: false
+description: >-
+  Synthflow publishes no AsyncAPI document, but it does document a real, signed,
+  observable webhook surface with two event types, an HMAC signature scheme and a
+  first-class delivery-log API. This artifact captures that catalog. The webhook payload
+  is not described in the OpenAPI — the Platform API models only the delivery LOGS
+  (ListWebhookLogs, GetWebhookLogDetail) — so this is the only machine-readable record of
+  the event contract in the repo.
+
+transport: https
+direction: outbound
+delivery: 'HTTP POST to a customer-controlled URL'
+
+security:
+  signature:
+    algorithm: HMAC-SHA256
+    header: HTTP_SYNTHFLOW_SIGNATURE
+    signed_payload: call_id
+    encoding: base64
+    secret_management: 'Admin -> Workspace Settings -> Security -> Webhooks'
+    applies_to: [post-call, inbound]
+    verification_guidance: >-
+      Synthflow publishes a Python reference implementation and explicitly instructs
+      constant-time comparison (hmac.compare_digest) to avoid timing attacks.
+    note: >-
+      The signature covers the call_id only, not the full request body. A verifier
+      therefore proves the sender knows the shared secret for that call_id, but does not
+      get body-integrity coverage from the signature itself.
+
+events:
+  - name: post-call
+    summary: Fires after a call ends.
+    configured_by:
+      field: external_webhook_url
+      where: 'the Make a call request body'
+      operations: [voice-call]
+      also_settable_on_agent: true
+    signed: true
+    payload_highlights:
+      - transcript
+      - call status
+      - end call reason
+      - executed actions
+      - post-call analytics (LLM-judge scoring)
+      - collected variables
+      - recording availability
+    enumerations:
+      call_status: [pending, ringing, in-progress, completed, no-answer, busy, failed, canceled, user-canceled, hangup_on_voicemail, left_voicemail, spam, paused, registered]
+      end_call_reason: [voicemail, voicemail_message_left, human_goodbye, agent_goodbye, human_pick_up_cut_off, max_duration, custom_end_call, user_canceled, undefined]
+    analytics_fields:
+      scored: [persona, style, steps, no_repetition, objections, objection_not_defined, knowledge, goal, appointment, user_sentiment, agent_sentiment, call_completion, answered_by_human, opted_in, no_opt_out, call_summary]
+      aggregate: [judge_found_partial_or_error, judge_found_full_error, all_feedback]
+      value_domains:
+        boolean_or_na: 'true | false | not_applicable | null'
+        graded: 'true | partial | false'
+    privacy: >-
+      Agent-level PII redaction (redact_pii) strips credit card numbers/expiry/CVV, SSNs,
+      names, emails, phone numbers and physical addresses from post-call webhook payloads
+      before delivery. Redaction is one-way and applies to new calls only.
+  - name: inbound
+    summary: Fires within roughly 10 seconds of an inbound call starting.
+    configured_by:
+      field: inbound_call_webhook_url
+      where: 'the agent document'
+      operations: [create-assistant, update-assistant]
+    signed: true
+    purpose:
+      - assign or reroute the agent that will take the call
+      - inject variables and metadata into the conversation
+    note: >-
+      This is a request/response webhook, not fire-and-forget — the customer's response
+      steers call routing, which makes latency part of the contract.
+
+observability:
+  delivery_logs:
+    docs: https://docs.synthflow.ai/logs
+    api:
+      list: ListWebhookLogs
+      detail: GetWebhookLogDetail
+      spec: openapi/_original/synthflow-openapi.json
+    mcp_tools: [list_webhook_logs, get_webhook_log_detail]
+    note: >-
+      Both the request and the response for a single delivery are retrievable, over REST
+      and over MCP. That is stronger delivery observability than most webhook surfaces in
+      the catalog expose.
+
+gaps:
+  - 'No AsyncAPI or JSON Schema document is published for either event payload.'
+  - 'No documented retry policy, backoff schedule or dead-letter behaviour for failed deliveries.'
+  - 'The signature covers call_id rather than the request body, so it does not provide body integrity.'
+  - 'The webhook payload shape is documented in prose and tables on the docs page only; it does not appear in the OpenAPI as a `webhooks` block, which OpenAPI 3.1 would allow.'
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://docs.synthflow.ai/webhooks', status: 200}
+    - {url: 'https://docs.synthflow.ai/webhooks.md', status: 200}
+    - {url: 'https://docs.synthflow.ai/security.md', status: 200}
+    - {url: 'https://docs.synthflow.ai/asyncapi.yaml', status: 404}

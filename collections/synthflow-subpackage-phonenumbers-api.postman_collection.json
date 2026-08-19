@@ -1,0 +1,832 @@
+{
+  "item": [
+    {
+      "id": "867aa3a2-4fcf-4a73-84f3-fa4a0e5ba36b",
+      "name": "subpackage_phoneNumbers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "790197ef-caaa-46d2-8f57-9d154fe0787e",
+          "name": "List phone numbers",
+          "request": {
+            "name": "List phone numbers",
+            "description": {
+              "content": "Lists all phone numbers assigned to a workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "numbers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workspace",
+                  "value": "<string>",
+                  "description": "(Required) Workspace ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Phone numbers displayed per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Index of the first phone number to be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "is_available",
+                  "value": "<boolean>",
+                  "description": "Filters phone numbers by inbound availability.\n- `true`: only numbers not assigned to inbound agents\n- `false`: only numbers assigned to inbound agents\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3999a48d-2dd9-4c62-b5a7-6abdcc0816ea",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "numbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "is_available",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"response\": {\n    \"pagination\": {\n      \"total_records\": 3039,\n      \"limit\": 756,\n      \"offset\": 4065\n    },\n    \"phone_numbers\": [\n      {\n        \"number\": \"string\",\n        \"sid\": \"string\",\n        \"is_available\": true\n      },\n      {\n        \"number\": \"string\",\n        \"sid\": \"string\",\n        \"is_available\": true\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32da41d8-3764-4b26-8672-3a339f845662",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "numbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "is_available",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "790d23cb-f253-45ec-86c6-fd3a91633eaa",
+          "name": "Get a phone number",
+          "request": {
+            "name": "Get a phone number",
+            "description": {
+              "content": "Retrieves detailed information about a specific phone number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "numbers",
+                ":phone_number_slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workspace",
+                  "value": "<string>",
+                  "description": "(Required) Workspace ID."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phone_number_slug",
+                  "description": "(Required) The phone number slug (phone number without the leading +)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8da345d8-e2de-4fbe-ba79-e336f6e512ec",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "numbers",
+                    ":phone_number_slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone_number_slug",
+                      "description": "(Required) The phone number slug (phone number without the leading +)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slug\": \"string\",\n  \"address_requirement\": \"string\",\n  \"phone_number\": \"string\",\n  \"friendly_name\": \"string\",\n  \"is_sms_capable\": true,\n  \"is_voice_capable\": true,\n  \"iso_country\": \"string\",\n  \"locality\": \"string\",\n  \"sip_auth_username\": \"string\",\n  \"sip_outbound_proxy\": \"string\",\n  \"sip_term_uri\": \"string\",\n  \"sid\": \"string\",\n  \"provider_name\": \"string\",\n  \"region\": \"string\",\n  \"is_available\": false,\n  \"agency_workspace_id\": \"string\",\n  \"workspace_id\": \"string\",\n  \"created_at\": \"1960-05-10T02:50:53.513Z\",\n  \"updated_at\": \"1957-10-28T12:46:02.053Z\",\n  \"assistants\": [\n    \"a36d0b07-ba91-5106-b121-ed893daf2c8b\",\n    \"711c628a-b8e3-60d4-7bbc-48f17acc381f\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dd20a86-39b1-4686-ab2f-78281ae15e21",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "numbers",
+                    ":phone_number_slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone_number_slug",
+                      "description": "(Required) The phone number slug (phone number without the leading +)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ca15249e-3e50-4abb-84f0-9d81e6ddbed0",
+          "name": "Update a phone number",
+          "request": {
+            "name": "Update a phone number",
+            "description": {
+              "content": "Updates the configuration of a phone number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "numbers",
+                ":phone_number_slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phone_number_slug",
+                  "description": "(Required) The phone number slug (phone number without the leading +)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"friendly_name\": \"<string>\",\n  \"sip_auth_username\": \"<string>\",\n  \"sip_outbound_proxy\": \"<string>\",\n  \"sip_term_uri\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "936ba18b-1985-4252-b15a-dc70b5fbda1f",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "numbers",
+                    ":phone_number_slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone_number_slug",
+                      "description": "(Required) The phone number slug (phone number without the leading +)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"friendly_name\": \"<string>\",\n  \"sip_auth_username\": \"<string>\",\n  \"sip_outbound_proxy\": \"<string>\",\n  \"sip_term_uri\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f14a0168-337d-464f-a559-0617dc8a0cb3",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "numbers",
+                    ":phone_number_slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone_number_slug",
+                      "description": "(Required) The phone number slug (phone number without the leading +)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"friendly_name\": \"<string>\",\n  \"sip_auth_username\": \"<string>\",\n  \"sip_outbound_proxy\": \"<string>\",\n  \"sip_term_uri\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "003c0994-5f77-4bf3-b78f-2bb226c96a5e",
+          "name": "Delete a phone number",
+          "request": {
+            "name": "Delete a phone number",
+            "description": {
+              "content": "Deletes a phone number from your workspace. This will detach the phone number from any agents it is linked to. For phone numbers purchased through Synthflow, this also cancels the monthly subscription.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "numbers",
+                ":phone_number_slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phone_number_slug",
+                  "description": "(Required) The phone number slug (phone number without the leading +)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "713e227f-2cce-4933-b65b-b1d7c07f4618",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "numbers",
+                    ":phone_number_slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone_number_slug",
+                      "description": "(Required) The phone number slug (phone number without the leading +)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cad7689a-75f6-4ea5-95b3-15f2e2a9ab45",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "numbers",
+                    ":phone_number_slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone_number_slug",
+                      "description": "(Required) The phone number slug (phone number without the leading +)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f77cfd4b-2d7b-4444-8091-2201d9c88ce0",
+          "name": "Import phone number",
+          "request": {
+            "name": "Import phone number",
+            "description": {
+              "content": "Imports a custom phone number into your workspace. This is useful for direct SIP dialing scenarios where your telephony provider does not offer elastic SIP trunking.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "custom-numbers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspace_id\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"friendly_name\": \"<string>\",\n  \"trunk_username\": \"<string>\",\n  \"trunk_pwd\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "48ec4e6f-0d58-40f9-8e74-1434bba1d1f8",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-numbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspace_id\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"friendly_name\": \"<string>\",\n  \"trunk_username\": \"<string>\",\n  \"trunk_pwd\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"response\": {\n    \"key\": \"b1169568-ce8a-4201-14b4-55b00c0dc5c3\",\n    \"phone_number\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4f0b1a1-94fa-4c68-afff-37b6e055bd8d",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-numbers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspace_id\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"friendly_name\": \"<string>\",\n  \"trunk_username\": \"<string>\",\n  \"trunk_pwd\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.synthflow.ai/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4f79fd13-44a4-4f7d-83a3-3f46a8b1647f",
+    "name": "Platform subpackage_phoneNumbers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

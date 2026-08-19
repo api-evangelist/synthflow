@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Platform subpackage_mcp API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_mcp",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get MCP configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/workspaces/:workspace_id/mcp-config",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the MCP server configuration for a specific workspace."
+        },
+        {
+          "info": {
+            "name": "Set MCP configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/workspaces/:workspace_id/mcp-config",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds or updates MCP server entries for the workspace. Existing servers not included in the payload are preserved unchanged.\n\nFor each server entry in the payload, if `headers` is omitted or `null` and a server with the same `id` (or `mcp_url`) already exists, the stored header values are preserved. To explicitly clear all headers for a server, pass `headers: {}`. Returns the first saved server entry with its stable ID.\n"
+        },
+        {
+          "info": {
+            "name": "Update MCP configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.synthflow.ai/v2/workspaces/:workspace_id/mcp-config",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing MCP configuration for a specific workspace. Returns 404 if no configuration exists (use POST to create one).\n\nFor each server entry, if `headers` is omitted or `null` and a server with the same `id` already exists, the stored header values are preserved. To explicitly clear all headers for a server, pass `headers: {}`.\n"
+        },
+        {
+          "info": {
+            "name": "Delete MCP configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/workspaces/:workspace_id/mcp-config",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes the MCP configuration and associated secrets from Vault."
+        },
+        {
+          "info": {
+            "name": "Discover MCP tools",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/workspaces/:workspace_id/mcp-tools/discover",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "config_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional MCP config identifier to scope discovery to a single server configuration."
+              }
+            ]
+          },
+          "docs": "Discovers available MCP tools across all servers configured for the workspace."
+        },
+        {
+          "info": {
+            "name": "Invoke an MCP tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/workspaces/:workspace_id/mcp-tools/invoke",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invokes a namespaced MCP tool on the appropriate server. This is a synchronous call that may take 8–15 seconds."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

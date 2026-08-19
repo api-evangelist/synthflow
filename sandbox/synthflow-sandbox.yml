@@ -1,0 +1,101 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.synthflow.ai/simulations + https://docs.synthflow.ai/test-your-agent
+description: >-
+  Synthflow has no test-mode API keys and no test/live key separation — there is one live
+  workspace and one credential. What it ships instead is a genuine pre-production testing
+  layer built INTO the product: a Test Center that runs LLM-driven simulated conversations
+  against an agent before it goes live, exposed as first-class API resources
+  (simulation scenarios, cases, suites, sessions) and as MCP tools. Testing here means
+  simulating a caller, not simulating a transaction.
+
+test_live_separation:
+  supported: false
+  key_prefixes: none
+  note: >-
+    API keys carry no environment prefix and no mode flag. Every call placed through
+    voice-call dials a real number and consumes real minutes. There is no sandbox
+    credential that neutralises side effects.
+
+simulation:
+  name: Test Center
+  docs: https://docs.synthflow.ai/simulations
+  purpose: 'Simulate calls and evaluate agents before going live.'
+  model:
+    scenario:
+      description: 'A reusable persona/situation an AI caller plays.'
+      operations: [create-simulation-scenario, list-simulation-scenarios, get-simulation-scenario, update-simulation-scenario, delete-simulation-scenario]
+    case:
+      description: 'One test: a scenario applied to an agent with expected behaviour.'
+      operations: [create-simulation-case, list-simulation-cases, get-simulation-case, update-simulation-case, delete-simulation-case, list-simulation-cases-by-agent]
+      generation:
+        operation: generate-simulation-cases
+        note: 'Cases can be generated automatically rather than authored by hand.'
+    suite:
+      description: 'A collection of cases executed together against an agent.'
+      operations: [create-simulation-suite, list-simulation-suites, get-simulation-suite, update-simulation-suite, delete-simulation-suite, execute-simulation-suite]
+    run:
+      description: 'An execution and its per-session results.'
+      operations: [start-simulation, list-simulations, get-simulation, list-simulation-sessions, get-simulation-session]
+  mcp_tools: [list_simulation_suites, create_simulation_suite, delete_simulation_suite, list_simulation_cases, create_simulation_case, delete_simulation_case, execute_simulation_suite, list_simulations, get_simulation_session]
+  provider_skill: skills/synthflow-create-simulation.md
+
+manual_testing:
+  docs: https://docs.synthflow.ai/test-your-agent
+  mechanisms:
+    - name: Test call from the dashboard
+      description: 'Talk to the agent directly before deploying it.'
+    - name: start_test_call
+      surface: mcp
+      description: 'Start a test call with an agent from an MCP client.'
+    - name: test_api_call
+      surface: mcp
+      description: 'Send a test request for a custom action and inspect the response, without running a call.'
+  websocket_media_test:
+    operations: [start-ws-media-call, get-ws-media-base-url]
+    path: /calls/outbound-test-ws-media
+    docs: https://docs.synthflow.ai/ws-media-integration
+    note: >-
+      The path is literally named "outbound-test-ws-media" — a browser/app audio test
+      channel that streams over WebSocket instead of placing a telephony call. It is the
+      closest thing in the surface to a side-effect-free way to exercise an agent, and it
+      returns 503 where WebSocket media is not enabled for the environment.
+
+evaluation:
+  custom_evaluations:
+    docs: https://docs.synthflow.ai/configure-custom-evaluations
+    action_type: CUSTOM_EVAL
+    description: 'Reusable pass/fail or graded questions scored against a completed call.'
+    provider_skill: skills/synthflow-create-eval.md
+  post_call_analytics:
+    description: 'Sixteen LLM-judge fields scored on every call and delivered on the post-call webhook.'
+    see: asyncapi/synthflow-webhooks.yml
+
+fixtures:
+  test_phone_numbers: none_published
+  magic_values: none_published
+  test_clock: false
+  note: >-
+    Unlike the telephony providers it competes with, Synthflow publishes no magic test
+    numbers and no reserved test identifiers. Nothing in the docs is a value you can dial
+    to force a busy, no-answer or voicemail outcome; those statuses are only reachable from
+    real calls.
+
+compliance_warning:
+  source: https://github.com/SynthFlowAI/synthflow-skills/blob/main/SKILL.md
+  text: >-
+    Synthflow's own skill warns that it is a violation of FCC law to dial phone numbers
+    without consent in an automated manner, and to review TCPA requirements before
+    launching automated call campaigns. Relevant to any agent that can call voice-call.
+
+gaps:
+  - 'No test-mode credential — every API key is a live key.'
+  - 'No published magic/test phone numbers to force call outcomes.'
+  - 'No time simulation or test clock.'
+  - 'Simulations validate agent BEHAVIOUR, not integration plumbing: there is no way to exercise the webhook delivery path or the phone-number provisioning path without real side effects.'
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://docs.synthflow.ai/simulations', status: 200}
+    - {url: 'https://docs.synthflow.ai/ws-media-integration.md', status: 200}

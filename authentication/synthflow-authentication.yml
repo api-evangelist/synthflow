@@ -1,12 +1,110 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/synthflow-openapi.json
+generated: '2026-08-13'
+method: searched
+source: https://docs.synthflow.ai/authentication
+docs: https://docs.synthflow.ai/authentication
+derived_from: openapi/_original/synthflow-openapi.json
+description: >-
+  Synthflow runs two different authentication models on two different surfaces. The REST
+  Platform API uses a single static workspace API key sent as an HTTP bearer token. The
+  hosted MCP server uses OAuth 2.0, delegated to WorkOS AuthKit, with dynamic client
+  registration and PKCE. They do not share credentials.
+
 summary:
-  types:
-  - http
+  types: [http, oauth2]
+  api_key_in: [header]
+  oauth2_flows: [authorizationCode, deviceCode, refreshToken]
+  surfaces: 2
+
 schemes:
-- name: sec0
-  type: http
-  scheme: bearer
-  sources:
-  - openapi/synthflow-openapi.json
+  - name: sec0
+    surface: rest
+    type: http
+    scheme: bearer
+    header: Authorization
+    format: 'Bearer <SYNTHFLOW_API_KEY>'
+    sources: [openapi/_original/synthflow-openapi.json]
+    applied_to: '100 of 100 operations (global security requirement)'
+    key_prefix: none
+    key_management: 'Admin -> Workspace Settings -> API Keys'
+    scoping: workspace
+    role_gated: 'Key creation and viewing depend on the user role.'
+    mfa_prerequisite: 'Where the workspace requires 2FA, a user must have 2FA enabled to create or view API keys.'
+    rotation_guidance: 'Provider advises rotating keys periodically and deleting unused keys.'
+    verification: >-
+      Synthflow publishes a read-only verification call — GET
+      https://api.synthflow.ai/v2/assistants/ (list-assistant) takes no required
+      parameters, so a 200 confirms the key.
+    expiry: 'Not documented — keys appear to be long-lived until deleted.'
+    scopes: none
+    note: >-
+      A single static key carries full workspace authority across all 100 operations,
+      including delete-assistant and voice-call (which places real, billable calls). There
+      is no read-only key, no per-resource scoping and no key-level permission model, so an
+      agent given a key to read call logs can also delete every agent in the workspace.
+  - name: mcp-oauth
+    surface: mcp
+    type: oauth2
+    resource: https://mcp.synthflow.ai/mcp
+    protected_resource_metadata: https://mcp.synthflow.ai/.well-known/oauth-protected-resource
+    authorization_server: https://kind-prelude-27.authkit.app
+    authorization_server_metadata: https://kind-prelude-27.authkit.app/.well-known/oauth-authorization-server
+    issuer: https://kind-prelude-27.authkit.app
+    bearer_methods_supported: [header]
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://kind-prelude-27.authkit.app/oauth2/authorize
+        tokenUrl: https://kind-prelude-27.authkit.app/oauth2/token
+        pkce: S256
+      - flow: deviceCode
+        deviceAuthorizationUrl: https://kind-prelude-27.authkit.app/oauth2/device_authorization
+        grant_type: 'urn:ietf:params:oauth:grant-type:device_code'
+      - flow: refreshToken
+        tokenUrl: https://kind-prelude-27.authkit.app/oauth2/token
+    dynamic_client_registration: https://kind-prelude-27.authkit.app/oauth2/register
+    introspection_endpoint: https://kind-prelude-27.authkit.app/oauth2/introspection
+    jwks_uri: https://kind-prelude-27.authkit.app/oauth2/jwks
+    token_endpoint_auth_methods_supported: [none, client_secret_post, client_secret_basic]
+    response_types_supported: [code]
+    response_modes_supported: [query]
+    scopes: [openid, profile, email, offline_access]
+    see: scopes/synthflow-scopes.yml
+    provenance_note: >-
+      kind-prelude-27.authkit.app is a WorkOS AuthKit tenant, not a synthflow.ai host. It
+      is named as the authorization server by Synthflow's OWN protected-resource metadata
+      served from mcp.synthflow.ai, and Synthflow's security documentation independently
+      states that WorkOS is its identity infrastructure provider. This is a delegated IdP,
+      not a foreign contract.
+  - name: docs-mcp
+    surface: mcp-docs
+    type: none
+    url: https://docs.synthflow.ai/_mcp/server
+    note: 'The Fern documentation MCP server answers initialize and tools/list anonymously.'
+
+workspace_authentication:
+  description: 'How humans sign in, as distinct from how API callers authenticate.'
+  docs: https://docs.synthflow.ai/security
+  methods:
+    - {method: email-password, mfa: 'TOTP 2FA with backup codes, optionally mandatory workspace-wide'}
+    - {method: google, mfa: 'TOTP 2FA'}
+    - {method: sso-saml, provider: WorkOS, plan: Enterprise, identity_providers: [Okta, Entra ID, Google SAML, Auth0]}
+  allowed_email_domains: true
+
+webhook_authentication:
+  direction: inbound-to-customer
+  mechanism: HMAC-SHA256
+  header: HTTP_SYNTHFLOW_SIGNATURE
+  see: asyncapi/synthflow-webhooks.yml
+
+gaps:
+  - 'No scoped or read-only API keys — one key, full workspace authority.'
+  - 'No documented key expiry or automatic rotation.'
+  - 'No OAuth on the REST API, so a third-party integration must hold a customer''s raw workspace key.'
+  - 'No /.well-known/openid-configuration on any synthflow.ai host.'
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://docs.synthflow.ai/authentication.md', status: 200}
+    - {url: 'https://mcp.synthflow.ai/mcp', status: 401, detail: 'WWW-Authenticate: Bearer error="unauthorized"'}
+    - {url: 'https://mcp.synthflow.ai/.well-known/oauth-protected-resource', status: 200}
+    - {url: 'https://kind-prelude-27.authkit.app/.well-known/oauth-authorization-server', status: 200}

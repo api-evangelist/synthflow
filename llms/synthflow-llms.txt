@@ -1,0 +1,245 @@
+# Synthflow
+> Documentation for building, deploying, integrating, and operating Synthflow AI voice and chat agents, plus the public Platform API and telephony integrations.
+
+This file lists the published pages on docs.synthflow.ai in a lightweight Markdown index for AI tools.
+
+## Documentation
+
+- [Build Agents with Synthflow AI](https://docs.synthflow.ai/getting-started): Learn the Build, Evaluate, Launch, and Learn workflow for creating, testing, deploying, and improving Synthflow agents.
+- [Synthflow MCP server](https://docs.synthflow.ai/mcp-server): Connect Cursor, Claude, Codex, and other MCP-capable clients to Synthflow's MCP server and manage agents, calls, knowledge bases, and more via tools.
+- [Create an Agent](https://docs.synthflow.ai/create-an-agent): Create voice or chat agents in the Synthflow dashboard, or via the API. Choose Flow Designer or Prompt Builder, templates, or JSON import.
+- [The Agent Editor](https://docs.synthflow.ai/the-agent-editor): Learn how the Synthflow agent editor is organized so you can manage prompts, settings, actions, deployment, and testing from one workspace.
+- [Getting Started with Flow Designer](https://docs.synthflow.ai/flow-designer): Learn when to use Flow Designer, how its node-based conversation model works, and how to build reliable multi-step voice workflows.
+- [Multi-Agent System](https://docs.synthflow.ai/multi-agent-system): Learn how to use the Multi-Agent System and Trigger Subflow node to build one agent with multiple specialized conversation flows.
+- [Variables](https://docs.synthflow.ai/collect-variables): Learn how to use the variable drawer to view, manage, and navigate to variables used throughout your Flow Designer agent.
+- [Global Settings Node](https://docs.synthflow.ai/configure-global-settings): Configure the Global Settings node to define shared behavior, tone, and rules for your Flow Designer agent.
+- [Greeting Message Node](https://docs.synthflow.ai/configure-the-greeting-message-node): Learn how to configure the Greeting Message node to welcome users and set the tone for your Flow Designer agent.
+- [Conversation Node](https://docs.synthflow.ai/configure-step-nodes): Learn how to use the Conversation node to collect variables and gather specific information from users during Flow Designer conversations.
+- [Message Node](https://docs.synthflow.ai/message-node): Learn how to use the Message Node to deliver information, confirmations, and instructions in your Flow Designer agent.
+- [Branch Node](https://docs.synthflow.ai/configure-branch-nodes): Learn how to use Branch Nodes to make decisions and route your Flow Designer agent based on variables, user input, or action results.
+- [Jump To Node](https://docs.synthflow.ai/configure-jump-nodes): Learn how to use the Jump To Node to redirect your Flow Designer agent to a specific node, skipping intermediate steps.
+- [Custom Action Node](https://docs.synthflow.ai/configure-custom-action-node): Learn how to configure the Custom Action node so a Flow Designer agent can call external APIs during a flow.
+- [Call Transfer Node](https://docs.synthflow.ai/configure-call-transfer-node): Learn how to use the Call Transfer node to seamlessly transfer calls from your AI agent to human agents or external phone systems.
+- [Real-Time Booking Node](https://docs.synthflow.ai/configure-real-time-booking-node): Learn how to use the Real-Time Booking node to integrate calendar scheduling into your Flow Designer agent.
+- [End Call Node](https://docs.synthflow.ai/configure-the-end-node): Learn how to use the End Call Node to gracefully conclude conversations and terminate your Flow Designer agent sessions.
+- [Publishing to Live](https://docs.synthflow.ai/publish-flow-designer): Learn how to publish your Flow Designer agent and understand what happens when you deploy changes to production.
+- [Prompting best practices](https://docs.synthflow.ai/prompting-best-practices): Learn how to write clear, structured prompts that guide Synthflow voice agents through reliable conversations, with model-specific notes for GPT-5.x.
+- [General Configuration](https://docs.synthflow.ai/general-configuration): Configure your agent's language, model, timezone, transcription, and response speed in the General settings panel.
+- [Voice Configuration](https://docs.synthflow.ai/voice-configuration): Adjust your agent's voice model, speaker settings, pacing, and advanced synthesis controls to match your use case.
+- [About supported languages](https://docs.synthflow.ai/about-supported-languages): Review supported languages and transcriber guidance so your agent can recognize and speak the right language well.
+- [Call Configuration](https://docs.synthflow.ai/call-configuration): Configure call behavior, ring timing, silence handling, voicemail, and audio controls for Synthflow voice agents.
+- [End-Call Reasons](https://docs.synthflow.ai/end-call-reasons): Configure custom end-call reasons so Synthflow agents can automatically terminate conversations under defined conditions.
+- [Greeting Message Behavior](https://docs.synthflow.ai/documentation/build/configuration/greeting-message-behavior)
+- [Security & Compliance](https://docs.synthflow.ai/security-and-compliance): Learn about Synthflow's security and compliance options that are available at an agent level.
+- [Actions](https://docs.synthflow.ai/actions-overview): Explore the Synthflow action types you can use to book meetings, transfer calls, connect APIs, message users, and score conversations.
+- [Real-Time Booking](https://docs.synthflow.ai/create-a-real-time-booking-action): Set up a real-time booking action so your agent can check calendar availability and schedule appointments during a conversation.
+- [Call Transfers](https://docs.synthflow.ai/call-transfers): Learn how to configure and manage call transfers within Synthflow, including TEL, SIP, and dynamic routing options.
+- [Phone Number Transfers (TEL)](https://docs.synthflow.ai/transfer-calls-to-humans): Learn how to configure call transfers to phone numbers using E.164 format in Synthflow.
+- [SIP Transfers](https://docs.synthflow.ai/call-transfer-to-sip): Transfer calls from AI agents to SIP endpoints like PBX systems, softphones, or SIP trunks.
+- [Dynamic Transfers](https://docs.synthflow.ai/dynamic-transfers): Using Custom Variables for Call Transfers and Messages
+- [Create a Phone Book](https://docs.synthflow.ai/create-a-phone-book): Create a phone book so one action can manage multiple transfer destinations for call routing.
+- [Custom Actions](https://docs.synthflow.ai/about-custom-actions): Learn what custom actions are, when to use them, and how they connect Synthflow agents to external APIs and workflows.
+- [Create a Custom Action](https://docs.synthflow.ai/create-a-custom-action): Build a custom action that calls external APIs, maps variables, and uses results inside Synthflow conversations.
+- [Set Messages for Custom Actions](https://docs.synthflow.ai/set-messages-for-custom-actions): Define the messages an agent says before, during, or after a custom action runs in a conversation.
+- [Retrieve Date and Time](https://docs.synthflow.ai/retrieve-date-and-time): Set up a custom action that retrieves the local date and time so agents can reference accurate time context.
+- [Run Several Custom Actions](https://docs.synthflow.ai/run-several-custom-actions): Chain multiple custom actions together so one API-driven step can feed the next inside a Synthflow flow.
+- [Post-call SMS](https://docs.synthflow.ai/post-call-sms): Learn how to configure Post-call SMS actions that let your AI agent send a follow-up text message to customers after phone calls using Twilio integration.
+- [In-Call Messaging](https://docs.synthflow.ai/in-call-messaging): Configure voice agents to send an SMS or WhatsApp message during a call and react to the customer's reply in real time.
+- [Information Extractors](https://docs.synthflow.ai/use-the-information-extractor): Learn how to use Information Extractors to capture specific data points from calls, including yes/no answers, single-choice selections, and open-ended responses.
+- [Custom Evaluations](https://docs.synthflow.ai/configure-custom-evaluations): Configure reusable custom evaluations so call quality can be measured against your own success criteria.
+- [IVR Handling](https://docs.synthflow.ai/set-up-ivr-handling): Learn how to teach your outbound agents to handle IVRs (interactive voice responses)
+- [Memory of Past Calls](https://docs.synthflow.ai/memory): Use memory groups so agents can remember past calls and personalize future conversations with the same contact.
+- [Knowledge Base](https://docs.synthflow.ai/knowledge-base): Create knowledge bases; add PDFs, documents, and single URLs; crawl websites; import Help Center articles from Zendesk; attach bases to agents; inspect knowledge base searches in call logs.
+- [Variables](https://docs.synthflow.ai/variables): Learn about the variable types available in Synthflow, including system variables, custom variables, and action results.
+- [Version Control](https://docs.synthflow.ai/version-control): Learn how to manage, track, and roll back changes to your agents and documentation in Synthflow.
+- [Manual Testing](https://docs.synthflow.ai/test-your-agent): Learn how to test your voice agent before going live using manual testing methods or automated simulations.
+- [Custom Evaluations](https://docs.synthflow.ai/create-a-custom-evaluation): Create a custom evaluation to score calls against business-specific goals, compliance checks, or success metrics.
+- [Simulations](https://docs.synthflow.ai/simulations): Use the Test Center to simulate calls and evaluate agents before going live.
+- [Deploy your Agent](https://docs.synthflow.ai/deploy-your-agent): Compare Synthflow deployment channels for telephony, WhatsApp Business calling, websocket embeds, and chat experiences.
+- [Telephony Overview](https://docs.synthflow.ai/about-telephony): Compare Synthflow telephony options for purchased numbers, Twilio, and SIP or PBX integrations, plus the infrastructure behind them.
+- [Buy a Phone Number](https://docs.synthflow.ai/buy-a-phone-number): Purchase a phone number in Synthflow for testing or production calling and assign it to your agents.
+- [Custom phone numbers](https://docs.synthflow.ai/custom-phonenumbers): Learn how to bring your own phone numbers to Synthflow by connecting your carrier, trunk, or PBX. This guide covers supported integrations, configuration steps, and frequently asked questions for custom number setup.
+- [Connect your phone system (SIP/PBX)](https://docs.synthflow.ai/connect-your-phone-system): Bring your carrier or PBX via SIP trunking. Includes supported settings and an integration matrix.
+- [Synthflow SIP trunking network guidelines](https://docs.synthflow.ai/sip-trunking-acl): Firewall and ACL rules for SIP signalling and RTP media when trunking into Synthflow by region (Global, US, EU), including LATAM media for US workspaces.
+- [Performance Metrics](https://docs.synthflow.ai/telephony-quality-and-performance): Key telephony metrics definitions, what to monitor, and how to measure call quality.
+- [Concurrency](https://docs.synthflow.ai/cuncurrency-calling-limits): Understand Synthflow concurrency and CAPS limits, how they differ, and what happens when your workspace exceeds them.
+- [Telephony Errors](https://docs.synthflow.ai/telephony-errors): Telephony error messages and how to resolve them
+- [Forward Calls to Synthflow](https://docs.synthflow.ai/forward-calls-to-synthflow): How to initiate a call in your system and forward it to a Synthflow AI agent using SIP transfer and custom logic.
+- [How to Direct SIP Dialing](https://docs.synthflow.ai/dial-to-the-sip-endpoint): Route calls directly to the Synthflow SIP endpoint when your telephony setup does not use elastic SIP trunking.
+- [SIP Call Ladder](https://docs.synthflow.ai/sip-call-ladder): View SIP ladder diagrams and download PCAP files for call analysis
+- [Use action variables in inbound SIP calls](https://docs.synthflow.ai/use-action-variables-in-inbound-sip-calls): Inject action variables into inbound SIP calls so external data can enrich prompts and call behavior in real time.
+- [Forward calls to the SIP trunk](https://docs.synthflow.ai/forward-calls-to-sip-trunk): Forward calls into a SIP trunk from Synthflow and understand the steps needed to initialize the handoff.
+- [Forward calls using SIP diversion headers](https://docs.synthflow.ai/diversion-headers): Use SIP Diversion headers to pass richer routing and transfer context into Synthflow for inbound calls.
+- [Use the X-EI SIP header](https://docs.synthflow.ai/x-ei-sip-header): Pass call metadata into Synthflow using the legacy X-EI SIP header for downstream prompts and analytics.
+- [Use SIP X-Headers in Prompts, Actions & Transfers](https://docs.synthflow.ai/sip-x-headers-in-prompts): Learn how to use custom SIP X-* headers in Synthflow prompts, custom actions, and transfer headers for dynamic, context-aware voice AI agents.
+- [Deploy in LATAM Regions](https://docs.synthflow.ai/deploy-in-latam-regions): Real-world examples of regional deployment and backbone routing improvements.
+- [WhatsApp Business Calling](https://docs.synthflow.ai/whatsapp-business-calling): Set up WhatsApp Business calling so Synthflow voice agents can receive calls inside WhatsApp.
+- [Integrate into Website and Apps](https://docs.synthflow.ai/ws-media-integration): Start a voice call and stream audio over WebSocket with a single API request — no WebRTC signaling on the client.
+- [Launch Chat Agents](https://docs.synthflow.ai/launch-chat-agents): Learn how to launch chat agents with Synthflow via API, chat widget, WhatsApp, or SMS.
+- [Workflows](https://docs.synthflow.ai/workflows): Learn how to build effective workflows in Synthflow to connect agents to CRMs, databases, and external services — with practical tips, common use cases, and real-world examples.
+- [Logs](https://docs.synthflow.ai/logs): Access detailed logs for calls, API requests, and webhook interactions in one centralized location.
+- [Analytics](https://docs.synthflow.ai/collect-analytics): Use the analytics dashboard to track call volume, call outcomes, sentiment, and agent performance across your workspace and your subaccounts.
+- [Export Call Data](https://docs.synthflow.ai/export-call-data): Export call logs and set up recurring call-data exports for reporting, analysis, and record-keeping.
+- [Webhooks Overview](https://docs.synthflow.ai/about-webhooks): Understand how Synthflow webhooks deliver post-call data to your systems so you can automate CRM updates and follow-up workflows.
+- [Webhooks Security](https://docs.synthflow.ai/webhooks-security): Validate Synthflow webhook signatures so your system can verify webhook authenticity and payload integrity.
+- [Post-Call Webhook](https://docs.synthflow.ai/webhooks): Reference the post-call webhook payload and delivery format used to send completed call data from Synthflow.
+- [Inbound Call Webhooks](https://docs.synthflow.ai/inbound-webhook): Reference the inbound call webhook payload used to send external call data into Synthflow before the conversation starts.
+- [Subscriber Terms](https://docs.synthflow.ai/terms-conditions): Read the Subscriber Terms that govern use of the Synthflow software, subscriptions, and marketplace services.
+- [GTC — Direct Use (DACH)](https://docs.synthflow.ai/gtc-direct-dach): General Terms and Conditions for direct use of Synthflow software and services by enterprise customers in the DACH region.
+- [GTC — Direct Use (US)](https://docs.synthflow.ai/gtc-direct-us): General Terms and Conditions for direct use of Synthflow software and services by enterprise customers in the United States.
+- [GTC — Distribution (DACH)](https://docs.synthflow.ai/gtc-reseller-dach): General Terms and Conditions for distribution and resale of Synthflow software by partners in the DACH region.
+- [GTC — Distribution (US)](https://docs.synthflow.ai/gtc-reseller-us): General Terms and Conditions for distribution and resale of Synthflow software by partners in the United States.
+- [Business Associate Agreement](https://docs.synthflow.ai/baa): Template Business Associate Agreement (HIPAA Addendum) executed between Synthflow and customers using the HIPAA Setting to process Protected Health Information.
+- [Privacy Policy](https://docs.synthflow.ai/privacy-policy): Read Synthflow's privacy policy for how personal data is collected, processed, and protected across the website and platform.
+- [Imprint](https://docs.synthflow.ai/imprint): View the legal imprint and operator details for Synthflow's documentation site and business entity.
+- [AI Transparency Statement](https://docs.synthflow.ai/ai-transparency): Read Synthflow's AI transparency statement and disclosure information for compliance with the EU AI Act.
+- [Introduction](https://docs.synthflow.ai/getting-started-with-your-api): Learn the Synthflow API base URLs, core endpoint groups, and the first steps for making authenticated requests.
+- [Authentication](https://docs.synthflow.ai/authentication): Generate a Synthflow API key under Admin > Workspace Settings > API Keys, send it with Bearer authentication, and follow basic key-management practices.
+- [Post-Call Webhook](https://docs.synthflow.ai/post-call-webhook): Reference the post-call webhook payload and delivery format used to send completed call data from Synthflow.
+- [Inbound Webhook](https://docs.synthflow.ai/inbound-webhook-api): Reference the inbound webhook payload and format used to inject external call context into Synthflow.
+- [Custom Variables](https://docs.synthflow.ai/custom-variables): Pass custom variables into Synthflow prompts so agents can personalize behavior using external context.
+- [Dynamic prompt injection](https://docs.synthflow.ai/dynamic-prompt-injection): Dynamically change an agent prompt at runtime so call behavior can adapt to external context and API inputs.
+- [Timezones](https://docs.synthflow.ai/time-zones): Use the supported IANA timezone values for agents, scheduling, and API requests in Synthflow.
+- [Overview](https://docs.synthflow.ai/about-integrations): Browse Synthflow integrations for CRM, scheduling, payments, automation, and telephony workflows.
+- [ElevenLabs](https://docs.synthflow.ai/elevenlabs): Learn what ElevenLabs provides for voice synthesis and how it fits into Synthflow voice configurations.
+- [Anthropic](https://docs.synthflow.ai/anthropic): Connect Claude or Claude Code to the Synthflow MCP server to build agents, review calls, and manage knowledge bases in plain language.
+- [OpenAI](https://docs.synthflow.ai/openai): Connect Synthflow to OpenAI through the ChatGPT and Codex connectors, or add your OpenAI API key so supported models run with your own credentials.
+- [Salesforce](https://docs.synthflow.ai/integrate-with-salesforce): Install and configure the Synthflow Salesforce app so Salesforce workflows can work with AI agents.
+- [Stripe](https://docs.synthflow.ai/stripe-overview): Connect Stripe to Synthflow for rebilling, pricing plans, and agency subaccount billing workflows.
+- [Cal.com](https://docs.synthflow.ai/calcom): Connect Cal.com to Synthflow so voice agents can schedule meetings and bookings during live calls.
+- [HubSpot](https://docs.synthflow.ai/hubspot): Install the Synthflow AI Phone Calling app for HubSpot, connect HubSpot to Synthflow, and trigger AI-powered calls from HubSpot contacts.
+- [Freshworks](https://docs.synthflow.ai/freshworks): Automate inbound phone calls, sync contacts, and hand calls to human agents through Freshcaller IVR using the Synthflow Voice AI Agents app from the Freshworks Marketplace.
+- [Zendesk](https://docs.synthflow.ai/zendesk): What Zendesk offers for Help Center and support, and how Help Center maps to Synthflow knowledge bases; OAuth and import steps are in the Knowledge Base guide.
+- [Quickstart](https://docs.synthflow.ai/integrate-twilio): Connect your Twilio account to Synthflow for voice and SMS capabilities across agents and messaging channels, including regional API routing and compliance.
+- [WhatsApp](https://docs.synthflow.ai/whatsapp-integration): Integrate Synthflow with WhatsApp Business calling so voice agents can receive calls inside WhatsApp.
+- [GoHighLevel](https://docs.synthflow.ai/gohighlevel): Connect Synthflow with GoHighLevel for subaccount sync when the integration is connected, booking, and inbound/outbound call workflows.
+- [Make](https://docs.synthflow.ai/make): Build no-code scenarios in Make to trigger Synthflow calls, react to post-call events, and exchange data with your agents.
+- [Zapier](https://docs.synthflow.ai/zapier-overview): Learn how to integrate Synthflow AI with Zapier to automate voice calls, sync call data, and build powerful no-code workflows.
+- [Bubble](https://docs.synthflow.ai/bubble): Install and configure the Synthflow Bubble plugin so Bubble apps can use real-time voice AI capabilities.
+- [SIP Integration](https://docs.synthflow.ai/about-sip): Learn how to connect your own telephony provider to Synthflow AI using SIP trunking.
+- [SIP integration with 3CX](https://docs.synthflow.ai/sip-with-3cx): Connect 3CX to Synthflow via SIP so 3CX call traffic can be routed through AI agents and back to your system.
+- [SIP Integration with 8x8](https://docs.synthflow.ai/sip-with-8x8): Connect 8x8 to Synthflow via SIP trunking so AI agents can handle and transfer 8x8 call traffic.
+- [SIP Integration with Aircall](https://docs.synthflow.ai/sip-with-aircall): Connect Aircall to Synthflow via SIP trunking so AI agents can answer and transfer Aircall traffic.
+- [Asterisk-based PBX Systems](https://docs.synthflow.ai/transfer-calls-between-synthflow-and-pbx): Configure warm transfers between Synthflow and Asterisk-based PBX systems for seamless handoff to human agents.
+- [SIP integration with Dialpad](https://docs.synthflow.ai/sip-with-dialpad): Connect Dialpad to Synthflow over SIP trunking so Dialpad calls can route through your AI agents.
+- [Five9](https://docs.synthflow.ai/sip-with-five9): Integrate Synthflow AI with Five9 using the AI Agent Connect program to handle contact centre calls with AI agents.
+- [SIP Integration with Genesys Cloud](https://docs.synthflow.ai/sip-with-genesys-cloud): Connect Genesys Cloud to Synthflow via BYOC Cloud SIP trunking for inbound, outbound, and transfer flows.
+- [RingCentral](https://docs.synthflow.ai/ring-central): Choose the right RingCentral integration for Synthflow (RingEX or RingCX) over SIP.
+- [SIP integration with RingEX](https://docs.synthflow.ai/sip-with-ringex): Connect RingCentral RingEX to Synthflow via SIP by registering Synthflow as a SIP extension.
+- [SIP integration with RingCX](https://docs.synthflow.ai/sip-with-ringcx): Integrate Synthflow as an Intelligent Virtual Agent (IVA) in RingCX voice queues using SIP.
+- [SIP Integration with Talkdesk](https://docs.synthflow.ai/sip-with-talkdesk): Connect Talkdesk to Synthflow via SIP trunking for AI handling and transfers back to live agents.
+- [SIP integration with Telnyx](https://docs.synthflow.ai/sip-with-telnyx): Connect Telnyx to Synthflow via SIP trunking so Telnyx numbers and routing can work with your AI agents.
+- [SIP integration with Twilio](https://docs.synthflow.ai/sip-with-twilio): Connect Twilio Elastic SIP Trunking to Synthflow so Twilio infrastructure can route calls through AI agents.
+- [SIP integration with Vonage](https://docs.synthflow.ai/sip-with-vonage): Connect Vonage to Synthflow via SIP trunking so Vonage-based call flows can use AI agents.
+- [Account Access & Login](https://docs.synthflow.ai/account-access-login): Learn how to access your Synthflow account, manage login credentials, and use security settings such as 2FA and SSO.
+- [Notifications](https://docs.synthflow.ai/notifications): Receive email alerts about important app updates and system status incidents.
+- [Clusters & Regions](https://docs.synthflow.ai/customer-region): Learn about the available clusters and how they determine where your data is stored and processed
+- [Billing Overview](https://docs.synthflow.ai/billing): Learn how Synthflow billing, invoices, usage, and account-managed pricing work.
+- [Usage and Billing](https://docs.synthflow.ai/usage): Understand how Synthflow tracks usage for calls, chat messages, simulations, allowances, and invoices.
+- [Enterprise](https://docs.synthflow.ai/enterprise): Learn how Synthflow scopes Enterprise packages for production voice AI deployments.
+- [Manage Your Subscription](https://docs.synthflow.ai/manage-billing): Learn how to manage your Synthflow subscription, update billing information, and access invoices.
+- [Two-Factor Authentication](https://docs.synthflow.ai/two-factor-authentication): Learn how to enable and use two-factor authentication (2FA), recovery codes, and API key requirements
+- [Whitelist Email Domains](https://docs.synthflow.ai/allowed-email-domains): Configure allowed email domains in Security settings to restrict workspace invitations.
+- [Single Sign-On](https://docs.synthflow.ai/sso): Connect your identity provider to centralize authentication, and enforce access policies
+- [Team members](https://docs.synthflow.ai/user-management): Learn about workspace roles and how to invite and manage team members in Synthflow.
+- [Admin Dashboard](https://docs.synthflow.ai/agency-whitelabel-dashboard): Overview of the unified Admin area with Workspace Settings, Partner, and Personal sections, plus shortcuts to whitelabel guides.
+- [Manage Subaccounts](https://docs.synthflow.ai/create-a-subaccount): Create and manage agency subaccounts in Synthflow, including new workspaces and GoHighLevel imports when that integration is connected.
+- [Manage Permissions](https://docs.synthflow.ai/manage-subaccount-permissions): Control which actions, agent types, Agent Editor options, and integrations are available to agency subaccounts through permission settings.
+- [Import Products](https://docs.synthflow.ai/import-a-product): Import products from your agency library into subaccounts, including agents, workflows, and phone numbers.
+- [Limits & Defaults](https://docs.synthflow.ai/limits-and-defaults): Set default limits and usage policies for subaccounts before they move onto paid pricing plans.
+- [Custom Domain](https://docs.synthflow.ai/custom-domain): Learn how to set up a custom domain for your agency, configure DNS records, and optimize your site's metadata for better search engine visibility.
+- [Branding](https://docs.synthflow.ai/general-settings): Configure agency branding such as name, logo, color, and support details for customer-facing workspaces.
+- [Pricing plans and Rebilling](https://docs.synthflow.ai/set-up-pricing-and-rebilling): Set up agency pricing plans and Stripe rebilling so you can charge subaccounts for Synthflow usage.
+- [Early Access](https://docs.synthflow.ai/early-access): Learn how Synthflow Early Access works and how selected users can test upcoming features before general release.
+- [Changelog](https://docs.synthflow.ai/changelog)
+
+## API Reference
+
+- [Create Assistant](https://docs.synthflow.ai/api-reference/platform-api/agents/create-assistant)
+- [Update Assistant](https://docs.synthflow.ai/api-reference/platform-api/agents/update-assistant)
+- [Delete Assistant](https://docs.synthflow.ai/api-reference/platform-api/agents/delete-assistant)
+- [Get Assistant](https://docs.synthflow.ai/api-reference/platform-api/agents/get-assistant)
+- [List Assistant](https://docs.synthflow.ai/api-reference/platform-api/agents/list-assistant)
+- [Voice Call](https://docs.synthflow.ai/api-reference/platform-api/calls/voice-call)
+- [Get Phone Call](https://docs.synthflow.ai/api-reference/platform-api/calls/get-phone-call)
+- [List Calls](https://docs.synthflow.ai/api-reference/platform-api/calls/list-calls)
+- [Create Chat](https://docs.synthflow.ai/api-reference/platform-api/chat/create-chat)
+- [List Chats](https://docs.synthflow.ai/api-reference/platform-api/chat/list-chats)
+- [Get Chat](https://docs.synthflow.ai/api-reference/platform-api/chat/get-chat)
+- [Delete Chat](https://docs.synthflow.ai/api-reference/platform-api/chat/delete-chat)
+- [Send Chat Message](https://docs.synthflow.ai/api-reference/platform-api/chat/send-chat-message)
+- [Create Outbound Chat](https://docs.synthflow.ai/api-reference/platform-api/chat/create-outbound-chat)
+- [Create Simulation Case](https://docs.synthflow.ai/api-reference/platform-api/simulations/create-simulation-case)
+- [List Simulation Cases](https://docs.synthflow.ai/api-reference/platform-api/simulations/list-simulation-cases)
+- [Get Simulation Case](https://docs.synthflow.ai/api-reference/platform-api/simulations/get-simulation-case)
+- [Update Simulation Case](https://docs.synthflow.ai/api-reference/platform-api/simulations/update-simulation-case)
+- [Delete Simulation Case](https://docs.synthflow.ai/api-reference/platform-api/simulations/delete-simulation-case)
+- [Generate Simulation Cases](https://docs.synthflow.ai/api-reference/platform-api/simulations/generate-simulation-cases)
+- [List Simulation Cases By Agent](https://docs.synthflow.ai/api-reference/platform-api/simulations/list-simulation-cases-by-agent)
+- [Create Simulation Suite](https://docs.synthflow.ai/api-reference/platform-api/simulations/create-simulation-suite)
+- [List Simulation Suites](https://docs.synthflow.ai/api-reference/platform-api/simulations/list-simulation-suites)
+- [Get Simulation Suite](https://docs.synthflow.ai/api-reference/platform-api/simulations/get-simulation-suite)
+- [Update Simulation Suite](https://docs.synthflow.ai/api-reference/platform-api/simulations/update-simulation-suite)
+- [Delete Simulation Suite](https://docs.synthflow.ai/api-reference/platform-api/simulations/delete-simulation-suite)
+- [Execute Simulation Suite](https://docs.synthflow.ai/api-reference/platform-api/simulations/execute-simulation-suite)
+- [Create Simulation Scenario](https://docs.synthflow.ai/api-reference/platform-api/simulations/create-simulation-scenario)
+- [List Simulation Scenarios](https://docs.synthflow.ai/api-reference/platform-api/simulations/list-simulation-scenarios)
+- [Get Simulation Scenario](https://docs.synthflow.ai/api-reference/platform-api/simulations/get-simulation-scenario)
+- [Update Simulation Scenario](https://docs.synthflow.ai/api-reference/platform-api/simulations/update-simulation-scenario)
+- [Delete Simulation Scenario](https://docs.synthflow.ai/api-reference/platform-api/simulations/delete-simulation-scenario)
+- [Start Simulation](https://docs.synthflow.ai/api-reference/platform-api/simulations/start-simulation)
+- [List Simulation Sessions](https://docs.synthflow.ai/api-reference/platform-api/simulations/list-simulation-sessions)
+- [Get Simulation Session](https://docs.synthflow.ai/api-reference/platform-api/simulations/get-simulation-session)
+- [List Simulations](https://docs.synthflow.ai/api-reference/platform-api/simulations/list-simulations)
+- [Get Simulation](https://docs.synthflow.ai/api-reference/platform-api/simulations/get-simulation)
+- [List Actions](https://docs.synthflow.ai/api-reference/platform-api/actions/list-actions)
+- [Create Action](https://docs.synthflow.ai/api-reference/platform-api/actions/create-action)
+- [Initialize Action](https://docs.synthflow.ai/api-reference/platform-api/actions/initialize-action)
+- [Update Action](https://docs.synthflow.ai/api-reference/platform-api/actions/update-action)
+- [Delete Action](https://docs.synthflow.ai/api-reference/platform-api/actions/delete-action)
+- [Get Action](https://docs.synthflow.ai/api-reference/platform-api/actions/get-action)
+- [Attach Action](https://docs.synthflow.ai/api-reference/platform-api/actions/attach-action)
+- [Detach Action](https://docs.synthflow.ai/api-reference/platform-api/actions/detach-action)
+- [Analytics Export](https://docs.synthflow.ai/api-reference/platform-api/analytics/analytics-export)
+- [Get Numbers](https://docs.synthflow.ai/api-reference/platform-api/phone-numbers/get-numbers)
+- [Get Phone Number](https://docs.synthflow.ai/api-reference/platform-api/phone-numbers/get-phone-number)
+- [Create Custom Number](https://docs.synthflow.ai/api-reference/platform-api/phone-numbers/create-custom-number)
+- [Update Phone Number](https://docs.synthflow.ai/api-reference/platform-api/phone-numbers/update-phone-number)
+- [Delete Phone Number](https://docs.synthflow.ai/api-reference/platform-api/phone-numbers/delete-phone-number)
+- [Get Voices](https://docs.synthflow.ai/api-reference/platform-api/voices/get-voices)
+- [Get Knowledge Base](https://docs.synthflow.ai/api-reference/platform-api/knowledge-bases/get-knowledge-base)
+- [Create Knowledge Base](https://docs.synthflow.ai/api-reference/platform-api/knowledge-bases/create-knowledge-base)
+- [Update Knowledge Base](https://docs.synthflow.ai/api-reference/platform-api/knowledge-bases/update-knowledge-base)
+- [Delete Knowledge Base](https://docs.synthflow.ai/api-reference/platform-api/knowledge-bases/delete-knowledge-base)
+- [Attach Knowledge Base](https://docs.synthflow.ai/api-reference/platform-api/knowledge-bases/attach-knowledge-base)
+- [Detach Knowledge Base](https://docs.synthflow.ai/api-reference/platform-api/knowledge-bases/detach-knowledge-base)
+- [List Knowledge Base Sources](https://docs.synthflow.ai/api-reference/platform-api/knowledge-bases/list-knowledge-base-sources)
+- [Attach Document To Source](https://docs.synthflow.ai/api-reference/platform-api/knowledge-bases/attach-document-to-source)
+- [Knowledge Base Source Delete](https://docs.synthflow.ai/api-reference/platform-api/knowledge-bases/knowledge-base-source-delete)
+- [Create a Phone Book](https://docs.synthflow.ai/api-reference/platform-api/phone-books/create-a-phone-book): Create a phone book so one action can manage multiple transfer destinations for call routing.
+- [List Phone Books](https://docs.synthflow.ai/api-reference/platform-api/phone-books/list-phone-books)
+- [Delete a Phone Book](https://docs.synthflow.ai/api-reference/platform-api/phone-books/delete-a-phone-book)
+- [Create a Phone Book Entry](https://docs.synthflow.ai/api-reference/platform-api/phone-books/create-a-phone-book-entry)
+- [Delete a Phone Book Entry](https://docs.synthflow.ai/api-reference/platform-api/phone-books/delete-a-phone-book-entry)
+- [Create Subaccount](https://docs.synthflow.ai/api-reference/platform-api/subaccounts/create-subaccount)
+- [Update Subaccount](https://docs.synthflow.ai/api-reference/platform-api/subaccounts/update-subaccount)
+- [Delete Subaccount](https://docs.synthflow.ai/api-reference/platform-api/subaccounts/delete-subaccount)
+- [Get Subaccount](https://docs.synthflow.ai/api-reference/platform-api/subaccounts/get-subaccount)
+- [List Subaccounts](https://docs.synthflow.ai/api-reference/platform-api/subaccounts/list-subaccounts)
+- [Create a Contact](https://docs.synthflow.ai/api-reference/platform-api/contacts/create-a-contact)
+- [List Contacts](https://docs.synthflow.ai/api-reference/platform-api/contacts/list-contacts)
+- [Get a Contact](https://docs.synthflow.ai/api-reference/platform-api/contacts/get-a-contact)
+- [Update a Contact](https://docs.synthflow.ai/api-reference/platform-api/contacts/update-a-contact)
+- [Delete a Contact](https://docs.synthflow.ai/api-reference/platform-api/contacts/delete-a-contact)
+- [Create a Memory Store](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/create-a-memory-store)
+- [List Memory Stores](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/list-memory-stores)
+- [Update a Memory Store](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/update-a-memory-store)
+- [Delete a Memory Store](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/delete-a-memory-store)
+- [Get a Memory Store](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/get-a-memory-store)
+- [Attach a Memory Store to an Agent](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/attach-a-memory-store-to-an-agent)
+- [Detach a Memory Store from an Agent](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/detach-a-memory-store-from-an-agent)
+- [Get Data for a Specific Memory Store and Contact](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/get-data-for-a-specific-memory-store-and-contact)
+- [Attach a Contact to a Memory Store](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/attach-a-contact-to-a-memory-store)
+- [Detach a Contact from a Memory Store](https://docs.synthflow.ai/api-reference/platform-api/memory-stores/detach-a-contact-from-a-memory-store)
+- [List Webhook Logs](https://docs.synthflow.ai/api-reference/platform-api/webhook-logs/list-webhook-logs)
+- [Get Webhook Log Detail](https://docs.synthflow.ai/api-reference/platform-api/webhook-logs/get-webhook-log-detail)

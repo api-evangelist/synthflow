@@ -1,0 +1,161 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: https://docs.synthflow.ai/mcp-server
+description: >-
+  Synthflow publishes a first-party hosted MCP server that lets an MCP client (Claude,
+  Claude Code, ChatGPT, Codex, Cursor) manage a Synthflow workspace — agents, calls,
+  actions, knowledge bases, simulations, phone numbers and contacts. It is deployed as a
+  remote HTTP endpoint in three regions and is OAuth-protected. A second, separate
+  read-only documentation MCP server is served from the docs host without authentication.
+
+deployment:
+  mode: remote
+  endpoint: https://mcp.synthflow.ai/mcp
+  auth: oauth
+  verified: probed
+
+servers:
+  - name: synthflow
+    role: platform
+    transport: streamable-http
+    regions:
+      - {region: Global, url: 'https://mcp.synthflow.ai/mcp'}
+      - {region: United States, url: 'https://mcp.us.synthflow.ai/mcp'}
+      - {region: European Union, url: 'https://mcp.eu.synthflow.ai/mcp'}
+    auth:
+      type: oauth
+      protected_resource_metadata: https://mcp.synthflow.ai/.well-known/oauth-protected-resource
+      authorization_server: https://kind-prelude-27.authkit.app
+      bearer_methods_supported: [header]
+      note: >-
+        Anonymous tools/list returns HTTP 401 with
+        WWW-Authenticate: Bearer error="unauthorized", so live inputSchema introspection
+        requires an authenticated session. The tool list below is the provider's own
+        published catalogue from the MCP server docs page, not a guess.
+    regional_constraint: >-
+      The server URL and the workspace must be in the same region; an EU URL against a US
+      workspace fails to connect.
+    scoping: >-
+      Every tool runs against the connected workspace. Tools that accept workspace_id can
+      target a subaccount, so agency admins can operate across managed accounts from one
+      connection.
+    safety:
+      destructive_confirmation_required: [delete_agent, delete_action, delete_contact, delete_knowledge_base]
+      confirmation_mechanism: a second call carrying confirmed=true
+      immediate_effect: [batch_update_agents_by_filter, rollback_agent_version, publish_agent_draft]
+      provider_guidance: >-
+        Synthflow advises keeping write and delete tools behind client-side approval and
+        reviewing each call before allowing it.
+  - name: synthflow-docs
+    role: documentation
+    transport: streamable-http
+    url: https://docs.synthflow.ai/_mcp/server
+    auth:
+      type: none
+    server_info:
+      name: fern-docs-mcp-server
+      version: '1.0.0'
+      protocol_version: '2025-06-18'
+    verified: probed
+    note: >-
+      Observed live. initialize and tools/list both answer anonymously. It exposes one
+      tool and is a docs-search surface, not the platform control plane. Synthflow ships
+      it preconfigured in .mcp.json / .cursor/mcp.json / .vscode/mcp.json inside its
+      published skills repo, bridged with `npx -y mcp-remote`.
+    tools:
+      - name: searchDocs
+        description: Search the documentation at https://docs.synthflow.ai. Returns relevant doc passages with source URLs.
+        input_schema_properties: [query]
+
+tools:
+  - {name: list_agents, category: agents, description: List agents in scope, with optional filters and pagination.}
+  - {name: get_agent, category: agents, description: Retrieve the full configuration for one agent by model_id.}
+  - {name: create_agent, category: agents, description: Create an inbound, outbound, or widget agent from a template.}
+  - {name: update_agent, category: agents, description: Save configuration changes to an agent as a draft.}
+  - {name: publish_agent_draft, category: agents, description: Publish the current draft so the changes go live.}
+  - {name: delete_agent, category: agents, description: Permanently delete an agent., destructive: true}
+  - {name: search_agents_by_prompt, category: agents, description: Find agents whose prompt contains, or does not contain, given text.}
+  - {name: batch_update_agents_by_filter, category: agents, description: Apply the same field change to every agent matching a filter.}
+  - {name: list_agent_versions, category: agents, description: List an agent's published versions plus the current draft.}
+  - {name: get_agent_version_diff, category: agents, description: Compare two agent versions field by field.}
+  - {name: rollback_agent_version, category: agents, description: Restore a previously published version.}
+  - {name: list_voices, category: agents, description: List available voices with language and accent details.}
+  - {name: list_calls, category: calls, description: List recent or matching calls.}
+  - {name: get_call_details, category: calls, description: Retrieve the details for a specific call.}
+  - {name: get_call_analytics, category: calls, description: Retrieve analytics across calls.}
+  - {name: start_test_call, category: calls, description: Start a test call with an agent.}
+  - {name: list_actions, category: actions, description: List the actions in the workspace.}
+  - {name: get_action, category: actions, description: Retrieve one action's configuration.}
+  - {name: initialize_action, category: actions, description: Scaffold a new action before you configure it.}
+  - {name: create_action, category: actions, description: Create an action.}
+  - {name: update_action, category: actions, description: Update an existing action's configuration.}
+  - {name: delete_action, category: actions, description: Delete an action., destructive: true}
+  - {name: attach_action_to_agent, category: actions, description: Attach an action to an agent.}
+  - {name: detach_action_from_agent, category: actions, description: Remove an action from an agent.}
+  - {name: get_agent_actions, category: actions, description: List the actions attached to an agent.}
+  - {name: test_api_call, category: actions, description: Send a test request for a custom action and inspect the response.}
+  - {name: list_knowledge_bases, category: knowledge-bases, description: List the knowledge bases in the workspace.}
+  - {name: get_knowledge_base, category: knowledge-bases, description: Retrieve a knowledge base and its items.}
+  - {name: create_knowledge_base, category: knowledge-bases, description: Create a knowledge base.}
+  - {name: delete_knowledge_base, category: knowledge-bases, description: Delete a knowledge base., destructive: true}
+  - {name: add_knowledge_base_item, category: knowledge-bases, description: Add an item to a knowledge base.}
+  - {name: add_knowledge_base_files, category: knowledge-bases, description: Upload files into a knowledge base.}
+  - {name: delete_knowledge_base_items, category: knowledge-bases, description: Remove items from a knowledge base.}
+  - {name: attach_knowledge_base_to_agent, category: knowledge-bases, description: Attach a knowledge base to an agent.}
+  - {name: detach_knowledge_base_from_agent, category: knowledge-bases, description: Remove a knowledge base from an agent.}
+  - {name: get_agent_knowledge_base, category: knowledge-bases, description: Retrieve the knowledge base attached to an agent.}
+  - {name: list_simulation_suites, category: simulations, description: List simulation suites.}
+  - {name: create_simulation_suite, category: simulations, description: Create a simulation suite.}
+  - {name: delete_simulation_suite, category: simulations, description: Delete a simulation suite.}
+  - {name: list_simulation_cases, category: simulations, description: List the test cases in a suite.}
+  - {name: create_simulation_case, category: simulations, description: Create a simulation test case.}
+  - {name: delete_simulation_case, category: simulations, description: Delete a simulation test case.}
+  - {name: execute_simulation_suite, category: simulations, description: Run a simulation suite against an agent.}
+  - {name: list_simulations, category: simulations, description: List simulation runs.}
+  - {name: get_simulation_session, category: simulations, description: Retrieve one simulation session and its results.}
+  - {name: list_phone_numbers, category: phone-numbers, description: List the phone numbers in the workspace.}
+  - {name: attach_phone_numbers_to_agent_pooling, category: phone-numbers, description: Add numbers to an outbound agent's number pool.}
+  - {name: detach_phone_number_from_agent_pooling, category: phone-numbers, description: Remove a number from an outbound agent's number pool.}
+  - {name: list_phone_books, category: phone-numbers, description: List phone books used as transfer destinations.}
+  - {name: get_phone_book, category: phone-numbers, description: Retrieve a phone book and its entries.}
+  - {name: create_phone_book, category: phone-numbers, description: Create a phone book.}
+  - {name: update_phone_book, category: phone-numbers, description: Update a phone book's entries or routing conditions.}
+  - {name: delete_phone_book, category: phone-numbers, description: Delete a phone book.}
+  - {name: list_contacts, category: contacts, description: List contacts.}
+  - {name: create_contact, category: contacts, description: Create a contact.}
+  - {name: update_contact, category: contacts, description: Update a contact's name, phone number, email, or metadata.}
+  - {name: delete_contact, category: contacts, description: Permanently delete a contact. Requires confirmation., destructive: true}
+  - {name: list_subaccounts, category: workspace, description: List the subaccounts under the current account.}
+  - {name: list_integrations, category: workspace, description: List connected integrations.}
+  - {name: list_webhook_logs, category: workspace, description: List webhook delivery logs.}
+  - {name: get_webhook_log_detail, category: workspace, description: Retrieve the request and response for one webhook delivery.}
+  - {name: search_docs, category: workspace, description: Search the Synthflow documentation.}
+  - {name: fetch_url, category: workspace, description: Fetch the contents of a URL.}
+  - {name: save_learning, category: workspace, description: Save a workspace-level learning for future sessions.}
+  - {name: get_more_tools, category: workspace, description: Check whether additional tools are available for the current task.}
+
+related_surfaces:
+  mcp_connectors:
+    docs: https://docs.synthflow.ai/mcp-actions
+    direction: outbound
+    note: >-
+      Distinct and opposite surface. MCP Connectors let a Synthflow VOICE AGENT call tools
+      on an EXTERNAL MCP server during a live call. The REST API carries the control
+      plane for this at /workspaces/{workspace_id}/mcp-config and
+      /workspaces/{workspace_id}/mcp-tools/{discover,invoke}. Synthflow is the MCP CLIENT
+      there; it is the MCP SERVER at mcp.synthflow.ai.
+  aurora:
+    docs: https://docs.synthflow.ai/aurora
+    note: In-dashboard agent drawing on the same tool set, plus dashboard-only rendering tools.
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://mcp.synthflow.ai/mcp', method: 'POST tools/list', status: 401, detail: 'WWW-Authenticate Bearer; {"detail":"No token provided."}'}
+    - {url: 'https://mcp.us.synthflow.ai/mcp', method: 'POST tools/list', status: 401}
+    - {url: 'https://mcp.eu.synthflow.ai/mcp', method: 'POST tools/list', status: 401}
+    - {url: 'https://mcp.synthflow.ai/.well-known/oauth-protected-resource', status: 200}
+    - {url: 'https://docs.synthflow.ai/_mcp/server', method: 'POST initialize', status: 200}
+    - {url: 'https://docs.synthflow.ai/_mcp/server', method: 'POST tools/list', status: 200, detail: '1 tool: searchDocs'}
+    - {url: 'https://docs.synthflow.ai/mcp-server', status: 200}

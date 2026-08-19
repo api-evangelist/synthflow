@@ -1,0 +1,94 @@
+generated: '2026-08-13'
+method: searched
+source: live probes of every apis.yml baseURL host, every OpenAPI servers[] host, the docs host and the MCP hosts
+description: >-
+  /.well-known/ discovery probe across the Synthflow estate. Two real documents were
+  served: an RFC 9727 api-catalog linkset on the documentation host, and RFC 9728
+  OAuth protected-resource metadata on each regional MCP host. No security.txt and no
+  OpenID/OAuth authorization-server document is served on any Synthflow-controlled
+  host; the MCP authorization server is delegated to WorkOS AuthKit.
+hosts:
+  - https://api.synthflow.ai
+  - https://api.us.synthflow.ai
+  - https://api.eu.synthflow.ai
+  - https://synthflow.ai
+  - https://docs.synthflow.ai
+  - https://mcp.synthflow.ai
+  - https://mcp.us.synthflow.ai
+documents:
+  - host: https://docs.synthflow.ai
+    path: /.well-known/api-catalog
+    status: 200
+    content_type: application/json
+    file: synthflow-api-catalog.json
+    spec: RFC 9727 (API Catalog / linkset)
+    note: >-
+      Real linkset. Anchors https://docs.synthflow.ai/api-reference/platform-api with a
+      service-desc pointing at https://docs.synthflow.ai/openapi/platform-api.yaml and a
+      service-doc pointing at the HTML reference.
+  - host: https://mcp.synthflow.ai
+    path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    file: synthflow-oauth-protected-resource.json
+    spec: RFC 9728 (OAuth 2.0 Protected Resource Metadata)
+    note: >-
+      Declares resource https://mcp.synthflow.ai/mcp and delegates authorization to
+      https://kind-prelude-27.authkit.app. The same document is served at the
+      resource-scoped path /.well-known/oauth-protected-resource/mcp, and identically on
+      mcp.us.synthflow.ai and mcp.eu.synthflow.ai.
+  - host: https://kind-prelude-27.authkit.app
+    path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: synthflow-oauth-authorization-server.json
+    spec: RFC 8414 (OAuth 2.0 Authorization Server Metadata)
+    first_party: false
+    note: >-
+      Not a Synthflow-controlled host. Saved because Synthflow's own protected-resource
+      metadata names it as the authorization server for the MCP surface. WorkOS AuthKit
+      is Synthflow's identity provider (the docs also name WorkOS as the SSO
+      infrastructure provider), so this is a delegated-IdP case, not a foreign contract.
+misses:
+  - host: https://api.synthflow.ai
+    paths: [/.well-known/security.txt, /.well-known/openid-configuration, /.well-known/oauth-authorization-server, /.well-known/api-catalog, /.well-known/ai-plugin.json, /.well-known/agent-card.json, /.well-known/agent.json]
+    status: 404
+    note: Gateway returns {"error":"not_found","message":"No route matched"} for every path.
+  - host: https://api.us.synthflow.ai
+    paths: [/.well-known/security.txt, /.well-known/openid-configuration, /.well-known/oauth-authorization-server, /.well-known/api-catalog, /.well-known/ai-plugin.json, /.well-known/agent-card.json, /.well-known/agent.json]
+    status: 404
+  - host: https://api.eu.synthflow.ai
+    paths: [/.well-known/security.txt, /.well-known/openid-configuration, /.well-known/oauth-authorization-server, /.well-known/api-catalog, /.well-known/ai-plugin.json, /.well-known/agent-card.json, /.well-known/agent.json]
+    status: 404
+  - host: https://synthflow.ai
+    paths: [/.well-known/security.txt, /.well-known/openid-configuration, /.well-known/oauth-authorization-server, /.well-known/api-catalog, /.well-known/ai-plugin.json, /.well-known/agent-card.json, /.well-known/agent.json]
+    status: 404
+    note: Marketing host answers 404 with a short "Invalid .well-known request" HTML stub.
+  - host: https://docs.synthflow.ai
+    paths: [/.well-known/security.txt, /.well-known/openid-configuration, /.well-known/oauth-authorization-server, /.well-known/ai-plugin.json, /.well-known/agent-card.json, /.well-known/agent.json]
+    status: 404
+    note: Fern/Vercel docs host answers 404 with the docs HTML shell.
+  - host: https://mcp.synthflow.ai
+    paths: [/.well-known/oauth-authorization-server, /.well-known/agent-card.json, /.well-known/agent.json]
+    status: 404
+security_txt:
+  served: false
+  note: >-
+    No RFC 9116 security.txt on any Synthflow host. No SecurityTxt pointer is emitted.
+agent_card:
+  served: false
+  note: >-
+    /.well-known/agent-card.json and the legacy /.well-known/agent.json 404 on every host
+    probed. No a2a/ artifact and no AgentCard pointer were written.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://docs.synthflow.ai/.well-known/api-catalog', status: 200}
+    - {url: 'https://mcp.synthflow.ai/.well-known/oauth-protected-resource', status: 200}
+    - {url: 'https://mcp.us.synthflow.ai/.well-known/oauth-protected-resource', status: 200}
+    - {url: 'https://kind-prelude-27.authkit.app/.well-known/oauth-authorization-server', status: 200}
+    - {url: 'https://api.synthflow.ai/.well-known/security.txt', status: 404}
+    - {url: 'https://synthflow.ai/.well-known/security.txt', status: 404}
+    - {url: 'https://docs.synthflow.ai/.well-known/agent-card.json', status: 404}
+    - {url: 'https://api.synthflow.ai/.well-known/agent-card.json', status: 404}
+    - {url: 'https://mcp.synthflow.ai/.well-known/agent-card.json', status: 404}

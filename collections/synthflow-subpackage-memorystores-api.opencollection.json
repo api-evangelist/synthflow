@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Platform subpackage_memoryStores API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_memoryStores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a memory store",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/memory_stores",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a memory store"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,167 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Platform subpackage_phoneNumbers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_phoneNumbers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List phone numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/numbers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Workspace ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Phone numbers displayed per page."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first phone number to be returned."
+              },
+              {
+                "name": "is_available",
+                "value": "",
+                "type": "query",
+                "description": "Filters phone numbers by inbound availability.\n- `true`: only numbers not assigned to inbound agents\n- `false`: only numbers assigned to inbound agents\n"
+              }
+            ]
+          },
+          "docs": "Lists all phone numbers assigned to a workspace."
+        },
+        {
+          "info": {
+            "name": "Get a phone number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.synthflow.ai/v2/numbers/:phone_number_slug",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phone_number_slug",
+                "value": "",
+                "type": "path",
+                "description": "The phone number slug (phone number without the leading +)."
+              },
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Workspace ID."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific phone number."
+        },
+        {
+          "info": {
+            "name": "Update a phone number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.synthflow.ai/v2/numbers/:phone_number_slug",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phone_number_slug",
+                "value": "",
+                "type": "path",
+                "description": "The phone number slug (phone number without the leading +)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration of a phone number."
+        },
+        {
+          "info": {
+            "name": "Delete a phone number",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.synthflow.ai/v2/numbers/:phone_number_slug",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "phone_number_slug",
+                "value": "",
+                "type": "path",
+                "description": "The phone number slug (phone number without the leading +)."
+              }
+            ]
+          },
+          "docs": "Deletes a phone number from your workspace. This will detach the phone number from any agents it is linked to. For phone numbers purchased through Synthflow, this also cancels the monthly subscription."
+        },
+        {
+          "info": {
+            "name": "Import phone number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.synthflow.ai/v2/custom-numbers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Imports a custom phone number into your workspace. This is useful for direct SIP dialing scenarios where your telephony provider does not offer elastic SIP trunking."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

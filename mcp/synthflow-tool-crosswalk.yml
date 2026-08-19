@@ -1,0 +1,140 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/synthflow-mcp.yml + openapi/_original/synthflow-openapi.json
+description: >-
+  Binds each published Synthflow MCP tool to the REST operation(s) that back it, so an
+  agent can inherit a real inputSchema from the OpenAPI instead of guessing one. The live
+  MCP tools/list is OAuth-gated (HTTP 401 anonymously), so tools are mapped by name and
+  documented semantics against verified operationIds; confidence is recorded honestly and
+  is never `high` where the binding is inferred rather than observed.
+
+surfaces:
+  openapi:
+    file: openapi/_original/synthflow-openapi.json
+    title: PLATFORM API
+    version: '1.0.0'
+    servers: ['https://api.synthflow.ai/v2', 'https://api.us.synthflow.ai/v2', 'https://api.eu.synthflow.ai/v2']
+    operations: 100
+    gated: false
+  mcp:
+    url: https://mcp.synthflow.ai/mcp
+    tools_published: 66
+    gated: true
+    gate: 'OAuth 2.0 — anonymous tools/list returns 401; live inputSchema needs an authenticated session'
+  mcp_docs:
+    url: https://docs.synthflow.ai/_mcp/server
+    tools_published: 1
+    gated: false
+  graphql:
+    published: false
+
+crosswalk:
+  - {tool: list_agents, category: agents, rest: [list-assistant], binding: rest, confidence: high}
+  - {tool: get_agent, category: agents, rest: [get-assistant], binding: rest, confidence: high}
+  - {tool: create_agent, category: agents, rest: [create-assistant], binding: rest, confidence: high}
+  - {tool: update_agent, category: agents, rest: [update-assistant], binding: rest, confidence: high, note: 'MCP saves as a draft; the REST PUT has no separate draft/publish split.'}
+  - {tool: delete_agent, category: agents, rest: [delete-assistant], binding: rest, confidence: high}
+  - {tool: search_agents_by_prompt, category: agents, rest: [list-assistant], binding: rest, confidence: medium, note: 'list-assistant exposes a `search` query parameter; prompt-contains/not-contains filtering is richer on the tool than the parameter documents.'}
+  - {tool: list_voices, category: agents, rest: [get-voices], binding: rest, confidence: high}
+  - {tool: list_calls, category: calls, rest: [list-calls], binding: rest, confidence: high}
+  - {tool: get_call_details, category: calls, rest: [get-phone-call], binding: rest, confidence: high}
+  - {tool: get_call_analytics, category: calls, rest: [analyticsExport], binding: rest, confidence: medium}
+  - {tool: start_test_call, category: calls, rest: [voice-call, start-ws-media-call], binding: rest, confidence: medium, note: 'Fans out — a test call may be placed over telephony (voice-call) or over WebSocket media (start-ws-media-call). The tool does not state which.'}
+  - {tool: list_actions, category: actions, rest: [list-actions], binding: rest, confidence: high}
+  - {tool: get_action, category: actions, rest: [get-action], binding: rest, confidence: high}
+  - {tool: initialize_action, category: actions, rest: [initialize-action], binding: rest, confidence: high}
+  - {tool: create_action, category: actions, rest: [create-action], binding: rest, confidence: high}
+  - {tool: update_action, category: actions, rest: [update-action], binding: rest, confidence: high}
+  - {tool: delete_action, category: actions, rest: [delete-action], binding: rest, confidence: high}
+  - {tool: attach_action_to_agent, category: actions, rest: [attach-action], binding: rest, confidence: high}
+  - {tool: detach_action_from_agent, category: actions, rest: [detach-action], binding: rest, confidence: high}
+  - {tool: get_agent_actions, category: actions, rest: [get-assistant], binding: rest, confidence: low, note: 'No REST operation lists an agent''s actions directly; they are read off the agent document.'}
+  - {tool: list_knowledge_bases, category: knowledge-bases, rest: [list-knowledge-bases], binding: rest, confidence: high}
+  - {tool: get_knowledge_base, category: knowledge-bases, rest: [get-knowledge-base, listKnowledgeBaseSources], binding: rest, confidence: medium, note: 'Tool returns the base AND its items; REST splits that across two operations.'}
+  - {tool: create_knowledge_base, category: knowledge-bases, rest: [create-knowledge-base], binding: rest, confidence: high}
+  - {tool: delete_knowledge_base, category: knowledge-bases, rest: [delete-knowledge-base], binding: rest, confidence: high}
+  - {tool: add_knowledge_base_item, category: knowledge-bases, rest: [attachDocumentToSource], binding: rest, confidence: medium}
+  - {tool: add_knowledge_base_files, category: knowledge-bases, rest: [attachDocumentToSource], binding: rest, confidence: medium, note: 'Both item-add tools appear to land on the same source-attach operation.'}
+  - {tool: delete_knowledge_base_items, category: knowledge-bases, rest: [knowledgeBaseSourceDelete], binding: rest, confidence: medium}
+  - {tool: attach_knowledge_base_to_agent, category: knowledge-bases, rest: [attach-knowledge-base], binding: rest, confidence: high}
+  - {tool: detach_knowledge_base_from_agent, category: knowledge-bases, rest: [detach-knowledge-base], binding: rest, confidence: high}
+  - {tool: get_agent_knowledge_base, category: knowledge-bases, rest: [get-assistant], binding: rest, confidence: low, note: 'Read off the agent document; no dedicated REST operation.'}
+  - {tool: list_simulation_suites, category: simulations, rest: [list-simulation-suites], binding: rest, confidence: high}
+  - {tool: create_simulation_suite, category: simulations, rest: [create-simulation-suite], binding: rest, confidence: high}
+  - {tool: delete_simulation_suite, category: simulations, rest: [delete-simulation-suite], binding: rest, confidence: high}
+  - {tool: list_simulation_cases, category: simulations, rest: [list-simulation-cases, list-simulation-cases-by-agent], binding: rest, confidence: high}
+  - {tool: create_simulation_case, category: simulations, rest: [create-simulation-case], binding: rest, confidence: high}
+  - {tool: delete_simulation_case, category: simulations, rest: [delete-simulation-case], binding: rest, confidence: high}
+  - {tool: execute_simulation_suite, category: simulations, rest: [execute-simulation-suite], binding: rest, confidence: high}
+  - {tool: list_simulations, category: simulations, rest: [list-simulations], binding: rest, confidence: high}
+  - {tool: get_simulation_session, category: simulations, rest: [get-simulation-session], binding: rest, confidence: high}
+  - {tool: list_phone_numbers, category: phone-numbers, rest: [get-numbers], binding: rest, confidence: high}
+  - {tool: attach_phone_numbers_to_agent_pooling, category: phone-numbers, rest: [attach-phone-numbers-to-assistant], binding: rest, confidence: high}
+  - {tool: detach_phone_number_from_agent_pooling, category: phone-numbers, rest: [detach-phone-number-from-assistant], binding: rest, confidence: high}
+  - {tool: list_phone_books, category: phone-numbers, rest: [listPhoneBooks], binding: rest, confidence: high}
+  - {tool: create_phone_book, category: phone-numbers, rest: [createAPhoneBook], binding: rest, confidence: high}
+  - {tool: delete_phone_book, category: phone-numbers, rest: [deleteAPhoneBook], binding: rest, confidence: high}
+  - {tool: update_phone_book, category: phone-numbers, rest: [createAPhoneBookEntry, deleteAPhoneBookEntry], binding: rest, confidence: low, note: 'No REST update operation for a phone book; the tool''s edit semantics can only be reached by adding/removing entries.'}
+  - {tool: list_contacts, category: contacts, rest: [list-contacts], binding: rest, confidence: high}
+  - {tool: create_contact, category: contacts, rest: [create-a-contact], binding: rest, confidence: high}
+  - {tool: update_contact, category: contacts, rest: [update-a-contact], binding: rest, confidence: high}
+  - {tool: delete_contact, category: contacts, rest: [deleteAContact], binding: rest, confidence: high}
+  - {tool: list_subaccounts, category: workspace, rest: [list-subaccounts], binding: rest, confidence: high}
+  - {tool: list_webhook_logs, category: workspace, rest: [ListWebhookLogs], binding: rest, confidence: high}
+  - {tool: get_webhook_log_detail, category: workspace, rest: [GetWebhookLogDetail], binding: rest, confidence: high}
+
+mcp_only:
+  - {tool: publish_agent_draft, reason: 'Draft/publish is an MCP + dashboard lifecycle concept. The REST API exposes only update-assistant; no publish operation exists.'}
+  - {tool: list_agent_versions, reason: 'Agent version history has no REST surface.'}
+  - {tool: get_agent_version_diff, reason: 'Server-side composite over version history; no REST equivalent.'}
+  - {tool: rollback_agent_version, reason: 'Version rollback has no REST surface.'}
+  - {tool: batch_update_agents_by_filter, reason: 'Server-side composite — filter then fan-out update. REST has no bulk-update operation.'}
+  - {tool: test_api_call, reason: 'Sends an ad-hoc probe for a custom action definition; not a published REST operation.'}
+  - {tool: get_phone_book, reason: 'REST lists and creates phone books but has no GET for a single phone book.'}
+  - {tool: list_integrations, reason: 'Connected-integration inventory has no REST surface.'}
+  - {tool: search_docs, reason: 'Documentation search, backed by the Fern docs MCP server, not the Platform API.'}
+  - {tool: fetch_url, reason: 'Generic URL fetch utility; not a Synthflow resource.'}
+  - {tool: save_learning, reason: 'Aurora workspace-memory primitive; no REST surface.'}
+  - {tool: get_more_tools, reason: 'MCP-protocol affordance for progressive tool disclosure; not an API resource.'}
+
+rest_only:
+  - capability: Chat agents
+    operations: [create-chat, get-chat, delete-chat, list-chats, send-chat-message, create-outbound-chat]
+    note: 'The entire chat-agent surface is REST-only — the MCP server manages voice agents, calls and configuration but exposes no chat tools.'
+  - capability: Memory stores
+    operations: [create-a-memory-store, list-memory-stores, getAMemoryStore, updateAMemoryStore, deleteAMemoryStore, attachAMemoryStoreToAnAgent, detachAMemoryStoreFromAnAgent, attachAContactToAMemoryStore, detachAContactFromAMemoryStore, getDataForASpecificMemoryStoreAndContact]
+    note: 'Memory / past-call recall has no MCP tools at all.'
+  - capability: Simulation scenarios
+    operations: [create-simulation-scenario, list-simulation-scenarios, get-simulation-scenario, update-simulation-scenario, delete-simulation-scenario, generate-simulation-cases, get-simulation, list-simulation-sessions, start-simulation]
+    note: 'MCP covers suites, cases and sessions but not scenarios or scenario generation.'
+  - capability: External MCP connectors (Synthflow as MCP client)
+    operations: [GetWorkspaceMCPConfig, SetWorkspaceMCPConfig, UpdateWorkspaceMCPConfig, DeleteWorkspaceMCPConfig, DiscoverMCPTools, InvokeMCPTool]
+    note: 'Configures the OUTBOUND direction — a voice agent calling an external MCP server mid-call. Deliberately not exposed as tools on Synthflow''s own MCP server.'
+  - capability: Phone number administration
+    operations: [get-phone-number, update-phone-number, delete-phone-number, create-custom-number]
+    note: 'MCP can list numbers and pool them, but cannot buy, import (BYO carrier/SIP), update or release one.'
+  - capability: Subaccount administration
+    operations: [create-subaccount, update-subaccount, delete-subaccount, get-subaccount]
+    note: 'MCP can only list subaccounts; lifecycle management stays REST-only.'
+  - capability: Contact read
+    operations: [getAContact]
+  - capability: WebSocket media
+    operations: [start-ws-media-call, get-ws-media-base-url]
+  - capability: Knowledge base update
+    operations: [update-knowledge-base, update-knowledge-base-source]
+
+coverage:
+  mcp_tools_published: 66
+  mcp_tools_bound_to_rest: 53
+  mcp_only: 12
+  mcp_docs_server_tools: 1
+  rest_operations_total: 100
+  rest_operations_with_a_tool: 56
+  rest_operations_without_a_tool: 44
+  bindings_high_confidence: 44
+  bindings_medium_confidence: 6
+  bindings_low_confidence: 3
+
+notes:
+  - 'Neither surface is a superset. 44 of 100 REST operations have no MCP tool, and 12 MCP tools have no REST operation — chat, memory stores and simulation scenarios are REST-only capabilities, while agent versioning and bulk edit are MCP-only.'
+  - 'Because tools/list is OAuth-gated, no inputSchema was observed. Every parameter contract in this crosswalk should be read from the bound OpenAPI operation.'

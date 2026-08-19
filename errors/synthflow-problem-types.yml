@@ -1,0 +1,136 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/synthflow-openapi.json
+docs: https://docs.synthflow.ai/telephony-errors
+format: proprietary
+description: >-
+  Error catalog derived from the 108 declared 4xx/5xx responses across the 100 operations
+  of the Synthflow Platform API, enriched from the docs. Synthflow does NOT use RFC 9457
+  problem+json — every response, success and failure, is application/json, and the failure
+  envelope is a plain object. Most declared error responses carry no description beyond
+  the status code repeated as a string, so an agent cannot tell 400 "bad phone number"
+  from 400 "unknown model_id" without calling.
+
+envelope:
+  content_type: application/json
+  observed_shapes:
+    - {shape: '{"detail": "<message>"}', seen_on: 'unmatched routes on api.*.synthflow.ai, e.g. 404 {"detail":"Not Found"}'}
+    - {shape: '{"error": "<slug>", "message": "<message>"}', seen_on: 'the api.synthflow.ai gateway, e.g. {"error":"not_found","message":"No route matched"}'}
+  note: >-
+    Two different envelopes are observable on the same estate — the regional FastAPI hosts
+    answer with `detail`, the global gateway answers with `error`+`message`. Neither is
+    declared in the OpenAPI as a reusable component.
+rfc9457: false
+problem_json_media_type_used: false
+
+summary:
+  total_declared_error_responses: 108
+  by_status:
+    '400': 66
+    '404': 23
+    '422': 9
+    '403': 3
+    '401': 2
+    '500': 2
+    '503': 2
+    '502': 1
+  described_meaningfully: 20
+  described_as_bare_status_code: 88
+
+problems:
+  - status: 401
+    title: Missing or invalid API credentials
+    meaning: The Authorization bearer token is absent, malformed or revoked.
+    remediation: >-
+      Send Authorization: Bearer <key> with a key from Admin -> Workspace Settings ->
+      API Keys. If the workspace requires 2FA, 2FA must be enabled on the user before
+      keys can be created or viewed.
+    docs: https://docs.synthflow.ai/authentication
+    occurrences: 2
+    note: >-
+      Declared on only 2 of 100 operations, yet all 98 authenticated operations take an
+      Authorization header parameter. The 401 is under-declared across the spec.
+  - status: 403
+    title: Access denied to workspace
+    meaning: The key is valid but is not scoped to the requested workspace or subaccount.
+    remediation: Use a key issued in the target workspace, or address the subaccount you actually manage.
+    occurrences: 2
+  - status: 403
+    title: Provider import not enabled for this workspace
+    meaning: The selected telephony provider import is not enabled for the workspace.
+    remediation: Contact Synthflow to enable the carrier/provider import for the workspace.
+    source_operation: 'openapi/_original/synthflow-openapi.json#create-custom-number'
+    occurrences: 1
+  - status: 404
+    title: No MCP configuration found for this workspace
+    meaning: The workspace has no external MCP connector configuration to read.
+    remediation: Create one with SetWorkspaceMCPConfig before reading, updating or discovering tools.
+    source_operation: 'openapi/_original/synthflow-openapi.json#GetWorkspaceMCPConfig'
+    occurrences: 2
+  - status: 404
+    title: No MCP configuration found to delete
+    meaning: DeleteWorkspaceMCPConfig was called on a workspace with no configuration.
+    remediation: Treat as already-absent; deletion is effectively idempotent from the caller's view.
+    source_operation: 'openapi/_original/synthflow-openapi.json#DeleteWorkspaceMCPConfig'
+    occurrences: 1
+  - status: 404
+    title: Not found
+    meaning: The addressed resource (agent, call, action, knowledge base, contact, memory store, phone book) does not exist or is not visible to this key.
+    remediation: Re-list the collection to confirm the identifier; ids are workspace-scoped.
+    occurrences: 20
+  - status: 422
+    title: Validation error
+    meaning: The request body failed schema validation.
+    remediation: Compare the body against the operation's requestBody schema in the OpenAPI.
+    occurrences: 9
+  - status: 400
+    title: Invalid request
+    meaning: Generic request rejection. The dominant failure mode of the API.
+    remediation: >-
+      No machine-readable reason code is published. Read the `detail`/`message` string at
+      runtime; it is the only discriminator available.
+    occurrences: 66
+  - status: 429
+    title: Rate or concurrency limit exceeded
+    meaning: >-
+      The workspace exceeded its CAPS (call attempts per second) or Concurrent Active
+      Calls limit.
+    remediation: Back off and retry, or request higher limits from the account team.
+    docs: https://docs.synthflow.ai/concurrency-calling-limits
+    declared_in_spec: false
+    note: >-
+      Documented in the Concurrency page as a real runtime response but declared on ZERO
+      operations in the OpenAPI. An agent reading only the spec would not know 429 is
+      reachable.
+  - status: 500
+    title: Internal error
+    meaning: Unhandled server-side failure.
+    remediation: Retry with backoff; check https://status.synthflow.ai/.
+    occurrences: 2
+  - status: 502
+    title: Room join failed
+    meaning: The WebSocket media room could not be joined.
+    source_operation: 'openapi/_original/synthflow-openapi.json#start-ws-media-call'
+    occurrences: 1
+  - status: 503
+    title: WebSocket media is not enabled in this environment
+    meaning: The WS media feature is not enabled for this workspace/region.
+    remediation: Contact Synthflow to enable WebSocket media.
+    source_operation: 'openapi/_original/synthflow-openapi.json#start-ws-media-call'
+    occurrences: 2
+
+adjacent_catalogs:
+  telephony_errors:
+    docs: https://docs.synthflow.ai/telephony-errors
+    note: >-
+      Synthflow publishes a separate prose catalog of telephony-layer error messages and
+      resolutions (SIP/carrier failures). These are call-outcome errors, not HTTP API
+      errors, and are surfaced through call status / end-call reason rather than a
+      response code — see asyncapi/synthflow-webhooks.yml for those enumerations.
+
+gaps:
+  - 'No RFC 9457 application/problem+json.'
+  - 'No stable machine-readable error code or `type` URI anywhere in the surface.'
+  - '88 of 108 declared error responses carry the status code as their only description.'
+  - '429 is documented in prose but declared on no operation.'
+  - 'The error envelope is not a named component in components.schemas, so it cannot be $ref-ed or code-generated.'

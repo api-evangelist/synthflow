@@ -1,0 +1,158 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/synthflow-openapi.json
+docs: https://docs.synthflow.ai/api-reference/platform-api
+description: >-
+  Entity-relationship graph for the Synthflow Platform API, derived from the 63 paths,
+  100 operations and 547 component schemas of the live OpenAPI, plus the id-reference
+  fields that appear across those schemas. The Agent (called "assistant" in the REST path
+  space and "agent" everywhere else) is the hub: nearly every other entity attaches to it.
+
+naming_note: >-
+  The same entity is named three ways across the surface — the path is /assistants, the
+  identifier is model_id, and the docs, MCP tools and skills all call it an "agent". Any
+  generated client or agent has to carry that mapping.
+
+identifiers:
+  primary:
+    - {field: model_id, entity: Agent, note: 'The agent identifier. Not a "model" in the LLM sense.'}
+    - {field: call_id, entity: Call, note: 'Also the value signed by the webhook HMAC.'}
+    - {field: action_id, entity: Action}
+    - {field: chat_id, entity: Chat}
+    - {field: knowledge_base_id, entity: KnowledgeBase}
+    - {field: source_id, entity: KnowledgeBaseSource}
+    - {field: contact_id, entity: Contact}
+    - {field: memory_store_id, entity: MemoryStore}
+    - {field: phone_book_id, entity: PhoneBook}
+    - {field: entry_id, entity: PhoneBookEntry}
+    - {field: phone_number_slug, entity: PhoneNumber, note: 'A slug, not a numeric id — the only slug-keyed resource.'}
+    - {field: subaccount_id, entity: Subaccount}
+    - {field: workspace_id, entity: Workspace}
+    - {field: voice_id, entity: Voice}
+    - {field: simulation_case_id, entity: SimulationCase}
+    - {field: suite_id, entity: SimulationSuite}
+    - {field: scenario_id, entity: SimulationScenario}
+    - {field: simulation_id, entity: Simulation}
+    - {field: simulation_session_id, entity: SimulationSession}
+    - {field: webhook_log_id, entity: WebhookLog}
+  prefixed_ids: false
+  prefix_note: 'No typed id prefixes (no `ag_`, `call_` style). Ids are opaque and untyped, so an id alone does not tell a caller what it addresses.'
+
+entities:
+  - name: Workspace
+    root: true
+    description: 'The tenancy and billing boundary. Region-bound: Global, US or EU.'
+    operations: [GetWorkspaceMCPConfig, SetWorkspaceMCPConfig, UpdateWorkspaceMCPConfig, DeleteWorkspaceMCPConfig, DiscoverMCPTools, InvokeMCPTool]
+  - name: Subaccount
+    description: 'A child workspace managed by an agency account.'
+    operations: [create-subaccount, list-subaccounts, get-subaccount, update-subaccount, delete-subaccount]
+  - name: Agent
+    aliases: [Assistant]
+    description: 'A voice or chat agent. Types: inbound, outbound, widget.'
+    key: model_id
+    operations: [create-assistant, list-assistant, get-assistant, update-assistant, delete-assistant, attach-phone-numbers-to-assistant, detach-phone-number-from-assistant]
+  - name: Call
+    description: 'One telephony or WebSocket-media conversation and its transcript, recording, analytics and outcome.'
+    key: call_id
+    operations: [voice-call, list-calls, get-phone-call, start-ws-media-call, get-ws-media-base-url]
+  - name: Chat
+    description: 'A text conversation with a chat agent, over API, widget, WhatsApp or SMS.'
+    operations: [create-chat, list-chats, get-chat, delete-chat, send-chat-message, create-outbound-chat]
+  - name: Action
+    description: 'A capability an agent invokes mid-call: LIVE_TRANSFER, SEND_SMS, CUSTOM_ACTION, INFORMATION_EXTRACTOR, REAL_TIME_BOOKING, CUSTOM_EVAL.'
+    operations: [list-actions, create-action, initialize-action, get-action, update-action, delete-action, attach-action, detach-action]
+  - name: KnowledgeBase
+    description: 'A grounding corpus attachable to agents.'
+    operations: [list-knowledge-bases, create-knowledge-base, get-knowledge-base, update-knowledge-base, delete-knowledge-base, attach-knowledge-base, detach-knowledge-base]
+  - name: KnowledgeBaseSource
+    description: 'A document, URL, crawl or Zendesk import inside a knowledge base.'
+    operations: [listKnowledgeBaseSources, attachDocumentToSource, update-knowledge-base-source, knowledgeBaseSourceDelete]
+  - name: Contact
+    description: 'A person the workspace calls or messages.'
+    operations: [create-a-contact, list-contacts, getAContact, update-a-contact, deleteAContact]
+  - name: MemoryStore
+    description: 'Per-contact memory of past calls, attached to agents so future conversations are personalized.'
+    operations: [create-a-memory-store, list-memory-stores, getAMemoryStore, updateAMemoryStore, deleteAMemoryStore, attachAMemoryStoreToAnAgent, detachAMemoryStoreFromAnAgent, attachAContactToAMemoryStore, detachAContactFromAMemoryStore, getDataForASpecificMemoryStoreAndContact]
+  - name: PhoneNumber
+    description: 'A purchased Synthflow number or a BYO carrier/SIP number imported into the workspace.'
+    key: phone_number_slug
+    operations: [get-numbers, get-phone-number, update-phone-number, delete-phone-number, create-custom-number]
+  - name: PhoneBook
+    description: 'A named set of transfer destinations with routing conditions.'
+    operations: [createAPhoneBook, listPhoneBooks, deleteAPhoneBook]
+  - name: PhoneBookEntry
+    description: 'One transfer destination inside a phone book.'
+    operations: [createAPhoneBookEntry, deleteAPhoneBookEntry]
+  - name: Voice
+    description: 'A TTS voice with language and accent, selectable per agent.'
+    operations: [get-voices]
+  - name: SimulationScenario
+    description: 'A reusable persona/situation an AI caller plays during testing.'
+    operations: [create-simulation-scenario, list-simulation-scenarios, get-simulation-scenario, update-simulation-scenario, delete-simulation-scenario]
+  - name: SimulationCase
+    description: 'A single test binding a scenario to an agent.'
+    operations: [create-simulation-case, list-simulation-cases, get-simulation-case, update-simulation-case, delete-simulation-case, generate-simulation-cases, list-simulation-cases-by-agent]
+  - name: SimulationSuite
+    description: 'A collection of cases executed together.'
+    operations: [create-simulation-suite, list-simulation-suites, get-simulation-suite, update-simulation-suite, delete-simulation-suite, execute-simulation-suite]
+  - name: Simulation
+    description: 'One execution of a suite.'
+    operations: [start-simulation, list-simulations, get-simulation]
+  - name: SimulationSession
+    description: 'The per-case result inside a simulation run.'
+    operations: [list-simulation-sessions, get-simulation-session]
+  - name: WebhookLog
+    description: 'The request and response of one webhook delivery attempt.'
+    operations: [ListWebhookLogs, GetWebhookLogDetail]
+  - name: Analytics
+    description: 'Aggregated call metrics, exportable and scoped across subaccounts.'
+    operations: [analyticsExport]
+  - name: WorkspaceMCPConfig
+    description: 'Configuration for EXTERNAL MCP servers a voice agent may call during a live call.'
+    operations: [GetWorkspaceMCPConfig, SetWorkspaceMCPConfig, UpdateWorkspaceMCPConfig, DeleteWorkspaceMCPConfig, DiscoverMCPTools, InvokeMCPTool]
+
+relationships:
+  - {from: Workspace, to: Subaccount, type: has_many, via: subaccount_id}
+  - {from: Workspace, to: Agent, type: has_many, via: workspace_id}
+  - {from: Workspace, to: WorkspaceMCPConfig, type: has_one, via: workspace_id}
+  - {from: Agent, to: Call, type: has_many, via: model_id}
+  - {from: Agent, to: Chat, type: has_many, via: model_id}
+  - {from: Agent, to: Action, type: has_many, via: action_id, note: 'Many-to-many — attach-action / detach-action bind an existing action to an agent.'}
+  - {from: Agent, to: KnowledgeBase, type: has_many, via: knowledge_base_id, note: 'Many-to-many via attach-knowledge-base / detach-knowledge-base.'}
+  - {from: Agent, to: PhoneNumber, type: has_many, via: phone_number_slug, note: 'Outbound agents pool numbers; attach-phone-numbers-to-assistant.'}
+  - {from: Agent, to: Voice, type: has_one, via: voice_id}
+  - {from: Agent, to: Voice, type: has_one, via: fallback_voice_id}
+  - {from: Agent, to: MemoryStore, type: has_many, via: memory_store_ids}
+  - {from: Agent, to: SimulationCase, type: has_many, via: target_agent_id}
+  - {from: KnowledgeBase, to: KnowledgeBaseSource, type: has_many, via: source_id}
+  - {from: MemoryStore, to: Contact, type: has_many, via: contact_ids}
+  - {from: Contact, to: MemoryStore, type: has_many, via: memory_store_ids, note: 'Explicit join — attachAContactToAMemoryStore; memory data is read per (memory_store_id, contact_id).'}
+  - {from: PhoneBook, to: PhoneBookEntry, type: has_many, via: entry_id}
+  - {from: Action, to: PhoneBook, type: has_one, via: phone_book_id, note: 'A LIVE_TRANSFER action can route through a phone book instead of a fixed number.'}
+  - {from: SimulationSuite, to: SimulationCase, type: has_many, via: simulation_case_id}
+  - {from: SimulationCase, to: SimulationScenario, type: belongs_to, via: scenario_id}
+  - {from: SimulationSuite, to: Simulation, type: has_many, via: suite_id}
+  - {from: Simulation, to: SimulationSession, type: has_many, via: simulation_session_id}
+  - {from: Call, to: WebhookLog, type: has_many, via: call_id}
+  - {from: Call, to: Contact, type: belongs_to, via: contact_id}
+  - {from: Subaccount, to: Analytics, type: has_many, via: subaccount_id}
+
+counts:
+  entities: 22
+  relationships: 24
+  component_schemas: 547
+  operations: 100
+  paths: 63
+
+notes:
+  - >-
+    Agent is the hub of the graph: Calls, Chats, Actions, KnowledgeBases, PhoneNumbers,
+    Voices, MemoryStores and SimulationCases all hang off model_id.
+  - >-
+    Attachment is modelled as verbs rather than sub-resources — attach/detach operations
+    appear for actions, knowledge bases, phone numbers, memory stores and contacts,
+    instead of PUT/DELETE on a nested collection.
+  - >-
+    Billing identifiers (stripe_subscription_id, synthflow_price_id, pricing_tier_id,
+    agency_id) appear in schemas but have no operations, reflecting the agency rebilling
+    surface that the 2026-07-29 changelog entry retires.

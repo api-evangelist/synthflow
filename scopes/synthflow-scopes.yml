@@ -1,0 +1,86 @@
+generated: '2026-08-13'
+method: probed
+source: https://kind-prelude-27.authkit.app/.well-known/oauth-authorization-server
+resource_metadata: https://mcp.synthflow.ai/.well-known/oauth-protected-resource
+description: >-
+  OAuth scopes reachable on the Synthflow estate. These belong to the MCP surface only —
+  the REST Platform API declares no oauth2 security scheme and has no scope model at all
+  (a single bearer API key carries full workspace authority). The scopes below are the
+  IDENTITY scopes advertised by Synthflow's delegated authorization server; they are not
+  Synthflow capability scopes, and no per-tool or per-resource scope is published.
+
+applies_to:
+  surface: mcp
+  resource: https://mcp.synthflow.ai/mcp
+  regions:
+    - https://mcp.synthflow.ai/mcp
+    - https://mcp.us.synthflow.ai/mcp
+    - https://mcp.eu.synthflow.ai/mcp
+
+schemes:
+  - name: mcp-oauth
+    issuer: https://kind-prelude-27.authkit.app
+    first_party: false
+    provider: WorkOS AuthKit
+    provenance: >-
+      Named as the authorization server by Synthflow's own RFC 9728 protected-resource
+      metadata at mcp.synthflow.ai; WorkOS is independently named as Synthflow's identity
+      infrastructure provider in https://docs.synthflow.ai/security.
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://kind-prelude-27.authkit.app/oauth2/authorize
+        tokenUrl: https://kind-prelude-27.authkit.app/oauth2/token
+        pkce_methods: [S256]
+      - flow: deviceCode
+        deviceAuthorizationUrl: https://kind-prelude-27.authkit.app/oauth2/device_authorization
+        tokenUrl: https://kind-prelude-27.authkit.app/oauth2/token
+      - flow: refreshToken
+        tokenUrl: https://kind-prelude-27.authkit.app/oauth2/token
+
+scopes:
+  - scope: openid
+    description: 'OIDC — issue an ID token identifying the authenticated Synthflow user.'
+    flows: [authorizationCode, deviceCode]
+    sources: ['https://kind-prelude-27.authkit.app/.well-known/oauth-authorization-server']
+  - scope: profile
+    description: 'Basic profile claims for the authenticated user.'
+    flows: [authorizationCode, deviceCode]
+    sources: ['https://kind-prelude-27.authkit.app/.well-known/oauth-authorization-server']
+  - scope: email
+    description: 'Email address claim for the authenticated user.'
+    flows: [authorizationCode, deviceCode]
+    sources: ['https://kind-prelude-27.authkit.app/.well-known/oauth-authorization-server']
+  - scope: offline_access
+    description: 'Issue a refresh token so an MCP client can keep the connection alive without re-prompting.'
+    flows: [authorizationCode, deviceCode, refreshToken]
+    sources: ['https://kind-prelude-27.authkit.app/.well-known/oauth-authorization-server']
+
+authorization_model:
+  granularity: workspace
+  capability_scopes_published: false
+  note: >-
+    All four advertised scopes are identity scopes. Once authorized, the MCP session is
+    scoped to the connected workspace and carries the full published tool set — including
+    delete_agent, delete_knowledge_base and batch_update_agents_by_filter. There is no
+    read-only grant, and a user cannot consent to a subset of tools at the OAuth layer.
+  compensating_control: >-
+    Synthflow pushes safety down to the tool layer instead: destructive tools require a
+    second call carrying confirmed=true, and the provider explicitly advises keeping write
+    and delete tools behind client-side approval. That is a real control, but it is
+    advisory and client-enforced, not an authorization-server boundary.
+  subaccount_targeting: 'Tools that accept workspace_id can act on a managed subaccount within the same session.'
+
+rest_api:
+  oauth2: false
+  scopes: none
+  note: >-
+    The REST Platform API uses a static bearer API key with no scopes. derive-oauth-scopes
+    would produce an empty file for the spec; this artifact exists because the MCP surface
+    genuinely has an OAuth model.
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+    - {url: 'https://mcp.synthflow.ai/.well-known/oauth-protected-resource', status: 200}
+    - {url: 'https://kind-prelude-27.authkit.app/.well-known/oauth-authorization-server', status: 200}
+    - {url: 'https://mcp.synthflow.ai/mcp', status: 401}

@@ -1,0 +1,64 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Platform subpackage_contacts API
+  version: 1.0.0
+extends: openapi/synthflow-subpackage-contacts-api-openapi.yml
+x-provenance:
+  generated: '2026-08-13'
+  method: generated
+  source: >-
+    Generated from openapi/synthflow-subpackage-contacts-api-openapi.yml plus the artifacts harvested in this repo. Captures API
+    Evangelist annotations only; the harvested OpenAPI is never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: synthflow
+      x-apievangelist-api-key: subpackage-contacts-api
+      x-apievangelist-operation-count: 2
+      x-apievangelist-upstream-spec: https://docs.synthflow.ai/openapi.json
+      x-apievangelist-api-catalog: https://docs.synthflow.ai/.well-known/api-catalog
+      contact:
+        name: Synthflow Support
+        email: support@synthflow.ai
+        url: https://docs.synthflow.ai
+      termsOfService: https://docs.synthflow.ai/docs/terms-conditions
+  - target: $.info
+    update:
+      x-apievangelist-artifacts:
+        authentication: authentication/synthflow-authentication.yml
+        conventions: conventions/synthflow-conventions.yml
+        errors: errors/synthflow-problem-types.yml
+        lifecycle: lifecycle/synthflow-lifecycle.yml
+        rate_limits: rate-limits/synthflow-rate-limits.yml
+        webhooks: asyncapi/synthflow-webhooks.yml
+        data_model: data-model/synthflow-data-model.yml
+        mcp: mcp/synthflow-mcp.yml
+        tool_crosswalk: mcp/synthflow-tool-crosswalk.yml
+        skills: skills/_index.yml
+        sandbox: sandbox/synthflow-sandbox.yml
+  - target: $.servers
+    update:
+      - url: https://api.synthflow.ai/v2
+        description: Global
+      - url: https://api.us.synthflow.ai/v2
+        description: United States
+      - url: https://api.eu.synthflow.ai/v2
+        description: European Union
+  - target: $
+    update:
+      x-apievangelist-runtime-notes:
+        idempotency: >-
+          Not supported. No Idempotency-Key header exists on any operation; retrying
+          voice-call after a timeout can place a duplicate billable call.
+        rate_limit_headers: >-
+          None published. Exhaustion of CAPS or concurrency may return 429 or may queue,
+          depending on account setup; 429 is declared on no operation.
+        error_format: >-
+          Not RFC 9457. Two envelopes are observable across the estate:
+          {"detail": "..."} on the regional hosts and {"error": "...", "message": "..."}
+          on the global gateway.
+        pagination: >-
+          Mixed. Some operations use limit/offset, others use page_number/page_size.
+        region_binding: >-
+          The workspace region determines which host answers; api.us and api.eu are not
+          interchangeable with api.synthflow.ai for a given workspace.
