@@ -43,6 +43,25 @@ tags:
   - Outbound
   - Inbound
   - CRM
+  - Webhook
+  - Custom Actions
+  - HIPAA
+  - SOC 2
+  - MCP
+  - Agent Skills
+  - Conversational AI
+  - SIP
+  - Simulations
+  - Knowledge Base
+tags_raw:
+  - Voice
+  - Voice Agents
+  - No-Code
+  - Telephony
+  - Phone
+  - Outbound
+  - Inbound
+  - CRM
   - Webhooks
   - Custom Actions
   - HIPAA
@@ -142,7 +161,8 @@ apis:
   description: The Default API from Synthflow — 49 operation(s) for default.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
-  tags:
+  tags: []
+  tags_raw:
   - Default
   properties:
   - type: OpenAPI
@@ -152,7 +172,8 @@ apis:
   description: The subpackage_chat API from Synthflow — 4 operation(s) for subpackage_chat.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_chat
   properties:
   - type: OpenAPI
@@ -162,7 +183,8 @@ apis:
   description: The subpackage_contacts API from Synthflow — 2 operation(s) for subpackage_contacts.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_contacts
   properties:
   - type: OpenAPI
@@ -172,7 +194,8 @@ apis:
   description: The subpackage_mcp API from Synthflow — 3 operation(s) for subpackage_mcp.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_mcp
   properties:
   - type: OpenAPI
