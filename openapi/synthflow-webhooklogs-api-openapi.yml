@@ -1,0 +1,407 @@
+openapi: 3.2.0
+info:
+  title: PLATFORM Webhook Logs API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+  description: Global
+- url: https://api.us.synthflow.ai/v2
+  description: United States
+- url: https://api.eu.synthflow.ai/v2
+  description: European Union
+tags:
+- name: webhookLogs
+paths:
+  /logs:
+    get:
+      operationId: ListWebhookLogs
+      summary: List Webhook Logs
+      description: Retrieve a paginated list of webhook logs with filtering and search capability
+      tags:
+      - webhookLogs
+      parameters:
+      - name: workspace_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: page_number
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: webhook_type
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/LogsGetParametersWebhookType'
+      - name: status
+        in: query
+        description: Filter webhook logs by status
+        required: false
+        schema:
+          $ref: '#/components/schemas/LogsGetParametersStatus'
+      - name: http_method
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/LogsGetParametersHttpMethod'
+      - name: from_date
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: to_date
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: assistant_id
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: call_id
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Paginated list of webhook logs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookAssistantPaginatedList'
+        '403':
+          description: Access denied to workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /logs/{webhook_log_id}:
+    get:
+      operationId: GetWebhookLogDetail
+      summary: Get Webhook Log Detail
+      description: Retrieve detailed information for a specific webhook log
+      tags:
+      - webhookLogs
+      parameters:
+      - name: webhook_log_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workspace_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Detailed webhook log information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookLogDetailResponse'
+        '403':
+          description: Access denied to workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Webhook log not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    LogsGetParametersWebhookType:
+      type: string
+      enum:
+      - external_webhook
+      - inbound_webhook
+      - custom_action
+      title: LogsGetParametersWebhookType
+    WebhookLogPayloadFlowLocation:
+      type: object
+      properties: {}
+      description: Conversation flow context (stage, stage_name, and optionally node, node_name)
+      title: WebhookLogPayloadFlowLocation
+    WebhookLogPayload:
+      type: object
+      properties:
+        webhook_log_id:
+          type: string
+          description: Unique identifier for the webhook log
+        webhook_type:
+          $ref: '#/components/schemas/WebhookType'
+        webhook_url:
+          type: string
+          description: URL of the webhook endpoint
+        call_id:
+          type: string
+          description: ID of the call associated with this webhook
+        model_id:
+          type: string
+          description: ID of the model/assistant
+        workspace_id:
+          type: string
+          description: ID of the workspace
+        action_id:
+          type: string
+          description: ID of the action
+        request_timestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the request was sent
+        attempt_number:
+          type: integer
+          description: Number of attempts made
+        request_headers:
+          $ref: '#/components/schemas/WebhookLogPayloadRequestHeaders'
+          description: HTTP headers sent with the request
+        request_payload:
+          $ref: '#/components/schemas/WebhookLogPayloadRequestPayload'
+          description: Payload sent with the request
+        response_timestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the response was received
+        response_status_code:
+          type: integer
+          description: HTTP status code of the response
+        response_payload:
+          $ref: '#/components/schemas/WebhookLogPayloadResponsePayload'
+          description: Payload received in the response
+        response_headers:
+          $ref: '#/components/schemas/WebhookLogPayloadResponseHeaders'
+          description: HTTP headers received in the response
+        duration_ms:
+          type: integer
+          description: Duration of the request in milliseconds
+        status:
+          $ref: '#/components/schemas/WebhookStatus'
+        error_message:
+          type: string
+          description: Error message if the webhook failed
+        request_origin:
+          $ref: '#/components/schemas/WebhookLogPayloadRequestOrigin'
+          description: Request origin headers (user_agent, x_forwarded_for, x_real_ip)
+        flow_location:
+          $ref: '#/components/schemas/WebhookLogPayloadFlowLocation'
+          description: Conversation flow context (stage, stage_name, and optionally node, node_name)
+        request_query_params:
+          $ref: '#/components/schemas/WebhookLogPayloadRequestQueryParams'
+          description: URL query parameters
+        response_ttfb_ms:
+          type: integer
+          description: Time to first byte in milliseconds
+        response_size_total:
+          type: integer
+          description: Total response size including headers (bytes)
+        response_size_body:
+          type: integer
+          description: Response body size only (bytes)
+      required:
+      - webhook_log_id
+      - webhook_type
+      - webhook_url
+      - call_id
+      - request_timestamp
+      - attempt_number
+      - request_headers
+      - request_payload
+      - status
+      title: WebhookLogPayload
+    WebhookLogPayloadRequestOrigin:
+      type: object
+      properties: {}
+      description: Request origin headers (user_agent, x_forwarded_for, x_real_ip)
+      title: WebhookLogPayloadRequestOrigin
+    WebhookLogDetailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/WebhookLogPayload'
+      required:
+      - status
+      - response
+      title: WebhookLogDetailResponse
+    WebhookStatus:
+      type: string
+      enum:
+      - pending
+      - success
+      - failed
+      description: Status of webhook execution
+      title: WebhookStatus
+    WebhookAssistantPaginatedListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookLogListItem'
+        total:
+          type: integer
+          description: Total number of webhook logs
+        page_size:
+          type: integer
+          description: Number of items per page
+        page_number:
+          type: integer
+          description: Current page number
+      required:
+      - items
+      - total
+      - page_size
+      - page_number
+      title: WebhookAssistantPaginatedListResponse
+    WebhookLogPayloadRequestHeaders:
+      type: object
+      properties: {}
+      description: HTTP headers sent with the request
+      title: WebhookLogPayloadRequestHeaders
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type or classification
+        message:
+          type: string
+          description: Detailed error message
+      title: ErrorResponse
+    WebhookLogListItem:
+      type: object
+      properties:
+        request_timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of when the request was made
+        webhook_log_id:
+          type: string
+          description: Unique ID of the webhook log entry
+        model_id:
+          type: string
+          description: Associated model ID
+        status:
+          type: string
+          description: Webhook processing status
+        webhook_url:
+          type: string
+          format: uri
+          description: Destination URL for the webhook
+        response_status_code:
+          type: integer
+          description: HTTP status code returned by the target
+        http_method:
+          type: string
+          description: HTTP method used for the request
+      required:
+      - request_timestamp
+      - webhook_log_id
+      - model_id
+      - status
+      description: Schema for webhook log list items
+      title: WebhookLogListItem
+    WebhookType:
+      type: string
+      enum:
+      - external_webhook
+      - inbound_webhook
+      - custom_action
+      description: Type of webhook
+      title: WebhookType
+    LogsGetParametersHttpMethod:
+      type: string
+      enum:
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      title: LogsGetParametersHttpMethod
+    WebhookLogPayloadRequestPayload:
+      type: object
+      properties: {}
+      description: Payload sent with the request
+      title: WebhookLogPayloadRequestPayload
+    LogsGetParametersStatus:
+      type: string
+      enum:
+      - pending
+      - success
+      - failed
+      title: LogsGetParametersStatus
+    WebhookLogPayloadRequestQueryParams:
+      type: object
+      properties: {}
+      description: URL query parameters
+      title: WebhookLogPayloadRequestQueryParams
+    WebhookLogPayloadResponseHeaders:
+      type: object
+      properties: {}
+      description: HTTP headers received in the response
+      title: WebhookLogPayloadResponseHeaders
+    WebhookLogPayloadResponsePayload:
+      type: object
+      properties: {}
+      description: Payload received in the response
+      title: WebhookLogPayloadResponsePayload
+    WebhookAssistantPaginatedList:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/WebhookAssistantPaginatedListResponse'
+      required:
+      - status
+      - response
+      title: WebhookAssistantPaginatedList
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

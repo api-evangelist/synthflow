@@ -1,0 +1,429 @@
+openapi: 3.2.0
+info:
+  title: Platform Subpackage MCP API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+- url: https://api.us.synthflow.ai/v2
+- url: https://api.eu.synthflow.ai/v2
+tags:
+- name: subpackage_mcp
+paths:
+  /workspaces/{workspace_id}/mcp-config:
+    get:
+      operationId: get-workspace-mcp-config
+      summary: Get MCP configuration
+      description: Retrieves the MCP server configuration for a specific workspace.
+      tags:
+      - subpackage_mcp
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: MCP configuration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMCPConfigOut'
+        '404':
+          description: No MCP configuration found for this workspace
+          content:
+            application/json:
+              schema:
+                description: Any type
+    post:
+      operationId: set-workspace-mcp-config
+      summary: Set MCP configuration
+      description: 'Adds or updates MCP server entries for the workspace. Existing servers not included in the payload are preserved unchanged.
+
+
+        For each server entry in the payload, if `headers` is omitted or `null` and a server with the same `id` (or `mcp_url`) already exists, the stored header values are preserved. To explicitly clear all headers for a server, pass `headers: {}`. Returns the first saved server entry with its stable ID.
+
+        '
+      tags:
+      - subpackage_mcp
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: MCP configuration set successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MCPServerOut'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentMCPConfigIn'
+    put:
+      operationId: update-workspace-mcp-config
+      summary: Update MCP configuration
+      description: 'Updates an existing MCP configuration for a specific workspace. Returns 404 if no configuration exists (use POST to create one).
+
+
+        For each server entry, if `headers` is omitted or `null` and a server with the same `id` already exists, the stored header values are preserved. To explicitly clear all headers for a server, pass `headers: {}`.
+
+        '
+      tags:
+      - subpackage_mcp
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: MCP configuration updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: No MCP configuration found for this workspace
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentMCPConfigIn'
+    delete:
+      operationId: delete-workspace-mcp-config
+      summary: Delete MCP configuration
+      description: Removes the MCP configuration and associated secrets from Vault.
+      tags:
+      - subpackage_mcp
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: MCP configuration deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: No MCP configuration found to delete
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /workspaces/{workspace_id}/mcp-tools/discover:
+    post:
+      operationId: discover-mcp-tools
+      summary: Discover MCP tools
+      description: Discovers available MCP tools across all servers configured for the workspace.
+      tags:
+      - subpackage_mcp
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: config_id
+        in: query
+        description: Optional MCP config identifier to scope discovery to a single server configuration.
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Discovery results (may include per-server errors)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoverToolsResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: No MCP servers configured for this workspace
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /workspaces/{workspace_id}/mcp-tools/invoke:
+    post:
+      operationId: invoke-mcp-tool
+      summary: Invoke an MCP tool
+      description: Invokes a namespaced MCP tool on the appropriate server. This is a synchronous call that may take 8–15 seconds.
+      tags:
+      - subpackage_mcp
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tool invocation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvokeMCPToolResponse'
+        '400':
+          description: Invalid request (missing fields, malformed tool name)
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Workspace not found or tool namespace not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvokeMCPToolRequest'
+components:
+  schemas:
+    AgentMCPConfigIn:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerIn'
+          description: List of MCP server configurations
+      required:
+      - servers
+      title: AgentMCPConfigIn
+    MCPToolDefinition:
+      type: object
+      properties:
+        namespaced_tool:
+          type: string
+          description: 'Fully qualified tool name: {namespace}__{tool_name}'
+        original_tool_name:
+          type: string
+          description: Tool name as returned by the MCP server
+        tool_description:
+          type:
+          - string
+          - 'null'
+          description: Description returned by MCP server
+        input_schema:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: JSON Schema for the tool's input parameters
+      required:
+      - namespaced_tool
+      - original_tool_name
+      description: A tool returned by MCP discovery (enriched with namespace)
+      title: MCPToolDefinition
+    MCPServerIn:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable config ID. Omit for new entries (auto-generated).
+        mcp_url:
+          type: string
+          format: uri
+          description: The HTTPS URL of the MCP server (SSE endpoint)
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: Custom headers to send with MCP requests (e.g. Authorization, API keys)
+      required:
+      - mcp_url
+      title: MCPServerIn
+    ServerDiscoveryResult:
+      type: object
+      properties:
+        config_id:
+          type: string
+          description: Stable ID of the MCP server config entry in Vault
+        server_name:
+          type: string
+          description: Raw serverInfo.name from MCP initialize
+        server_title:
+          type: string
+          description: serverInfo.title with noise words stripped
+        server_version:
+          type: string
+        namespace:
+          type: string
+          description: Derived namespace used as tool name prefix
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPToolDefinition'
+        error:
+          type: string
+          description: Non-empty if this server failed discovery
+      required:
+      - server_name
+      - namespace
+      - tools
+      title: ServerDiscoveryResult
+    InvokeMCPToolResponse:
+      type: object
+      properties:
+        result:
+          type: string
+          description: Tool result text (empty on error)
+        is_error:
+          type: boolean
+          description: True if the MCP server returned an error for this tool call
+        error:
+          type: string
+          description: Error message if the invocation failed
+      title: InvokeMCPToolResponse
+    MCPServerOut:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable config ID for linking actions to this server entry
+        mcp_url:
+          type: string
+          format: uri
+          description: The HTTPS URL of the MCP server (SSE endpoint)
+        has_headers:
+          type: boolean
+          description: Whether custom headers are stored in Vault
+        headers_keys:
+          type: array
+          items:
+            type: string
+          description: Names of stored header keys (values redacted)
+      required:
+      - id
+      - mcp_url
+      - has_headers
+      title: MCPServerOut
+    DiscoverToolsResponse:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerDiscoveryResult'
+      required:
+      - servers
+      title: DiscoverToolsResponse
+    InvokeMCPToolRequest:
+      type: object
+      properties:
+        namespaced_tool:
+          type: string
+          description: 'Fully qualified tool name: {namespace}__{tool_name}'
+        arguments:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Tool arguments matching the tool's input_schema
+        timeout_ms:
+          type: integer
+          description: Optional caller-controlled timeout in milliseconds
+      required:
+      - namespaced_tool
+      title: InvokeMCPToolRequest
+    AgentMCPConfigOut:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerOut'
+          description: List of MCP server configurations with redacted headers
+      required:
+      - servers
+      title: AgentMCPConfigOut
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

@@ -1,26 +1,38 @@
 {
   "provider": "synthflow",
   "sources": [
-    "synthflow-default-api-openapi.yml",
-    "synthflow-subpackage-chat-api-openapi.yml",
-    "synthflow-subpackage-contacts-api-openapi.yml",
-    "synthflow-subpackage-mcp-api-openapi.yml",
-    "synthflow-subpackage-memorystores-api-openapi.yml",
-    "synthflow-subpackage-phonenumbers-api-openapi.yml",
-    "synthflow-subpackage-webhooklogs-api-openapi.yml"
+    "_original/synthflow-openapi.json"
   ],
   "outputs": [
     "synthflow-default-api-openapi.yml",
-    "synthflow-subpackage-chat-api-openapi.yml",
-    "synthflow-subpackage-contacts-api-openapi.yml",
-    "synthflow-subpackage-mcp-api-openapi.yml",
-    "synthflow-subpackage-memorystores-api-openapi.yml",
-    "synthflow-subpackage-phonenumbers-api-openapi.yml",
-    "synthflow-subpackage-webhooklogs-api-openapi.yml"
+    "synthflow-chat-api-openapi.yml",
+    "synthflow-contacts-api-openapi.yml",
+    "synthflow-mcp-api-openapi.yml",
+    "synthflow-memorystores-api-openapi.yml",
+    "synthflow-phonenumbers-api-openapi.yml",
+    "synthflow-webhooklogs-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "synthflow-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "synthflow-openapi.json: declared missing tag: ",
+    "synthflow-openapi.json: declared missing tag: chat",
+    "synthflow-openapi.json: declared missing tag: contacts",
+    "synthflow-openapi.json: declared missing tag: mcp",
+    "synthflow-openapi.json: declared missing tag: memoryStores",
+    "synthflow-openapi.json: declared missing tag: phoneNumbers",
+    "synthflow-openapi.json: declared missing tag: webhookLogs"
+  ],
+  "skipped": [
+    "synthflow-default-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-subpackage-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-subpackage-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-subpackage-mcp-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-subpackage-memorystores-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-subpackage-phonenumbers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-subpackage-webhooklogs-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

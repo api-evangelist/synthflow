@@ -1,21 +1,24 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Platform subpackage_mcp API
+  title: PLATFORM MCP API
   version: 1.0.0
 servers:
 - url: https://api.synthflow.ai/v2
+  description: Global
 - url: https://api.us.synthflow.ai/v2
+  description: United States
 - url: https://api.eu.synthflow.ai/v2
+  description: European Union
 tags:
-- name: subpackage_mcp
+- name: mcp
 paths:
   /workspaces/{workspace_id}/mcp-config:
     get:
-      operationId: get-workspace-mcp-config
+      operationId: GetWorkspaceMCPConfig
       summary: Get MCP configuration
       description: Retrieves the MCP server configuration for a specific workspace.
       tags:
-      - subpackage_mcp
+      - mcp
       parameters:
       - name: workspace_id
         in: path
@@ -42,7 +45,7 @@ paths:
               schema:
                 description: Any type
     post:
-      operationId: set-workspace-mcp-config
+      operationId: SetWorkspaceMCPConfig
       summary: Set MCP configuration
       description: 'Adds or updates MCP server entries for the workspace. Existing servers not included in the payload are preserved unchanged.
 
@@ -51,7 +54,7 @@ paths:
 
         '
       tags:
-      - subpackage_mcp
+      - mcp
       parameters:
       - name: workspace_id
         in: path
@@ -83,7 +86,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AgentMCPConfigIn'
     put:
-      operationId: update-workspace-mcp-config
+      operationId: UpdateWorkspaceMCPConfig
       summary: Update MCP configuration
       description: 'Updates an existing MCP configuration for a specific workspace. Returns 404 if no configuration exists (use POST to create one).
 
@@ -92,7 +95,7 @@ paths:
 
         '
       tags:
-      - subpackage_mcp
+      - mcp
       parameters:
       - name: workspace_id
         in: path
@@ -131,11 +134,11 @@ paths:
             schema:
               $ref: '#/components/schemas/AgentMCPConfigIn'
     delete:
-      operationId: delete-workspace-mcp-config
+      operationId: DeleteWorkspaceMCPConfig
       summary: Delete MCP configuration
       description: Removes the MCP configuration and associated secrets from Vault.
       tags:
-      - subpackage_mcp
+      - mcp
       parameters:
       - name: workspace_id
         in: path
@@ -164,11 +167,11 @@ paths:
                 description: Any type
   /workspaces/{workspace_id}/mcp-tools/discover:
     post:
-      operationId: discover-mcp-tools
+      operationId: DiscoverMCPTools
       summary: Discover MCP tools
       description: Discovers available MCP tools across all servers configured for the workspace.
       tags:
-      - subpackage_mcp
+      - mcp
       parameters:
       - name: workspace_id
         in: path
@@ -214,11 +217,11 @@ paths:
                 description: Any type
   /workspaces/{workspace_id}/mcp-tools/invoke:
     post:
-      operationId: invoke-mcp-tool
+      operationId: InvokeMCPTool
       summary: Invoke an MCP tool
       description: Invokes a namespaced MCP tool on the appropriate server. This is a synchronous call that may take 8–15 seconds.
       tags:
-      - subpackage_mcp
+      - mcp
       parameters:
       - name: workspace_id
         in: path
@@ -263,6 +266,101 @@ paths:
               $ref: '#/components/schemas/InvokeMCPToolRequest'
 components:
   schemas:
+    MCPServerIn:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable config ID. Omit for new entries (auto-generated).
+        mcp_url:
+          type: string
+          format: uri
+          description: The HTTPS URL of the MCP server (SSE endpoint)
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: Custom headers to send with MCP requests (e.g. Authorization, API keys)
+      required:
+      - mcp_url
+      title: MCPServerIn
+    MCPServerOut:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable config ID for linking actions to this server entry
+        mcp_url:
+          type: string
+          format: uri
+          description: The HTTPS URL of the MCP server (SSE endpoint)
+        has_headers:
+          type: boolean
+          description: Whether custom headers are stored in Vault
+        headers_keys:
+          type: array
+          items:
+            type: string
+          description: Names of stored header keys (values redacted)
+      required:
+      - id
+      - mcp_url
+      - has_headers
+      title: MCPServerOut
+    AgentMCPConfigOut:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerOut'
+          description: List of MCP server configurations with redacted headers
+      required:
+      - servers
+      title: AgentMCPConfigOut
+    AgentMCPConfigIn:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerIn'
+          description: List of MCP server configurations
+      required:
+      - servers
+      title: AgentMCPConfigIn
+    InvokeMCPToolResponse:
+      type: object
+      properties:
+        result:
+          type: string
+          description: Tool result text (empty on error)
+        is_error:
+          type: boolean
+          description: True if the MCP server returned an error for this tool call
+        error:
+          type: string
+          description: Error message if the invocation failed
+      title: InvokeMCPToolResponse
+    InvokeMCPToolRequest:
+      type: object
+      properties:
+        namespaced_tool:
+          type: string
+          description: 'Fully qualified tool name: {namespace}__{tool_name}'
+        arguments:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Tool arguments matching the tool's input_schema
+        timeout_ms:
+          type: integer
+          description: Optional caller-controlled timeout in milliseconds
+      required:
+      - namespaced_tool
+      title: InvokeMCPToolRequest
     MCPToolDefinition:
       type: object
       properties:
@@ -318,77 +416,6 @@ components:
       - namespace
       - tools
       title: ServerDiscoveryResult
-    MCPServerOut:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stable config ID for linking actions to this server entry
-        mcp_url:
-          type: string
-          format: uri
-          description: The HTTPS URL of the MCP server (SSE endpoint)
-        has_headers:
-          type: boolean
-          description: Whether custom headers are stored in Vault
-        headers_keys:
-          type: array
-          items:
-            type: string
-          description: Names of stored header keys (values redacted)
-      required:
-      - id
-      - mcp_url
-      - has_headers
-      title: MCPServerOut
-    MCPServerIn:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stable config ID. Omit for new entries (auto-generated).
-        mcp_url:
-          type: string
-          format: uri
-          description: The HTTPS URL of the MCP server (SSE endpoint)
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-          description: Custom headers to send with MCP requests (e.g. Authorization, API keys)
-      required:
-      - mcp_url
-      title: MCPServerIn
-    AgentMCPConfigIn:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MCPServerIn'
-          description: List of MCP server configurations
-      required:
-      - servers
-      title: AgentMCPConfigIn
-    InvokeMCPToolRequest:
-      type: object
-      properties:
-        namespaced_tool:
-          type: string
-          description: 'Fully qualified tool name: {namespace}__{tool_name}'
-        arguments:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Tool arguments matching the tool's input_schema
-        timeout_ms:
-          type: integer
-          description: Optional caller-controlled timeout in milliseconds
-      required:
-      - namespaced_tool
-      title: InvokeMCPToolRequest
     DiscoverToolsResponse:
       type: object
       properties:
@@ -399,30 +426,6 @@ components:
       required:
       - servers
       title: DiscoverToolsResponse
-    AgentMCPConfigOut:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MCPServerOut'
-          description: List of MCP server configurations with redacted headers
-      required:
-      - servers
-      title: AgentMCPConfigOut
-    InvokeMCPToolResponse:
-      type: object
-      properties:
-        result:
-          type: string
-          description: Tool result text (empty on error)
-        is_error:
-          type: boolean
-          description: True if the MCP server returned an error for this tool call
-        error:
-          type: string
-          description: Error message if the invocation failed
-      title: InvokeMCPToolResponse
   securitySchemes:
     sec0:
       type: http

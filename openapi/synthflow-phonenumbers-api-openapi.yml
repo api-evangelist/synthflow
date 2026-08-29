@@ -1,0 +1,511 @@
+openapi: 3.2.0
+info:
+  title: PLATFORM Phone Numbers API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+  description: Global
+- url: https://api.us.synthflow.ai/v2
+  description: United States
+- url: https://api.eu.synthflow.ai/v2
+  description: European Union
+tags:
+- name: phoneNumbers
+paths:
+  /numbers:
+    get:
+      operationId: get-numbers
+      summary: List phone numbers
+      description: Lists all phone numbers assigned to a workspace.
+      tags:
+      - phoneNumbers
+      parameters:
+      - name: workspace
+        in: query
+        description: Workspace ID.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Phone numbers displayed per page.
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: offset
+        in: query
+        description: Index of the first phone number to be returned.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: is_available
+        in: query
+        description: 'Filters phone numbers by inbound availability.
+
+          - `true`: only numbers not assigned to inbound agents
+
+          - `false`: only numbers assigned to inbound agents
+
+          '
+        required: false
+        schema:
+          type: boolean
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_get-numbers_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-numbersRequestBadRequestError'
+  /numbers/{phone_number_slug}:
+    get:
+      operationId: get-phone-number
+      summary: Get a phone number
+      description: Retrieves detailed information about a specific phone number.
+      tags:
+      - phoneNumbers
+      parameters:
+      - name: phone_number_slug
+        in: path
+        description: The phone number slug (phone number without the leading +).
+        required: true
+        schema:
+          type: string
+      - name: workspace
+        in: query
+        description: Workspace ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_get-phone-number_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-phone-numberRequestBadRequestError'
+    patch:
+      operationId: update-phone-number
+      summary: Update a phone number
+      description: Updates the configuration of a phone number.
+      tags:
+      - phoneNumbers
+      parameters:
+      - name: phone_number_slug
+        in: path
+        description: The phone number slug (phone number without the leading +).
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_update-phone-number_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-phone-numberRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                friendly_name:
+                  type: string
+                  description: A human-readable name for the phone number.
+                sip_auth_username:
+                  type: string
+                  description: SIP authentication username.
+                sip_outbound_proxy:
+                  type: string
+                  description: SIP outbound proxy.
+                sip_term_uri:
+                  type: string
+                  description: SIP termination URI / SIP domain. Required when changing the SIP domain for providers other than `five9`, `ringcx`, and `zoom`. You may also send `termination_uri` as an alias; it is mapped to `sip_term_uri`.
+                termination_uri:
+                  type: string
+                  description: Alias for `sip_term_uri` (SIP domain). Required when setting the domain for providers other than `five9`, `ringcx`, and `zoom`.
+                provider_name:
+                  $ref: '#/components/schemas/NumbersPhoneNumberSlugPatchRequestBodyContentApplicationJsonSchemaProviderName'
+                  description: Telephony provider. When set to a non-auto provider without a SIP domain, the request fails with 400.
+                trunk_username:
+                  type: string
+                  description: SIP trunk username for authentication. Required when enabling `uac_enabled`.
+                trunk_pwd:
+                  type: string
+                  description: SIP trunk password for authentication. Required when enabling `uac_enabled`.
+                uac_enabled:
+                  type: boolean
+                  description: When true, Synthflow sends outbound SIP REGISTER traffic to your carrier or PBX. Requires `trunk_username` and `trunk_pwd` when enabling registration.
+                uac_register_expires:
+                  type: integer
+                  description: SIP registration refresh interval in seconds. Whole numbers only, between 60 and 3600. Defaults to 300.
+    delete:
+      operationId: delete-phone-number
+      summary: Delete a phone number
+      description: Deletes a phone number from your workspace. This will detach the phone number from any agents it is linked to. For phone numbers purchased through Synthflow, this also cancels the monthly subscription.
+      tags:
+      - phoneNumbers
+      parameters:
+      - name: phone_number_slug
+        in: path
+        description: The phone number slug (phone number without the leading +).
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_delete-phone-number_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete-phone-numberRequestBadRequestError'
+  /custom-numbers:
+    post:
+      operationId: create-custom-number
+      summary: Import phone number
+      description: Imports a phone number into your workspace for direct SIP dialing when your telephony provider does not offer elastic SIP trunking. Set `provider_name` to select the provider. For `five9`, `ringcx`, and `zoom`, Synthflow auto-fills the SIP domain (and for Five9, the outbound TLS proxy) from the deployment region, so you only need `workspace_id`, `phone_number`, `provider_name`, and optionally `friendly_name`. Credentials are not required for those providers. For `custom` trunks, set `uac_enabled` to true when your carrier or PBX requires outbound SIP REGISTER traffic, and optionally set `uac_register_expires` (60 to 3600 seconds, default 300).
+      tags:
+      - phoneNumbers
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone-Numbers_create-custom-number_Response_200'
+        '400':
+          description: Invalid request. Returned when `termination_uri` is missing for a provider that requires it, or when UAC registration fields are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create-custom-numberRequestBadRequestError'
+        '403':
+          description: The selected provider import is not enabled for this workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create-custom-numberRequestForbiddenError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                workspace_id:
+                  type: string
+                  description: The workspace ID to associate the phone number with.
+                phone_number:
+                  type: string
+                  description: The phone number to import. For most providers use E.164. Five9 and Zoom also accept non-E.164 integration or extension identifiers.
+                friendly_name:
+                  type: string
+                  description: A human-readable name for the phone number.
+                provider_name:
+                  $ref: '#/components/schemas/CustomNumbersPostRequestBodyContentApplicationJsonSchemaProviderName'
+                  description: Telephony provider for the imported number. Omit or use `custom` for a bring-your-own SIP trunk. Use `five9`, `ringcx`, or `zoom` for those integrations; SIP domain defaults are applied automatically for those three only.
+                trunk_username:
+                  type: string
+                  description: Optional SIP trunk username for authentication. Required when `uac_enabled` is true. Not used for `five9`, `ringcx`, or `zoom`.
+                trunk_pwd:
+                  type: string
+                  description: Optional SIP trunk password for authentication. Required when `uac_enabled` is true. Not used for `five9`, `ringcx`, or `zoom`.
+                termination_uri:
+                  type: string
+                  description: SIP domain or termination URI used for outbound calls (maps to `sip_term_uri`). Required for `custom`, `twilio`, `telnyx`, `vonage`, and `ring_central`. Optional for `five9` (regional IP), `ringcx` (`sip.ringcentral.com`), and `zoom` (`sip.zoom.com`), which are filled automatically when omitted. Requests that omit it for a non-auto provider return 400.
+                sip_outbound_proxy:
+                  type: string
+                  description: Optional outbound proxy used for outbound calls and SIP REGISTER requests. For `five9`, Synthflow sets the regional TLS proxy automatically when omitted.
+                sip_auth_username:
+                  type: string
+                  description: Optional auth username used for SIP REGISTER requests when it differs from `trunk_username`.
+                uac_enabled:
+                  type: boolean
+                  default: false
+                  description: When true, Synthflow sends outbound SIP REGISTER traffic to your carrier or PBX so it can authenticate outbound calls. Requires `trunk_username` and `trunk_pwd`. Defaults to false.
+                uac_register_expires:
+                  type: integer
+                  default: 300
+                  description: SIP registration refresh interval in seconds. Only used when `uac_enabled` is true (or for providers that register implicitly, such as RingCentral). Whole numbers only, between 60 and 3600. Defaults to 300.
+              required:
+              - workspace_id
+              - phone_number
+components:
+  schemas:
+    Create-custom-numberRequestForbiddenError:
+      type: object
+      properties: {}
+      title: Create-custom-numberRequestForbiddenError
+    NumbersPhoneNumberSlugPatchRequestBodyContentApplicationJsonSchemaProviderName:
+      type: string
+      enum:
+      - twilio
+      - telnyx
+      - vonage
+      - ring_central
+      - ringcx
+      - custom
+      - zoom
+      - five9
+      description: Telephony provider. When set to a non-auto provider without a SIP domain, the request fails with 400.
+      title: NumbersPhoneNumberSlugPatchRequestBodyContentApplicationJsonSchemaProviderName
+    Create-custom-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-custom-numberRequestBadRequestError
+    NumbersGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/NumbersGetResponsesContentApplicationJsonSchemaResponsePagination'
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/NumbersGetResponsesContentApplicationJsonSchemaResponsePhoneNumbersItems'
+      title: NumbersGetResponsesContentApplicationJsonSchemaResponse
+    Phone-Numbers_get-numbers_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/NumbersGetResponsesContentApplicationJsonSchemaResponse'
+      title: Phone-Numbers_get-numbers_Response_200
+    Phone-Numbers_delete-phone-number_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: Phone-Numbers_delete-phone-number_Response_200
+    Phone-Numbers_create-custom-number_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/CustomNumbersPostResponsesContentApplicationJsonSchemaResponse'
+      title: Phone-Numbers_create-custom-number_Response_200
+    Update-phone-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-phone-numberRequestBadRequestError
+    NumbersGetResponsesContentApplicationJsonSchemaResponsePhoneNumbersItems:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Phone number.
+        sid:
+          type:
+          - string
+          - 'null'
+          description: Phone number SID. May be null for custom numbers.
+        is_available:
+          type: boolean
+          description: Whether the number is available for inbound assignment.
+      title: NumbersGetResponsesContentApplicationJsonSchemaResponsePhoneNumbersItems
+    Get-numbersRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-numbersRequestBadRequestError
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    Phone-Numbers_get-phone-number_Response_200:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: The phone number slug (phone number without the leading +).
+        address_requirement:
+          type: string
+          description: Address requirement for the phone number.
+        phone_number:
+          type: string
+          description: The full phone number in E.164 format.
+        friendly_name:
+          type: string
+          description: A human-readable name for the phone number.
+        is_sms_capable:
+          type: boolean
+          description: Whether the phone number can send and receive SMS.
+        is_voice_capable:
+          type: boolean
+          description: Whether the phone number can make and receive voice calls.
+        iso_country:
+          type: string
+          description: ISO country code for the phone number.
+        locality:
+          type: string
+          description: The locality or city associated with the phone number.
+        sip_auth_username:
+          type:
+          - string
+          - 'null'
+          description: SIP authentication username, if configured.
+        sip_outbound_proxy:
+          type:
+          - string
+          - 'null'
+          description: SIP outbound proxy, if configured.
+        sip_term_uri:
+          type: string
+          description: SIP termination URI.
+        uac_enabled:
+          type: boolean
+          description: Whether outbound SIP registration (REGISTER) is enabled for this number.
+        uac_register_expires:
+          type:
+          - integer
+          - 'null'
+          description: SIP registration refresh interval in seconds when registration is enabled.
+        sid:
+          type: string
+          description: Phone number SID from the provider.
+        provider_name:
+          type: string
+          description: Name of the telephony provider. Common values include `twilio`, `telnyx`, `vonage`, `ring_central`, `ringcx`, `custom`, `zoom`, and `five9`.
+        region:
+          type: string
+          description: The region associated with the phone number.
+        is_available:
+          type: boolean
+          description: Whether the number is available for inbound assignment.
+        agency_workspace_id:
+          type:
+          - string
+          - 'null'
+          description: Agency workspace ID, if applicable.
+        workspace_id:
+          type: string
+          description: The workspace ID the phone number belongs to.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the phone number was created.
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the phone number was last updated.
+        assistants:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of assistant IDs attached to this phone number.
+      title: Phone-Numbers_get-phone-number_Response_200
+    CustomNumbersPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        key:
+          type: string
+          format: uuid
+          description: Unique identifier for the custom phone number.
+        phone_number:
+          type: string
+          description: The imported phone number.
+      title: CustomNumbersPostResponsesContentApplicationJsonSchemaResponse
+    Delete-phone-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-phone-numberRequestBadRequestError
+    Phone-Numbers_update-phone-number_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: Phone-Numbers_update-phone-number_Response_200
+    Get-phone-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-phone-numberRequestBadRequestError
+    CustomNumbersPostRequestBodyContentApplicationJsonSchemaProviderName:
+      type: string
+      enum:
+      - twilio
+      - telnyx
+      - vonage
+      - ring_central
+      - ringcx
+      - custom
+      - zoom
+      - five9
+      description: Telephony provider for the imported number. Omit or use `custom` for a bring-your-own SIP trunk. Use `five9`, `ringcx`, or `zoom` for those integrations; SIP domain defaults are applied automatically for those three only.
+      title: CustomNumbersPostRequestBodyContentApplicationJsonSchemaProviderName
+    NumbersGetResponsesContentApplicationJsonSchemaResponsePagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+          description: Total number of phone numbers.
+        limit:
+          type: integer
+          description: Number of phone numbers per page.
+        offset:
+          type: integer
+          description: Index of the first phone number returned.
+      title: NumbersGetResponsesContentApplicationJsonSchemaResponsePagination
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

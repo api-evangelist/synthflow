@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Platform subpackage_webhookLogs API
+  title: Platform Subpackage Webhook Logs API
   version: 1.0.0
 servers:
 - url: https://api.synthflow.ai/v2
@@ -151,11 +151,85 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    WebhookLogPayloadResponsePayload:
+      type: object
+      properties: {}
+      description: Payload received in the response
+      title: WebhookLogPayloadResponsePayload
+    WebhookAssistantPaginatedList:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/WebhookAssistantPaginatedListResponse'
+      required:
+      - status
+      - response
+      title: WebhookAssistantPaginatedList
     WebhookLogPayloadResponseHeaders:
       type: object
       properties: {}
       description: HTTP headers received in the response
       title: WebhookLogPayloadResponseHeaders
+    WebhookAssistantPaginatedListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookLogListItem'
+        total:
+          type: integer
+          description: Total number of webhook logs
+        page_size:
+          type: integer
+          description: Number of items per page
+        page_number:
+          type: integer
+          description: Current page number
+      required:
+      - items
+      - total
+      - page_size
+      - page_number
+      title: WebhookAssistantPaginatedListResponse
+    WebhookLogPayloadRequestHeaders:
+      type: object
+      properties: {}
+      description: HTTP headers sent with the request
+      title: WebhookLogPayloadRequestHeaders
+    WebhookLogPayloadRequestQueryParams:
+      type: object
+      properties: {}
+      description: URL query parameters
+      title: WebhookLogPayloadRequestQueryParams
+    LogsGetParametersStatus:
+      type: string
+      enum:
+      - pending
+      - success
+      - failed
+      title: LogsGetParametersStatus
+    LogsGetParametersHttpMethod:
+      type: string
+      enum:
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      title: LogsGetParametersHttpMethod
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type or classification
+        message:
+          type: string
+          description: Detailed error message
+      title: ErrorResponse
     WebhookLogListItem:
       type: object
       properties:
@@ -189,11 +263,43 @@ components:
       - status
       description: Schema for webhook log list items
       title: WebhookLogListItem
-    WebhookLogPayloadRequestPayload:
+    WebhookLogDetailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/WebhookLogPayload'
+      required:
+      - status
+      - response
+      title: WebhookLogDetailResponse
+    WebhookLogPayloadFlowLocation:
       type: object
       properties: {}
-      description: Payload sent with the request
-      title: WebhookLogPayloadRequestPayload
+      description: Conversation flow context (stage, stage_name, and optionally node, node_name)
+      title: WebhookLogPayloadFlowLocation
+    WebhookStatus:
+      type: string
+      enum:
+      - pending
+      - success
+      - failed
+      description: Status of webhook execution
+      title: WebhookStatus
+    WebhookType:
+      type: string
+      enum:
+      - external_webhook
+      - inbound_webhook
+      - custom_action
+      description: Type of webhook
+      title: WebhookType
+    WebhookLogPayloadRequestOrigin:
+      type: object
+      properties: {}
+      description: Request origin headers (user_agent, x_forwarded_for, x_real_ip)
+      title: WebhookLogPayloadRequestOrigin
     WebhookLogPayload:
       type: object
       properties:
@@ -280,11 +386,11 @@ components:
       - request_payload
       - status
       title: WebhookLogPayload
-    WebhookLogPayloadRequestQueryParams:
+    WebhookLogPayloadRequestPayload:
       type: object
       properties: {}
-      description: URL query parameters
-      title: WebhookLogPayloadRequestQueryParams
+      description: Payload sent with the request
+      title: WebhookLogPayloadRequestPayload
     LogsGetParametersWebhookType:
       type: string
       enum:
@@ -292,112 +398,6 @@ components:
       - inbound_webhook
       - custom_action
       title: LogsGetParametersWebhookType
-    WebhookLogPayloadResponsePayload:
-      type: object
-      properties: {}
-      description: Payload received in the response
-      title: WebhookLogPayloadResponsePayload
-    WebhookAssistantPaginatedList:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/WebhookAssistantPaginatedListResponse'
-      required:
-      - status
-      - response
-      title: WebhookAssistantPaginatedList
-    WebhookAssistantPaginatedListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebhookLogListItem'
-        total:
-          type: integer
-          description: Total number of webhook logs
-        page_size:
-          type: integer
-          description: Number of items per page
-        page_number:
-          type: integer
-          description: Current page number
-      required:
-      - items
-      - total
-      - page_size
-      - page_number
-      title: WebhookAssistantPaginatedListResponse
-    WebhookLogDetailResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/WebhookLogPayload'
-      required:
-      - status
-      - response
-      title: WebhookLogDetailResponse
-    LogsGetParametersHttpMethod:
-      type: string
-      enum:
-      - get
-      - post
-      - put
-      - patch
-      - delete
-      title: LogsGetParametersHttpMethod
-    LogsGetParametersStatus:
-      type: string
-      enum:
-      - pending
-      - success
-      - failed
-      title: LogsGetParametersStatus
-    WebhookLogPayloadRequestHeaders:
-      type: object
-      properties: {}
-      description: HTTP headers sent with the request
-      title: WebhookLogPayloadRequestHeaders
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error type or classification
-        message:
-          type: string
-          description: Detailed error message
-      title: ErrorResponse
-    WebhookType:
-      type: string
-      enum:
-      - external_webhook
-      - inbound_webhook
-      - custom_action
-      description: Type of webhook
-      title: WebhookType
-    WebhookLogPayloadFlowLocation:
-      type: object
-      properties: {}
-      description: Conversation flow context (stage, stage_name, and optionally node, node_name)
-      title: WebhookLogPayloadFlowLocation
-    WebhookLogPayloadRequestOrigin:
-      type: object
-      properties: {}
-      description: Request origin headers (user_agent, x_forwarded_for, x_real_ip)
-      title: WebhookLogPayloadRequestOrigin
-    WebhookStatus:
-      type: string
-      enum:
-      - pending
-      - success
-      - failed
-      description: Status of webhook execution
-      title: WebhookStatus
   securitySchemes:
     sec0:
       type: http

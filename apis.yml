@@ -179,72 +179,66 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/synthflow-default-api-openapi.yml
-- aid: synthflow:synthflow-subpackage-chat-api
-  name: Synthflow subpackage_chat API
-  description: The subpackage_chat API from Synthflow — 4 operation(s) for subpackage_chat.
-  humanURL: https://docs.synthflow.ai
-  baseURL: https://api.synthflow.ai
-  tags: []
-  tags_raw:
-  - subpackage_chat
-  properties:
-  - type: OpenAPI
-    url: openapi/synthflow-subpackage-chat-api-openapi.yml
-- aid: synthflow:synthflow-subpackage-contacts-api
-  name: Synthflow subpackage_contacts API
-  description: The subpackage_contacts API from Synthflow — 2 operation(s) for subpackage_contacts.
-  humanURL: https://docs.synthflow.ai
-  baseURL: https://api.synthflow.ai
-  tags: []
-  tags_raw:
-  - subpackage_contacts
-  properties:
-  - type: OpenAPI
-    url: openapi/synthflow-subpackage-contacts-api-openapi.yml
-- aid: synthflow:synthflow-subpackage-mcp-api
-  name: Synthflow subpackage_mcp API
-  description: The subpackage_mcp API from Synthflow — 3 operation(s) for subpackage_mcp.
-  humanURL: https://docs.synthflow.ai
-  baseURL: https://api.synthflow.ai
-  tags: []
-  tags_raw:
-  - subpackage_mcp
-  properties:
-  - type: OpenAPI
-    url: openapi/synthflow-subpackage-mcp-api-openapi.yml
-- aid: synthflow:synthflow-subpackage-memorystores-api
-  name: Synthflow subpackage_memoryStores API
-  description: >-
-    The subpackage_memoryStores API from Synthflow — 1 operation(s) for subpackage_memorystores.
+- aid: synthflow:synthflow-chat-api
+  name: Synthflow Chat API
+  description: The chat API from Synthflow — 4 operation(s) for chat.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
-  - subpackage_memoryStores
+  - chat
   properties:
   - type: OpenAPI
-    url: openapi/synthflow-subpackage-memorystores-api-openapi.yml
-- aid: synthflow:synthflow-subpackage-phonenumbers-api
-  name: Synthflow subpackage_phoneNumbers API
-  description: >-
-    The subpackage_phoneNumbers API from Synthflow — 3 operation(s) for subpackage_phonenumbers.
+    url: openapi/synthflow-chat-api-openapi.yml
+- aid: synthflow:synthflow-contacts-api
+  name: Synthflow Contacts API
+  description: The contacts API from Synthflow — 2 operation(s) for contacts.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
-  - subpackage_phoneNumbers
+  - contacts
   properties:
   - type: OpenAPI
-    url: openapi/synthflow-subpackage-phonenumbers-api-openapi.yml
-- aid: synthflow:synthflow-subpackage-webhooklogs-api
-  name: Synthflow subpackage_webhookLogs API
-  description: >-
-    The subpackage_webhookLogs API from Synthflow — 2 operation(s) for subpackage_webhooklogs.
+    url: openapi/synthflow-contacts-api-openapi.yml
+- aid: synthflow:synthflow-mcp-api
+  name: Synthflow MCP API
+  description: The mcp API from Synthflow — 3 operation(s) for mcp.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
-  - subpackage_webhookLogs
+  - mcp
   properties:
   - type: OpenAPI
-    url: openapi/synthflow-subpackage-webhooklogs-api-openapi.yml
+    url: openapi/synthflow-mcp-api-openapi.yml
+- aid: synthflow:synthflow-memorystores-api
+  name: Synthflow Memory Stores API
+  description: The memoryStores API from Synthflow — 1 operation(s) for memorystores.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - memoryStores
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-memorystores-api-openapi.yml
+- aid: synthflow:synthflow-phonenumbers-api
+  name: Synthflow Phone Numbers API
+  description: The phoneNumbers API from Synthflow — 3 operation(s) for phonenumbers.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - phoneNumbers
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-phonenumbers-api-openapi.yml
+- aid: synthflow:synthflow-webhooklogs-api
+  name: Synthflow Webhook Logs API
+  description: The webhookLogs API from Synthflow — 2 operation(s) for webhooklogs.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - webhookLogs
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-webhooklogs-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/synthflow-agentic-access.yml

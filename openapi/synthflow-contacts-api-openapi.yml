@@ -1,13 +1,16 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Platform subpackage_contacts API
+  title: PLATFORM Contacts API
   version: 1.0.0
 servers:
 - url: https://api.synthflow.ai/v2
+  description: Global
 - url: https://api.us.synthflow.ai/v2
+  description: United States
 - url: https://api.eu.synthflow.ai/v2
+  description: European Union
 tags:
-- name: subpackage_contacts
+- name: contacts
 paths:
   /contacts:
     post:
@@ -15,7 +18,7 @@ paths:
       summary: Create a contact
       description: ''
       tags:
-      - subpackage_contacts
+      - contacts
       parameters:
       - name: Authorization
         in: header
@@ -57,7 +60,7 @@ paths:
       summary: Update a contact
       description: ''
       tags:
-      - subpackage_contacts
+      - contacts
       parameters:
       - name: contact_id
         in: path
@@ -97,17 +100,6 @@ paths:
                   $ref: '#/components/schemas/ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata'
 components:
   schemas:
-    ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata:
-      type: object
-      properties:
-        company:
-          type: string
-      description: Additional metadata for the contact.
-      title: ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata
-    ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata:
-      type: object
-      properties: {}
-      title: ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata
     Contacts_create-a-contact_Response_200:
       type: object
       properties:
@@ -116,18 +108,29 @@ components:
         response:
           $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaResponse'
       title: Contacts_create-a-contact_Response_200
-    ContactsPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        id:
-          type: string
-      title: ContactsPostResponsesContentApplicationJsonSchemaResponse
     Contacts_update-a-contact_Response_200:
       type: object
       properties:
         status:
           type: string
       title: Contacts_update-a-contact_Response_200
+    ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata:
+      type: object
+      properties:
+        company:
+          type: string
+      description: Additional metadata for the contact.
+      title: ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata
+    ContactsPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        id:
+          type: string
+      title: ContactsPostResponsesContentApplicationJsonSchemaResponse
+    ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata:
+      type: object
+      properties: {}
+      title: ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata
   securitySchemes:
     sec0:
       type: http
