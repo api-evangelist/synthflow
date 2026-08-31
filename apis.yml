@@ -185,6 +185,8 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - Chat
+  tags_raw:
   - chat
   properties:
   - type: OpenAPI
@@ -195,6 +197,8 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - Contacts
+  tags_raw:
   - contacts
   properties:
   - type: OpenAPI
@@ -205,6 +209,8 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - MCP
+  tags_raw:
   - mcp
   properties:
   - type: OpenAPI
@@ -215,6 +221,8 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - Memory Stores
+  tags_raw:
   - memoryStores
   properties:
   - type: OpenAPI
@@ -225,6 +233,8 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - Phone Numbers
+  tags_raw:
   - phoneNumbers
   properties:
   - type: OpenAPI
@@ -235,6 +245,8 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - Webhook Logs
+  tags_raw:
   - webhookLogs
   properties:
   - type: OpenAPI
