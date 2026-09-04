@@ -43,7 +43,7 @@ accessModel:
     self-serve/free reading came from a scaffolded plans file. Synthflow's own concurrency
     docs confirm the former Pro, Growth and Agency self-serve plans are retired and closed
     to new subscriptions.
-position: Provider
+position: Producing
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/synthflow.png
 tags:
