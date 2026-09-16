@@ -215,42 +215,36 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/synthflow-mcp-api-openapi.yml
-- aid: synthflow:synthflow-memorystores-api
+- aid: synthflow:synthflow-memory-stores-api
   name: Synthflow Memory Stores API
-  description: The memoryStores API from Synthflow — 1 operation(s) for memorystores.
+  description: The Memory Stores API from Synthflow — 1 operation(s) for memory stores.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
   - Memory Stores
-  tags_raw:
-  - memoryStores
   properties:
   - type: OpenAPI
-    url: openapi/synthflow-memorystores-api-openapi.yml
-- aid: synthflow:synthflow-phonenumbers-api
+    url: openapi/synthflow-memory-stores-api-openapi.yml
+- aid: synthflow:synthflow-phone-numbers-api
   name: Synthflow Phone Numbers API
-  description: The phoneNumbers API from Synthflow — 3 operation(s) for phonenumbers.
+  description: The Phone Numbers API from Synthflow — 3 operation(s) for phone numbers.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
   - Phone Numbers
-  tags_raw:
-  - phoneNumbers
   properties:
   - type: OpenAPI
-    url: openapi/synthflow-phonenumbers-api-openapi.yml
-- aid: synthflow:synthflow-webhooklogs-api
+    url: openapi/synthflow-phone-numbers-api-openapi.yml
+- aid: synthflow:synthflow-webhook-logs-api
   name: Synthflow Webhook Logs API
-  description: The webhookLogs API from Synthflow — 2 operation(s) for webhooklogs.
+  description: The Webhook Logs API from Synthflow — 2 operation(s) for webhook logs.
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
   - Webhook Logs
-  tags_raw:
-  - webhookLogs
   properties:
   - type: OpenAPI
-    url: openapi/synthflow-webhooklogs-api-openapi.yml
+    url: openapi/synthflow-webhook-logs-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/synthflow-agentic-access.yml
