@@ -63,7 +63,7 @@ tags:
   - Agent Skills
   - Conversational AI
   - SIP
-  - Simulations
+  - Simulation
   - Knowledge Base
 tags_raw:
   - Voice
@@ -98,6 +98,13 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - Assistant
+  - Calls
+  - Phone Numbers
+  - Knowledge Bases
+  - Actions
+  - REST
+  tags_raw:
   - Assistants
   - Calls
   - Phone Numbers
