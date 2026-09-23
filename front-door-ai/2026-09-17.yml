@@ -1,0 +1,34 @@
+# Front Door AI Index — synthflow — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: synthflow
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: synthflow.ai
+  final_host: synthflow.ai
+  ownership: own
+  owner: synthflow
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 90
+  host_score: 90
+  density: 38.53
+  words: 2336
+  tiers:
+    agentic: 21
+    core: 69
+    model: 0
+  ambiguous: 64
+  top_terms:
+    AI: 69
+    agent: 55
+    AI agent: 15
+    automation: 7
+    conversational AI: 3
+    AI assistant: 1
+    chatbot: 1
+    fine-tune: 1
+    intelligence: 1
+    smart: 1

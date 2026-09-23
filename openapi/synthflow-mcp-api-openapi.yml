@@ -10,7 +10,7 @@ servers:
 - url: https://api.eu.synthflow.ai/v2
   description: European Union
 tags:
-- name: mcp
+- name: MCP
 paths:
   /workspaces/{workspace_id}/mcp-config:
     get:
@@ -18,7 +18,7 @@ paths:
       summary: Get MCP configuration
       description: Retrieves the MCP server configuration for a specific workspace.
       tags:
-      - mcp
+      - MCP
       parameters:
       - name: workspace_id
         in: path
@@ -50,11 +50,9 @@ paths:
       description: 'Adds or updates MCP server entries for the workspace. Existing servers not included in the payload are preserved unchanged.
 
 
-        For each server entry in the payload, if `headers` is omitted or `null` and a server with the same `id` (or `mcp_url`) already exists, the stored header values are preserved. To explicitly clear all headers for a server, pass `headers: {}`. Returns the first saved server entry with its stable ID.
-
-        '
+        For each server entry in the payload, if `headers` is omitted or `null` and a server with the same `id` (or `mcp_url`) already exists, the stored header values are preserved. To explicitly clear all headers for a server, pass `headers: {}`. Returns the first saved server entry with its stable ID.'
       tags:
-      - mcp
+      - MCP
       parameters:
       - name: workspace_id
         in: path
@@ -91,11 +89,9 @@ paths:
       description: 'Updates an existing MCP configuration for a specific workspace. Returns 404 if no configuration exists (use POST to create one).
 
 
-        For each server entry, if `headers` is omitted or `null` and a server with the same `id` already exists, the stored header values are preserved. To explicitly clear all headers for a server, pass `headers: {}`.
-
-        '
+        For each server entry, if `headers` is omitted or `null` and a server with the same `id` already exists, the stored header values are preserved. To explicitly clear all headers for a server, pass `headers: {}`.'
       tags:
-      - mcp
+      - MCP
       parameters:
       - name: workspace_id
         in: path
@@ -138,7 +134,7 @@ paths:
       summary: Delete MCP configuration
       description: Removes the MCP configuration and associated secrets from Vault.
       tags:
-      - mcp
+      - MCP
       parameters:
       - name: workspace_id
         in: path
@@ -171,7 +167,7 @@ paths:
       summary: Discover MCP tools
       description: Discovers available MCP tools across all servers configured for the workspace.
       tags:
-      - mcp
+      - MCP
       parameters:
       - name: workspace_id
         in: path
@@ -221,7 +217,7 @@ paths:
       summary: Invoke an MCP tool
       description: Invokes a namespaced MCP tool on the appropriate server. This is a synchronous call that may take 8–15 seconds.
       tags:
-      - mcp
+      - MCP
       parameters:
       - name: workspace_id
         in: path
@@ -286,29 +282,71 @@ components:
       required:
       - mcp_url
       title: MCPServerIn
-    MCPServerOut:
+    MCPToolDefinition:
       type: object
       properties:
-        id:
+        namespaced_tool:
           type: string
-          description: Stable config ID for linking actions to this server entry
-        mcp_url:
+          description: 'Fully qualified tool name: {namespace}__{tool_name}'
+        original_tool_name:
           type: string
-          format: uri
-          description: The HTTPS URL of the MCP server (SSE endpoint)
-        has_headers:
-          type: boolean
-          description: Whether custom headers are stored in Vault
-        headers_keys:
+          description: Tool name as returned by the MCP server
+        tool_description:
+          type:
+          - string
+          - 'null'
+          description: Description returned by MCP server
+        input_schema:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: JSON Schema for the tool's input parameters
+      required:
+      - namespaced_tool
+      - original_tool_name
+      description: A tool returned by MCP discovery (enriched with namespace)
+      title: MCPToolDefinition
+    DiscoverToolsResponse:
+      type: object
+      properties:
+        servers:
           type: array
           items:
-            type: string
-          description: Names of stored header keys (values redacted)
+            $ref: '#/components/schemas/ServerDiscoveryResult'
       required:
-      - id
-      - mcp_url
-      - has_headers
-      title: MCPServerOut
+      - servers
+      title: DiscoverToolsResponse
+    ServerDiscoveryResult:
+      type: object
+      properties:
+        config_id:
+          type: string
+          description: Stable ID of the MCP server config entry in Vault
+        server_name:
+          type: string
+          description: Raw serverInfo.name from MCP initialize
+        server_title:
+          type: string
+          description: serverInfo.title with noise words stripped
+        server_version:
+          type: string
+        namespace:
+          type: string
+          description: Derived namespace used as tool name prefix
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPToolDefinition'
+        error:
+          type: string
+          description: Non-empty if this server failed discovery
+      required:
+      - server_name
+      - namespace
+      - tools
+      title: ServerDiscoveryResult
     AgentMCPConfigOut:
       type: object
       properties:
@@ -361,71 +399,29 @@ components:
       required:
       - namespaced_tool
       title: InvokeMCPToolRequest
-    MCPToolDefinition:
+    MCPServerOut:
       type: object
       properties:
-        namespaced_tool:
+        id:
           type: string
-          description: 'Fully qualified tool name: {namespace}__{tool_name}'
-        original_tool_name:
+          description: Stable config ID for linking actions to this server entry
+        mcp_url:
           type: string
-          description: Tool name as returned by the MCP server
-        tool_description:
-          type:
-          - string
-          - 'null'
-          description: Description returned by MCP server
-        input_schema:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-          description: JSON Schema for the tool's input parameters
-      required:
-      - namespaced_tool
-      - original_tool_name
-      description: A tool returned by MCP discovery (enriched with namespace)
-      title: MCPToolDefinition
-    ServerDiscoveryResult:
-      type: object
-      properties:
-        config_id:
-          type: string
-          description: Stable ID of the MCP server config entry in Vault
-        server_name:
-          type: string
-          description: Raw serverInfo.name from MCP initialize
-        server_title:
-          type: string
-          description: serverInfo.title with noise words stripped
-        server_version:
-          type: string
-        namespace:
-          type: string
-          description: Derived namespace used as tool name prefix
-        tools:
+          format: uri
+          description: The HTTPS URL of the MCP server (SSE endpoint)
+        has_headers:
+          type: boolean
+          description: Whether custom headers are stored in Vault
+        headers_keys:
           type: array
           items:
-            $ref: '#/components/schemas/MCPToolDefinition'
-        error:
-          type: string
-          description: Non-empty if this server failed discovery
+            type: string
+          description: Names of stored header keys (values redacted)
       required:
-      - server_name
-      - namespace
-      - tools
-      title: ServerDiscoveryResult
-    DiscoverToolsResponse:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServerDiscoveryResult'
-      required:
-      - servers
-      title: DiscoverToolsResponse
+      - id
+      - mcp_url
+      - has_headers
+      title: MCPServerOut
   securitySchemes:
     sec0:
       type: http

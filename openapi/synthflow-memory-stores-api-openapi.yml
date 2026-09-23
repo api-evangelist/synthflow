@@ -10,7 +10,7 @@ servers:
 - url: https://api.eu.synthflow.ai/v2
   description: European Union
 tags:
-- name: memoryStores
+- name: Memory Stores
 paths:
   /memory_stores:
     post:
@@ -18,7 +18,7 @@ paths:
       summary: Create a memory store
       description: ''
       tags:
-      - memoryStores
+      - Memory Stores
       parameters:
       - name: Authorization
         in: header

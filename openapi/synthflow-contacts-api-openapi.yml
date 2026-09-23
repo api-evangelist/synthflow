@@ -10,7 +10,7 @@ servers:
 - url: https://api.eu.synthflow.ai/v2
   description: European Union
 tags:
-- name: contacts
+- name: Contacts
 paths:
   /contacts:
     post:
@@ -18,7 +18,7 @@ paths:
       summary: Create a contact
       description: ''
       tags:
-      - contacts
+      - Contacts
       parameters:
       - name: Authorization
         in: header
@@ -60,7 +60,7 @@ paths:
       summary: Update a contact
       description: ''
       tags:
-      - contacts
+      - Contacts
       parameters:
       - name: contact_id
         in: path
@@ -100,14 +100,10 @@ paths:
                   $ref: '#/components/schemas/ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata'
 components:
   schemas:
-    Contacts_create-a-contact_Response_200:
+    ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata:
       type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaResponse'
-      title: Contacts_create-a-contact_Response_200
+      properties: {}
+      title: ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata
     Contacts_update-a-contact_Response_200:
       type: object
       properties:
@@ -121,16 +117,20 @@ components:
           type: string
       description: Additional metadata for the contact.
       title: ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata
+    Contacts_create-a-contact_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaResponse'
+      title: Contacts_create-a-contact_Response_200
     ContactsPostResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
         id:
           type: string
       title: ContactsPostResponsesContentApplicationJsonSchemaResponse
-    ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata:
-      type: object
-      properties: {}
-      title: ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata
   securitySchemes:
     sec0:
       type: http

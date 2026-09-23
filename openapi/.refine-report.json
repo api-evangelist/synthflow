@@ -12,7 +12,9 @@
     "synthflow-phonenumbers-api-openapi.yml",
     "synthflow-webhooklogs-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 3 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -24,15 +26,17 @@
     "synthflow-openapi.json: declared missing tag: mcp",
     "synthflow-openapi.json: declared missing tag: memoryStores",
     "synthflow-openapi.json: declared missing tag: phoneNumbers",
-    "synthflow-openapi.json: declared missing tag: webhookLogs"
+    "synthflow-openapi.json: declared missing tag: webhookLogs",
+    "superseded outputs removed: synthflow-memory-stores-api-openapi.yml, synthflow-phone-numbers-api-openapi.yml, synthflow-webhook-logs-api-openapi.yml",
+    "apis.yml register: written (+3 apis, 8 total)"
   ],
   "skipped": [
+    "synthflow-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "synthflow-default-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "synthflow-subpackage-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "synthflow-subpackage-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "synthflow-subpackage-mcp-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "synthflow-subpackage-memorystores-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "synthflow-subpackage-phonenumbers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "synthflow-subpackage-webhooklogs-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+    "synthflow-mcp-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-memory-stores-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-phone-numbers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-webhook-logs-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }
