@@ -13,6 +13,31 @@ tags:
 - name: Memory Stores
 paths:
   /memory_stores:
+    get:
+      operationId: list-memory-stores
+      summary: List memory stores
+      tags:
+      - Memory Stores
+      parameters:
+      - name: search
+        in: query
+        description: The memory store's title.
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list-memory-stores_Response_200'
     post:
       operationId: create-a-memory-store
       summary: Create a memory store
@@ -45,8 +70,388 @@ paths:
                 description:
                   type: string
                   description: Memory store description.
+  /memory_stores/{memory_store_id}:
+    patch:
+      operationId: updateAMemoryStore
+      summary: Update a memory store
+      tags:
+      - Memory Stores
+      parameters:
+      - name: memory_store_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/memory_store_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateAMemoryStore_Response_200'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Memory store name.
+                description:
+                  type: string
+                  description: Memory store description.
+    delete:
+      operationId: deleteAMemoryStore
+      summary: Delete a memory store
+      tags:
+      - Memory Stores
+      parameters:
+      - name: memory_store_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/memory_store_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteAMemoryStore_Response_200'
+    get:
+      operationId: getAMemoryStore
+      summary: Get a memory store
+      tags:
+      - Memory Stores
+      parameters:
+      - name: memory_store_id
+        in: path
+        description: The memory store's ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAMemoryStore_Response_200'
+  /memory_stores/{memory_store_id}/assistants/{assistant_id}/attach:
+    post:
+      operationId: attachAMemoryStoreToAnAgent
+      summary: Attach a memory store to an agent
+      tags:
+      - Memory Stores
+      parameters:
+      - name: memory_store_id
+        in: path
+        description: The memory store ID.
+        required: true
+        schema:
+          type: string
+      - name: assistant_id
+        in: path
+        description: The agent's model ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/attachAMemoryStoreToAnAgent_Response_200'
+  /memory_stores/{memory_store_id}/assistants/{assistant_id}/detach:
+    post:
+      operationId: detachAMemoryStoreFromAnAgent
+      summary: Detach a memory store from an agent
+      tags:
+      - Memory Stores
+      parameters:
+      - name: memory_store_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/memory_store_id'
+      - name: assistant_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/model_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/detachAMemoryStoreFromAnAgent_Response_200'
+  /memory_stores/{memory_store_id}/contacts/{contact_id}/memory_data:
+    get:
+      operationId: getDataForASpecificMemoryStoreAndContact
+      summary: Get data for a specific memory store and contact
+      tags:
+      - Memory Stores
+      parameters:
+      - name: memory_store_id
+        in: path
+        description: The memory store ID.
+        required: true
+        schema:
+          type: string
+      - name: contact_id
+        in: path
+        description: The contact ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getDataForASpecificMemoryStoreAndContact_Response_200'
+  /memory_stores/{memory_store_id}/contacts/{contact_id}/attach:
+    post:
+      operationId: attachAContactToAMemoryStore
+      summary: Attach a contact to a memory store
+      tags:
+      - Memory Stores
+      parameters:
+      - name: memory_store_id
+        in: path
+        description: The memory store ID.
+        required: true
+        schema:
+          type: string
+      - name: contact_id
+        in: path
+        description: The contact ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/attachAContactToAMemoryStore_Response_200'
+  /memory_stores/{memory_store_id}/contacts/{contact_id}/detach:
+    post:
+      operationId: detachAContactFromAMemoryStore
+      summary: Detach a contact from a memory store
+      tags:
+      - Memory Stores
+      parameters:
+      - name: memory_store_id
+        in: path
+        description: The memory store ID.
+        required: true
+        schema:
+          type: string
+      - name: contact_id
+        in: path
+        description: The contact ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/detachAContactFromAMemoryStore_Response_200'
 components:
   schemas:
+    list-memory-stores_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/MemoryStoresGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-memory-stores_Response_200
+    detachAContactFromAMemoryStore_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: detachAContactFromAMemoryStore_Response_200
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    getDataForASpecificMemoryStoreAndContact_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse'
+      title: getDataForASpecificMemoryStoreAndContact_Response_200
+    deleteAMemoryStore_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: deleteAMemoryStore_Response_200
+    attachAContactToAMemoryStore_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: attachAContactToAMemoryStore_Response_200
+    memory_store_id:
+      type: string
+      description: The ID of the memory store (group).
+      title: memory_store_id
+    MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        workspace_id:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        contact_ids:
+          type: array
+          items:
+            description: Any type
+      title: MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse
+    updateAMemoryStore_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+      title: updateAMemoryStore_Response_200
+    MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        memory_store_id:
+          type: string
+        memory_store_title:
+          type: string
+        memory:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      title: MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse
+    MemoryStoresGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems'
+        total:
+          type: integer
+        page_size:
+          type: integer
+        page_number:
+          type: integer
+      title: MemoryStoresGetResponsesContentApplicationJsonSchemaResponse
+    attachAMemoryStoreToAnAgent_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: attachAMemoryStoreToAnAgent_Response_200
+    getAMemoryStore_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: getAMemoryStore_Response_200
+    model_id:
+      type: string
+      description: Agent ID. You can find it on the agent’s page in your dashboard.
+      title: model_id
+    MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        workspace_id:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        contact_ids:
+          type: array
+          items:
+            description: Any type
+      title: MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems
+    detachAMemoryStoreFromAnAgent_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: detachAMemoryStoreFromAnAgent_Response_200
     Memory-stores_create-a-memory-store_Response_200:
       type: object
       properties:

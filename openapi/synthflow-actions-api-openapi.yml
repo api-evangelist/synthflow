@@ -1,0 +1,3164 @@
+openapi: 3.2.0
+info:
+  title: PLATFORM Actions API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+  description: Global
+- url: https://api.us.synthflow.ai/v2
+  description: United States
+- url: https://api.eu.synthflow.ai/v2
+  description: European Union
+tags:
+- name: Actions
+paths:
+  /actions:
+    get:
+      operationId: list-actions
+      summary: List actions
+      description: ''
+      tags:
+      - Actions
+      parameters:
+      - name: limit
+        in: query
+        description: Actions displayed per page.
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: offset
+        in: query
+        description: Index of the first action to be returned.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list-actions_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-actionsRequestBadRequestError'
+    post:
+      operationId: create-action
+      summary: Create an action
+      description: ''
+      tags:
+      - Actions
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create-action_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create-actionRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                REAL_TIME_BOOKING:
+                  $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBooking'
+                INFORMATION_EXTRACTOR:
+                  $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractor'
+                LIVE_TRANSFER:
+                  $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaLiveTransfer'
+                SEND_SMS:
+                  $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaSendSms'
+                INCALL_SMS:
+                  $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaIncallSms'
+                INCALL_WHATSAPP:
+                  $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaIncallWhatsapp'
+                CUSTOM_ACTION:
+                  $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomAction'
+                CUSTOM_EVAL:
+                  $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomEval'
+  /actions/initialize:
+    post:
+      operationId: initialize-action
+      summary: Initialize a custom action
+      description: ''
+      tags:
+      - Actions
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/initialize-action_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Initialize-actionRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action_id:
+                  type: string
+                  description: The action id that will be initialized
+                variables:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ActionsInitializePostRequestBodyContentApplicationJsonSchemaVariablesItems'
+              required:
+              - action_id
+  /actions/{action_id}:
+    put:
+      operationId: update-action
+      summary: Update an action
+      description: ''
+      tags:
+      - Actions
+      parameters:
+      - name: action_id
+        in: path
+        description: To find an action's ID, go to its page in your Synthflow dashboard.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/update-action_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-actionRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                REAL_TIME_BOOKING:
+                  $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBooking'
+                INFORMATION_EXTRACTOR:
+                  $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaInformationExtractor'
+                LIVE_TRANSFER:
+                  $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaLiveTransfer'
+                SEND_SMS:
+                  $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaSendSms'
+                INCALL_SMS:
+                  $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallSms'
+                INCALL_WHATSAPP:
+                  $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallWhatsapp'
+                CUSTOM_ACTION:
+                  $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomAction'
+    delete:
+      operationId: delete-action
+      summary: Delete an action
+      description: ''
+      tags:
+      - Actions
+      parameters:
+      - name: action_id
+        in: path
+        description: To find an action's ID, go to its page in your Synthflow dashboard.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/delete-action_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete-actionRequestBadRequestError'
+    get:
+      operationId: get-action
+      summary: Get an action
+      description: Retrieves metadata about an action.
+      tags:
+      - Actions
+      parameters:
+      - name: action_id
+        in: path
+        description: To find an action's ID, go to its page in your Synthflow dashboard.
+        required: true
+        schema:
+          type: string
+      - name: include_assistants
+        in: query
+        description: Include assistant IDs assigned to this action.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get-action_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-actionRequestBadRequestError'
+  /actions/attach:
+    post:
+      operationId: attach-action
+      summary: Attach an action
+      description: ''
+      tags:
+      - Actions
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/attach-action_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attach-actionRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model_id:
+                  type: string
+                  description: The ID of the agent you want to attach an action to.
+                actions:
+                  type: array
+                  items:
+                    type: string
+                  description: To find an action's ID, go to its page in your Synthflow dashboard.
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItems'
+                  description: Batch attach payload with per-action attachment configuration.
+              required:
+              - model_id
+  /actions/detach:
+    post:
+      operationId: detach-action
+      summary: Detach an action
+      description: ''
+      tags:
+      - Actions
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/detach-action_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Detach-actionRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model_id:
+                  type: string
+                  description: The ID of the agent you want to detach an action from.
+                actions:
+                  type: array
+                  items:
+                    type: string
+                  description: To find an action's ID, go to its page in your Synthflow dashboard.
+              required:
+              - model_id
+components:
+  schemas:
+    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItems:
+      type: object
+      properties:
+        action_id:
+          type: string
+          description: ID of the action to attach. Provide either `action_id` or `slug`.
+        slug:
+          type: string
+          description: Slug of the action to attach. Provide either `action_id` or `slug`.
+        attachment_type:
+          oneOf:
+          - $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsAttachmentType'
+          - type: 'null'
+          default: during
+          description: When this action is available in the conversation. Optional and defaults to `during` when omitted or null.
+        trigger_condition:
+          type:
+          - string
+          - 'null'
+          description: Per-assistant 'When to use this Action' condition describing when the agent should call this action. Currently applies to custom actions. Omit or send null to leave it unchanged; send an empty string to clear it.
+        input_variables_mapping:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItems'
+          description: Per-assistant mapping for this action's input variables.
+      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItems
+    ActionsInitializePostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+      title: ActionsInitializePostResponsesContentApplicationJsonSchemaResponse
+    Update-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-actionRequestBadRequestError
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType:
+      type: string
+      enum:
+      - string
+      - int
+      - float
+      - bool
+      - list
+      - money
+      - phone_number
+      - email
+      - datetime
+      - utc_datetime
+      default: string
+      description: Type of the variable
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType
+    ActionsPostRequestBodyContentApplicationJsonSchemaLiveTransfer:
+      oneOf:
+      - $ref: '#/components/schemas/LiveTransferCreateDirectPhoneConfig'
+      - $ref: '#/components/schemas/LiveTransferCreatePhoneBookConfig'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaLiveTransfer
+    attach-action_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsAttachPostResponsesContentApplicationJsonSchemaResponse'
+      title: attach-action_Response_200
+    get-action_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: get-action_Response_200
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItems'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponse
+    HumanAvailabilityScheduleItemPublic:
+      type: object
+      properties:
+        weekday:
+          $ref: '#/components/schemas/HumanAvailabilityScheduleItemPublicWeekday'
+          description: Lowercase full weekday name.
+        interval:
+          type: array
+          items:
+            $ref: '#/components/schemas/HumanAvailabilityIntervalPublic'
+          description: Exactly one interval object per weekday.
+      required:
+      - weekday
+      - interval
+      description: Availability for a single weekday. Exactly one interval is currently supported.
+      title: HumanAvailabilityScheduleItemPublic
+    Initialize-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Initialize-actionRequestBadRequestError
+    ActionsGetResponsesContentApplicationJsonSchemaResponsePagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      title: ActionsGetResponsesContentApplicationJsonSchemaResponsePagination
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItems:
+      type: object
+      properties:
+        action_id:
+          type: string
+          description: Action ID.
+        action_type:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsActionType'
+          description: Action type.
+        name:
+          type: string
+          description: Action name.
+        description:
+          type: string
+          description: Action description.
+        assistants:
+          type: array
+          items:
+            type: string
+          description: Assistant IDs assigned to this action. Returned when `include_assistants=true`.
+        input_variables:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariables'
+          description: Input variable details for this action, including variable definitions and attached assistant IDs.
+        parameters_hard_coded:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItems
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaSendSms:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The content/text of the SMS message
+        instructions:
+          type: string
+          description: The instructions that will trigger the SMS message to be sent
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaSendSms
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone:
+      type: string
+      enum:
+      - Africa/Accra
+      - Africa/Addis_Ababa
+      - Africa/Algiers
+      - Africa/Asmara
+      - Africa/Bamako
+      - Africa/Bangui
+      - Africa/Banjul
+      - Africa/Bissau
+      - Africa/Blantyre
+      - Africa/Brazzaville
+      - Africa/Bujumbura
+      - Africa/Cairo
+      - Africa/Casablanca
+      - Africa/Ceuta
+      - Africa/Conakry
+      - Africa/Dakar
+      - Africa/Dar_es_Salaam
+      - Africa/Djibouti
+      - Africa/Douala
+      - Africa/El_Aaiun
+      - Africa/Freetown
+      - Africa/Gaborone
+      - Africa/Harare
+      - Africa/Johannesburg
+      - Africa/Juba
+      - Africa/Kampala
+      - Africa/Khartoum
+      - Africa/Kigali
+      - Africa/Kinshasa
+      - Africa/Lagos
+      - Africa/Libreville
+      - Africa/Lome
+      - Africa/Luanda
+      - Africa/Lubumbashi
+      - Africa/Lusaka
+      - Africa/Malabo
+      - Africa/Maputo
+      - Africa/Maseru
+      - Africa/Mbabane
+      - Africa/Mogadishu
+      - Africa/Monrovia
+      - Africa/Nairobi
+      - Africa/Ndjamena
+      - Africa/Niamey
+      - Africa/Nouakchott
+      - Africa/Ouagadougou
+      - Africa/Porto-Novo
+      - Africa/Sao_Tome
+      - Africa/Tripoli
+      - Africa/Tunis
+      - Africa/Windhoek
+      - America/Adak
+      - America/Anchorage
+      - America/Anguilla
+      - America/Antigua
+      - America/Araguaina
+      - America/Argentina/Buenos_Aires
+      - America/Argentina/Catamarca
+      - America/Argentina/Cordoba
+      - America/Argentina/Jujuy
+      - America/Argentina/La_Rioja
+      - America/Argentina/Mendoza
+      - America/Argentina/Rio_Gallegos
+      - America/Argentina/Salta
+      - America/Argentina/San_Juan
+      - America/Argentina/San_Luis
+      - America/Argentina/Tucuman
+      - America/Argentina/Ushuaia
+      - America/Aruba
+      - America/Asuncion
+      - America/Atikokan
+      - America/Bahia
+      - America/Bahia_Banderas
+      - America/Barbados
+      - America/Belem
+      - America/Belize
+      - America/Blanc-Sablon
+      - America/Boa_Vista
+      - America/Bogota
+      - America/Boise
+      - America/Cambridge_Bay
+      - America/Campo_Grande
+      - America/Cancun
+      - America/Caracas
+      - America/Cayenne
+      - America/Cayman
+      - America/Chicago
+      - America/Chihuahua
+      - America/Ciudad_Juarez
+      - America/Costa_Rica
+      - America/Creston
+      - America/Cuiaba
+      - America/Curacao
+      - America/Danmarkshavn
+      - America/Dawson
+      - America/Dawson_Creek
+      - America/Denver
+      - America/Detroit
+      - America/Dominica
+      - America/Edmonton
+      - America/Eirunepe
+      - America/El_Salvador
+      - America/Fort_Nelson
+      - America/Fortaleza
+      - America/Glace_Bay
+      - America/Goose_Bay
+      - America/Grand_Turk
+      - America/Grenada
+      - America/Guadeloupe
+      - America/Guatemala
+      - America/Guayaquil
+      - America/Guyana
+      - America/Halifax
+      - America/Havana
+      - America/Hermosillo
+      - America/Indiana/Indianapolis
+      - America/Indiana/Knox
+      - America/Indiana/Marengo
+      - America/Indiana/Petersburg
+      - America/Indiana/Tell_City
+      - America/Indiana/Vevay
+      - America/Indiana/Vincennes
+      - America/Indiana/Winamac
+      - America/Inuvik
+      - America/Iqaluit
+      - America/Jamaica
+      - America/Juneau
+      - America/Kentucky/Louisville
+      - America/Kentucky/Monticello
+      - America/Kralendijk
+      - America/La_Paz
+      - America/Lima
+      - America/Los_Angeles
+      - America/Lower_Princes
+      - America/Maceio
+      - America/Managua
+      - America/Manaus
+      - America/Marigot
+      - America/Martinique
+      - America/Matamoros
+      - America/Mazatlan
+      - America/Menominee
+      - America/Merida
+      - America/Metlakatla
+      - America/Mexico_City
+      - America/Miquelon
+      - America/Moncton
+      - America/Monterrey
+      - America/Montevideo
+      - America/Montserrat
+      - America/Nassau
+      - America/New_York
+      - America/Nome
+      - America/Noronha
+      - America/North_Dakota/Beulah
+      - America/North_Dakota/Center
+      - America/North_Dakota/New_Salem
+      - America/Nuuk
+      - America/Ojinaga
+      - America/Panama
+      - America/Paramaribo
+      - America/Phoenix
+      - America/Port_of_Spain
+      - America/Port-au-Prince
+      - America/Porto_Velho
+      - America/Puerto_Rico
+      - America/Punta_Arenas
+      - America/Rankin_Inlet
+      - America/Recife
+      - America/Regina
+      - America/Resolute
+      - America/Rio_Branco
+      - America/Santarem
+      - America/Santiago
+      - America/Santo_Domingo
+      - America/Sao_Paulo
+      - America/Scoresbysund
+      - America/Sitka
+      - America/St_Barthelemy
+      - America/St_Johns
+      - America/St_Kitts
+      - America/St_Lucia
+      - America/St_Thomas
+      - America/St_Vincent
+      - America/Swift_Current
+      - America/Tegucigalpa
+      - America/Thule
+      - America/Tijuana
+      - America/Toronto
+      - America/Tortola
+      - America/Vancouver
+      - America/Whitehorse
+      - America/Winnipeg
+      - America/Yakutat
+      - Antarctica/Casey
+      - Antarctica/Davis
+      - Antarctica/DumontDUrville
+      - Antarctica/Macquarie
+      - Antarctica/Mawson
+      - Antarctica/McMurdo
+      - Antarctica/Palmer
+      - Antarctica/Rothera
+      - Antarctica/Syowa
+      - Antarctica/Troll
+      - Antarctica/Vostok
+      - Arctic/Longyearbyen
+      - Asia/Aden
+      - Asia/Almaty
+      - Asia/Amman
+      - Asia/Anadyr
+      - Asia/Aqtau
+      - Asia/Aqtobe
+      - Asia/Ashgabat
+      - Asia/Atyrau
+      - Asia/Baghdad
+      - Asia/Bahrain
+      - Asia/Baku
+      - Asia/Bangkok
+      - Asia/Barnaul
+      - Asia/Beirut
+      - Asia/Bishkek
+      - Asia/Brunei
+      - Asia/Chita
+      - Asia/Choibalsan
+      - Asia/Colombo
+      - Asia/Damascus
+      - Asia/Dhaka
+      - Asia/Dili
+      - Asia/Dubai
+      - Asia/Dushanbe
+      - Asia/Famagusta
+      - Asia/Gaza
+      - Asia/Hebron
+      - Asia/Ho_Chi_Minh
+      - Asia/Hong_Kong
+      - Asia/Hovd
+      - Asia/Irkutsk
+      - Asia/Jakarta
+      - Asia/Jayapura
+      - Asia/Jerusalem
+      - Asia/Kabul
+      - Asia/Kamchatka
+      - Asia/Karachi
+      - Asia/Kathmandu
+      - Asia/Khandyga
+      - Asia/Kolkata
+      - Asia/Krasnoyarsk
+      - Asia/Kuala_Lumpur
+      - Asia/Kuching
+      - Asia/Kuwait
+      - Asia/Macau
+      - Asia/Magadan
+      - Asia/Makassar
+      - Asia/Manila
+      - Asia/Muscat
+      - Asia/Nicosia
+      - Asia/Novokuznetsk
+      - Asia/Novosibirsk
+      - Asia/Omsk
+      - Asia/Oral
+      - Asia/Phnom_Penh
+      - Asia/Pontianak
+      - Asia/Pyongyang
+      - Asia/Qatar
+      - Asia/Qostanay
+      - Asia/Qyzylorda
+      - Asia/Riyadh
+      - Asia/Sakhalin
+      - Asia/Samarkand
+      - Asia/Seoul
+      - Asia/Shanghai
+      - Asia/Singapore
+      - Asia/Srednekolymsk
+      - Asia/Taipei
+      - Asia/Tashkent
+      - Asia/Tbilisi
+      - Asia/Tehran
+      - Asia/Thimphu
+      - Asia/Tokyo
+      - Asia/Tomsk
+      - Asia/Ulaanbaatar
+      - Asia/Urumqi
+      - Asia/Ust-Nera
+      - Asia/Vientiane
+      - Asia/Vladivostok
+      - Asia/Yakutsk
+      - Asia/Yangon
+      - Asia/Yekaterinburg
+      - Asia/Yerevan
+      - Atlantic/Azores
+      - Atlantic/Bermuda
+      - Atlantic/Canary
+      - Atlantic/Cape_Verde
+      - Atlantic/Faroe
+      - Atlantic/Madeira
+      - Atlantic/Reykjavik
+      - Atlantic/South_Georgia
+      - Atlantic/St_Helena
+      - Atlantic/Stanley
+      - Australia/Adelaide
+      - Australia/Brisbane
+      - Australia/Broken_Hill
+      - Australia/Darwin
+      - Australia/Eucla
+      - Australia/Hobart
+      - Australia/Lindeman
+      - Australia/Lord_Howe
+      - Australia/Melbourne
+      - Australia/Perth
+      - Australia/Sydney
+      - Europe/Amsterdam
+      - Europe/Andorra
+      - Europe/Astrakhan
+      - Europe/Athens
+      - Europe/Belgrade
+      - Europe/Berlin
+      - Europe/Bratislava
+      - Europe/Brussels
+      - Europe/Bucharest
+      - Europe/Budapest
+      - Europe/Busingen
+      - Europe/Chisinau
+      - Europe/Copenhagen
+      - Europe/Dublin
+      - Europe/Gibraltar
+      - Europe/Guernsey
+      - Europe/Helsinki
+      - Europe/Isle_of_Man
+      - Europe/Istanbul
+      - Europe/Jersey
+      - Europe/Kaliningrad
+      - Europe/Kirov
+      - Europe/Kyiv
+      - Europe/Lisbon
+      - Europe/Ljubljana
+      - Europe/London
+      - Europe/Luxembourg
+      - Europe/Madrid
+      - Europe/Malta
+      - Europe/Mariehamn
+      - Europe/Minsk
+      - Europe/Monaco
+      - Europe/Moscow
+      - Europe/Oslo
+      - Europe/Paris
+      - Europe/Podgorica
+      - Europe/Prague
+      - Europe/Riga
+      - Europe/Rome
+      - Europe/Samara
+      - Europe/San_Marino
+      - Europe/Sarajevo
+      - Europe/Saratov
+      - Europe/Simferopol
+      - Europe/Skopje
+      - Europe/Sofia
+      - Europe/Stockholm
+      - Europe/Tallinn
+      - Europe/Tirane
+      - Europe/Ulyanovsk
+      - Europe/Vaduz
+      - Europe/Vatican
+      - Europe/Vienna
+      - Europe/Vilnius
+      - Europe/Volgograd
+      - Europe/Warsaw
+      - Europe/Zagreb
+      - Europe/Zurich
+      - Indian/Antananarivo
+      - Indian/Chagos
+      - Indian/Christmas
+      - Indian/Cocos
+      - Indian/Comoro
+      - Indian/Kerguelen
+      - Indian/Mahe
+      - Indian/Maldives
+      - Indian/Mauritius
+      - Indian/Mayotte
+      - Indian/Reunion
+      - Pacific/Apia
+      - Pacific/Auckland
+      - Pacific/Bougainville
+      - Pacific/Chatham
+      - Pacific/Chuuk
+      - Pacific/Easter
+      - Pacific/Efate
+      - Pacific/Fakaofo
+      - Pacific/Fiji
+      - Pacific/Funafuti
+      - Pacific/Galapagos
+      - Pacific/Gambier
+      - Pacific/Guadalcanal
+      - Pacific/Guam
+      - Pacific/Honolulu
+      - Pacific/Kanton
+      - Pacific/Kiritimati
+      - Pacific/Kosrae
+      - Pacific/Kwajalein
+      - Pacific/Majuro
+      - Pacific/Marquesas
+      - Pacific/Midway
+      - Pacific/Nauru
+      - Pacific/Niue
+      - Pacific/Norfolk
+      - Pacific/Noumea
+      - Pacific/Pago_Pago
+      - Pacific/Palau
+      - Pacific/Pitcairn
+      - Pacific/Pohnpei
+      - Pacific/Port_Moresby
+      - Pacific/Rarotonga
+      - Pacific/Saipan
+      - Pacific/Tahiti
+      - Pacific/Tarawa
+      - Pacific/Tongatapu
+      - Pacific/Wake
+      - Pacific/Wallis
+      - US/Alaska
+      - US/Central
+      - US/Eastern
+      - US/Hawaii
+      - US/Mountain
+      - US/Pacific
+      description: '[List of possible time zones](/time-zones).'
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone
+    LiveTransferUpdatePhoneBookConfig:
+      type: object
+      properties:
+        transfer_mode:
+          $ref: '#/components/schemas/LiveTransferUpdatePhoneBookConfigTransferMode'
+          description: Transfer mode.
+        message_to_transfer_target:
+          type: string
+          description: The message the human agent will hear after the call is transferred to them.
+        phone_book_id:
+          type: string
+          description: Phone book ID.
+        instructions:
+          type: string
+          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
+        timeout:
+          type: integer
+          description: How long to wait for the transfer call to happen before stop trying to do the transfer
+        digits:
+          type: string
+          description: Extension digits for the transfer call
+        initiating_msg:
+          type: string
+          description: Message that the agent will say before starting the transfer call
+        goodbye_msg:
+          type: string
+          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
+        failed_msg:
+          type: string
+          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
+        enable_background_music:
+          type: boolean
+        stop_recording_after_transfer:
+          type: boolean
+          description: Whether the call should stop being recorded once it's transferred.
+        human_detection:
+          type: boolean
+          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
+        human_detection_timeout_seconds:
+          type: integer
+          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
+        summarization_prompt:
+          type: string
+          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
+        preserve_caller_id:
+          type: boolean
+          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
+        screened:
+          type: boolean
+          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
+        human_availability:
+          $ref: '#/components/schemas/HumanAvailabilityPublic'
+      required:
+      - transfer_mode
+      - phone_book_id
+      - instructions
+      - initiating_msg
+      title: LiveTransferUpdatePhoneBookConfig
+    List-actionsRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-actionsRequestBadRequestError
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomEval:
+      type: object
+      properties:
+        question:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestion'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomEval
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm:
+      type: string
+      enum:
+      - confirmed
+      - new
+      description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsType:
+      type: string
+      enum:
+      - string
+      - integer
+      - number
+      - boolean
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsType
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariables:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItems'
+          description: Variables that the action expects as runtime input.
+        assistants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItems'
+          description: Assistants attached to this action, including per-assistant input variable mappings.
+      description: Input variable details for this action, including variable definitions and attached assistant IDs.
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariables
+    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorSingleChoice:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The title that will identify the action
+        description:
+          type: string
+          description: The description of what the action is expected to do
+        choices:
+          type: array
+          items:
+            type: string
+          description: The possible choices that will answer the expected description of the action
+      required:
+      - identifier
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorSingleChoice
+    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsSource:
+      type: string
+      enum:
+      - llm
+      - hardcoded
+      description: Source used to populate the variable.
+      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsSource
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl:
+      type: object
+      properties:
+        calendar_id:
+          type: string
+          description: Calendar ID from the GHL calendar. Can be obtained from GHL in calendars > Calendar Settings
+        autoconfirm:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm'
+          description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
+        booking_title:
+          type: string
+          description: The title that will be displayed in the Synthflow app for the created action
+      required:
+      - calendar_id
+      - autoconfirm
+      - booking_title
+      description: 'Important: You need to be connected to the GHL integration'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl
+    create-action_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsPostResponsesContentApplicationJsonSchemaResponse'
+      title: create-action_Response_200
+    ActionsDetachPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties: {}
+      title: ActionsDetachPostResponsesContentApplicationJsonSchemaResponse
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the variable that will be used during the call
+        description:
+          type: string
+          description: Description of the functionality of the variable
+        example:
+          type: string
+          description: Example of the value/answer that can be given to fill the variable
+        type:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType'
+          default: string
+          description: Type of the variable
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl:
+      type: object
+      properties:
+        autoconfirm:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm'
+          description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
+        booking_title:
+          type: string
+          description: The title that will be displayed in the Synthflow app for the created action
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl
+    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorYesNo:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The title that will identify the action
+        description:
+          type: string
+          description: The description of what the action is expected to do
+      required:
+      - identifier
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorYesNo
+    HumanAvailabilityPublic:
+      type: object
+      properties:
+        timezone:
+          $ref: '#/components/schemas/timezone'
+          description: IANA timezone identifier for schedule evaluation.
+        schedule:
+          type: array
+          items:
+            $ref: '#/components/schemas/HumanAvailabilityScheduleItemPublic'
+          description: List of weekday schedules. A weekday can appear only once.
+        unavailable_message:
+          type: string
+          description: Message the agent says when transfer is attempted outside configured availability.
+        active:
+          type: boolean
+          description: Enables or disables availability checks.
+      required:
+      - timezone
+      - schedule
+      - active
+      description: Human availability schedule used by live transfer actions.
+      title: HumanAvailabilityPublic
+    LiveTransferCreatePhoneBookConfigTransferMode:
+      type: string
+      enum:
+      - cold_transfer
+      - warm_transfer
+      - warm_transfer_with_context
+      description: Transfer mode.
+      title: LiveTransferCreatePhoneBookConfigTransferMode
+    update-action_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsActionIdPutResponsesContentApplicationJsonSchemaResponse'
+      title: update-action_Response_200
+    ? ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsSource
+    : type: string
+      enum:
+      - hardcoded
+      - llm
+      - system_vars
+      - prompt_variables
+      - fsm_variables
+      - action_results
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsSource
+    LiveTransferCreatePhoneBookConfig:
+      type: object
+      properties:
+        transfer_mode:
+          $ref: '#/components/schemas/LiveTransferCreatePhoneBookConfigTransferMode'
+          description: Transfer mode.
+        phone_book_id:
+          type: string
+          description: Phone book ID.
+        message_to_transfer_target:
+          type: string
+          description: The message the human agent will hear after the call is transferred to them.
+        instructions:
+          type: string
+          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
+        timeout:
+          type: integer
+          description: How long to wait for the transfer call to happen before stop trying to do the transfer
+        digits:
+          type: string
+          description: Extension digits for the transfer call
+        initiating_msg:
+          type: string
+          description: Message that the agent will say before starting the transfer call
+        goodbye_msg:
+          type: string
+          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
+        failed_msg:
+          type: string
+          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
+        stop_recording_after_transfer:
+          type: boolean
+          description: Whether the call should stop being recorded once it's transferred.
+        human_detection:
+          type: boolean
+          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
+        human_detection_timeout_seconds:
+          type: integer
+          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
+        summarization_prompt:
+          type: string
+          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
+        preserve_caller_id:
+          type: boolean
+          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
+        screened:
+          type: boolean
+          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
+        human_availability:
+          $ref: '#/components/schemas/HumanAvailabilityPublic'
+      required:
+      - transfer_mode
+      - phone_book_id
+      - instructions
+      - initiating_msg
+      title: LiveTransferCreatePhoneBookConfig
+    ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItems:
+      type: object
+      properties:
+        action_id:
+          type: string
+        action_type:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        parameters_hard_coded:
+          $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded'
+      title: ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItems
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBooking:
+      type: object
+      properties:
+        first_appt_date:
+          type: string
+          format: date
+          description: The initial date that will be the used to start searching for booking appointments, the format is YYYY-MM-DD
+        max_time_slots:
+          type: integer
+          description: The amount of slots that the agent will recommend per day when trying to book an appointment. The limit is 3
+        min_hours_diff:
+          type: integer
+          description: The difference in hours between appointments that will be suggested by the agent
+        no_of_days:
+          type: integer
+          description: Number of days that the agent will suggest appointments
+        timezone:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone'
+          description: '[List of possible time zones](/time-zones).'
+        CALCOM:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom'
+        GHL:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl'
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBooking
+    ActionsActionIdDeleteResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+      title: ActionsActionIdDeleteResponsesContentApplicationJsonSchemaResponse
+    LiveTransferCreateDirectPhoneConfig:
+      type: object
+      properties:
+        transfer_mode:
+          $ref: '#/components/schemas/LiveTransferCreateDirectPhoneConfigTransferMode'
+          description: Transfer mode.
+        message_to_transfer_target:
+          type: string
+          description: The message the human agent will hear after the call is transferred to them.
+        phone:
+          type: string
+          description: Phone number to be called for transferring the call
+        instructions:
+          type: string
+          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
+        timeout:
+          type: integer
+          description: How long to wait for the transfer call to happen before stop trying to do the transfer
+        digits:
+          type: string
+          description: Extension digits for the transfer call
+        initiating_msg:
+          type: string
+          description: Message that the agent will say before starting the transfer call
+        goodbye_msg:
+          type: string
+          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
+        failed_msg:
+          type: string
+          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
+        stop_recording_after_transfer:
+          type: boolean
+          description: Whether the call should stop being recorded once it's transferred.
+        human_detection:
+          type: boolean
+          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
+        human_detection_timeout_seconds:
+          type: integer
+          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
+        summarization_prompt:
+          type: string
+          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
+        preserve_caller_id:
+          type: boolean
+          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
+        screened:
+          type: boolean
+          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
+        human_availability:
+          $ref: '#/components/schemas/HumanAvailabilityPublic'
+      required:
+      - transfer_mode
+      - phone
+      - instructions
+      - initiating_msg
+      title: LiveTransferCreateDirectPhoneConfig
+    ? ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItems
+    : type: object
+      properties:
+        variable_name:
+          type: string
+        source:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsSource'
+        hardcoded_value:
+          type: string
+        llm_config:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsLlmConfig'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItems
+    list-actions_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-actions_Response_200
+    Detach-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Detach-actionRequestBadRequestError
+    detach-action_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/ActionsDetachPostResponsesContentApplicationJsonSchemaResponse'
+      title: detach-action_Response_200
+    ActionsPostRequestBodyContentApplicationJsonSchemaIncallWhatsapp:
+      type: object
+      properties:
+        content_sid:
+          type: string
+          description: Twilio Content template SID (for example `HX...`) used for the outbound WhatsApp message.
+        content_variables:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Values that fill the template placeholders. Keys match the numeric placeholders in the template body (for example `{"1": "<user_name>"}`).'
+        wait_for_reply:
+          type: boolean
+          default: false
+          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
+        timeout_seconds:
+          type: integer
+          description: Maximum time to wait for a reply when `wait_for_reply` is true.
+        fallback_message:
+          type: string
+          description: Message the agent speaks if the timeout fires with no reply.
+      required:
+      - content_sid
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaIncallWhatsapp
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsAttachmentType:
+      type: string
+      enum:
+      - before
+      - during
+      - after
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsAttachmentType
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomAction:
+      type: object
+      properties:
+        http_mode:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHttpMode'
+          default: GET
+          description: Select the method that will be used
+        url:
+          type: string
+          description: URL to be used by the action
+        name:
+          type: string
+          description: Name of the action
+        description:
+          type: string
+          description: Description of the action
+        run_action_before_call_start:
+          type: boolean
+          description: Actions that will run before the call, like phone number
+        speech_while_using_the_tool:
+          type: string
+          description: A message spoken verbatim to the caller while the action is being executed. Use this to fill silence during processing (e.g. "Let me look that up for you").
+        action_sound:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionActionSound'
+          description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
+        integration:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionIntegration'
+          description: The possible integrations that can be selected to retrieve information
+        custom_auth:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth'
+        variables_before_the_call:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems'
+        variables_during_the_call:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems'
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems'
+        query_parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems'
+        agent_speak_naturally:
+          type: boolean
+          description: If disabled, the agent will strictly stick to your pre-written messages. If enabled, it may say something that accounts for the previous context of the conversation.
+        message_delay:
+          type: string
+          description: What the agent should say if the action reaches the delay threshold.
+        message_delay_time:
+          type: integer
+          description: Delay threshold, in seconds.
+        message_error:
+          type: string
+          description: What the agent should say if the action failed.
+        json_body_stringified:
+          type: string
+          description: A json stringified of the payload/body that will be used for the action
+        prompt:
+          type: string
+          description: The prompt that will be used in case it is set
+        message_before_action_starts:
+          type: string
+          description: A message spoken verbatim to the caller before the action is triggered. Rarely needed. Use only when compliance or regulatory requirements mandate a specific disclosure before an action runs (e.g. "This call may be recorded").
+        failure_timeout:
+          type: integer
+          description: How long to wait for the custom action to complete before timing out (in seconds)
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomAction
+    ActionsPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        action_id:
+          type: string
+        action_type:
+          type: string
+        prompt_variables:
+          type: array
+          items:
+            description: Any type
+      title: ActionsPostResponsesContentApplicationJsonSchemaResponse
+    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItems:
+      type: object
+      properties:
+        variable_name:
+          type: string
+          description: Input variable name defined in the action.
+        source:
+          $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsSource'
+          description: Source used to populate the variable.
+        hardcoded_value:
+          type:
+          - string
+          - 'null'
+          description: Value used when source is `hardcoded`.
+        llm_config:
+          oneOf:
+          - $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsLlmConfig'
+          - type: 'null'
+      required:
+      - variable_name
+      - source
+      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItems
+    HumanAvailabilityIntervalPublic:
+      type: object
+      properties:
+        from:
+          type: string
+          description: Start time in HH:MM 24-hour format.
+        to:
+          type: string
+          description: End time in HH:MM 24-hour format.
+      required:
+      - from
+      - to
+      description: One availability interval in 24-hour format.
+      title: HumanAvailabilityIntervalPublic
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth:
+      type: object
+      properties:
+        is_needed:
+          type: boolean
+          default: false
+          description: If authorization to use the set URL and method are required set to true
+        location:
+          type: string
+          description: 'Section where the authorization will be used like: header'
+        key:
+          type: string
+          default: Bearer
+          description: The authorization type. Default is Bearer
+        value:
+          type: string
+          description: The value of the token that will be used with the authentication type
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth
+    LiveTransferCreateDirectPhoneConfigTransferMode:
+      type: string
+      enum:
+      - cold_transfer
+      - warm_transfer
+      - warm_transfer_with_context
+      description: Transfer mode.
+      title: LiveTransferCreateDirectPhoneConfigTransferMode
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom:
+      type: object
+      properties:
+        integration:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration'
+          description: The selected option will be the meeting type that will be created when the booking is done
+        sms_boolean:
+          type: boolean
+          description: If the value is true the SMS message from the sms_message field will be send
+        sms_message:
+          type: string
+          description: Text to be sent in the sms
+        user_email:
+          type: string
+          description: Email that will be used to create the meeting
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionActionSound:
+      type: string
+      enum:
+      - ''
+      - typing
+      - ambient-background
+      - modern-jazz
+      - inspirational-symphony-classical-music
+      description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionActionSound
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomAction:
+      type: object
+      properties:
+        http_mode:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHttpMode'
+          description: Select the method that will be used
+        url:
+          type: string
+          description: URL to be used by the action
+        run_action_before_call_start:
+          type: boolean
+          description: Actions that will run before the call, like phone number
+        name:
+          type: string
+          description: Name of the action
+        description:
+          type: string
+          description: Description of the action
+        speech_while_using_the_tool:
+          type: string
+          description: A message spoken verbatim to the caller while the action is being executed. Use this to fill silence during processing (e.g. "Let me look that up for you").
+        action_sound:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionActionSound'
+          description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
+        integration:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionIntegration'
+          description: The possible integrations that can be selected to retrieve information
+        failure_timeout:
+          type: integer
+          description: How long to wait for the custom action to complete before timing out (in seconds)
+        custom_auth:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth'
+        variables_before_the_call:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems'
+        variables_during_the_call:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems'
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems'
+        query_parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems'
+        agent_speak_naturally:
+          type: boolean
+          description: If disabled, the agent will strictly stick to your pre-written messages. If enabled, it may say something that accounts for the previous context of the conversation.
+        message_delay:
+          type: string
+          description: What the agent should say if the action reaches the delay threshold.
+        message_delay_time:
+          type: integer
+          description: Delay threshold, in seconds.
+        message_error:
+          type: string
+          description: What the agent should say if the action failed.
+        json_body_stringified:
+          type: string
+          description: A json stringified of the payload/body that will be used for the action
+        prompt:
+          type: string
+          description: The prompt that will be used in case it is set
+        message_before_action_starts:
+          type: string
+          description: A message spoken verbatim to the caller before the action is triggered. Rarely needed. Use only when compliance or regulatory requirements mandate a specific disclosure before an action runs (e.g. "This call may be recorded").
+      required:
+      - http_mode
+      - url
+      - run_action_before_call_start
+      - name
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomAction
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth:
+      type: object
+      properties:
+        is_needed:
+          type: boolean
+          default: false
+          description: If authorization to use the set URL and method are required set to true
+        location:
+          type: string
+          description: 'Section where the authorization will be used like: header'
+        key:
+          type: string
+          default: Bearer
+          description: The authorization type. Default is Bearer
+        value:
+          type: string
+          description: The value of the token that will be used with the authentication type
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsExample:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsExample
+    ActionsGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponsePagination'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItems'
+      title: ActionsGetResponsesContentApplicationJsonSchemaResponse
+    delete-action_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsActionIdDeleteResponsesContentApplicationJsonSchemaResponse'
+      title: delete-action_Response_200
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems
+    timezone:
+      type: string
+      enum:
+      - Africa/Accra
+      - Africa/Addis_Ababa
+      - Africa/Algiers
+      - Africa/Asmara
+      - Africa/Bamako
+      - Africa/Bangui
+      - Africa/Banjul
+      - Africa/Bissau
+      - Africa/Blantyre
+      - Africa/Brazzaville
+      - Africa/Bujumbura
+      - Africa/Cairo
+      - Africa/Casablanca
+      - Africa/Ceuta
+      - Africa/Conakry
+      - Africa/Dakar
+      - Africa/Dar_es_Salaam
+      - Africa/Djibouti
+      - Africa/Douala
+      - Africa/El_Aaiun
+      - Africa/Freetown
+      - Africa/Gaborone
+      - Africa/Harare
+      - Africa/Johannesburg
+      - Africa/Juba
+      - Africa/Kampala
+      - Africa/Khartoum
+      - Africa/Kigali
+      - Africa/Kinshasa
+      - Africa/Lagos
+      - Africa/Libreville
+      - Africa/Lome
+      - Africa/Luanda
+      - Africa/Lubumbashi
+      - Africa/Lusaka
+      - Africa/Malabo
+      - Africa/Maputo
+      - Africa/Maseru
+      - Africa/Mbabane
+      - Africa/Mogadishu
+      - Africa/Monrovia
+      - Africa/Nairobi
+      - Africa/Ndjamena
+      - Africa/Niamey
+      - Africa/Nouakchott
+      - Africa/Ouagadougou
+      - Africa/Porto-Novo
+      - Africa/Sao_Tome
+      - Africa/Tripoli
+      - Africa/Tunis
+      - Africa/Windhoek
+      - America/Adak
+      - America/Anchorage
+      - America/Anguilla
+      - America/Antigua
+      - America/Araguaina
+      - America/Argentina/Buenos_Aires
+      - America/Argentina/Catamarca
+      - America/Argentina/Cordoba
+      - America/Argentina/Jujuy
+      - America/Argentina/La_Rioja
+      - America/Argentina/Mendoza
+      - America/Argentina/Rio_Gallegos
+      - America/Argentina/Salta
+      - America/Argentina/San_Juan
+      - America/Argentina/San_Luis
+      - America/Argentina/Tucuman
+      - America/Argentina/Ushuaia
+      - America/Aruba
+      - America/Asuncion
+      - America/Atikokan
+      - America/Bahia
+      - America/Bahia_Banderas
+      - America/Barbados
+      - America/Belem
+      - America/Belize
+      - America/Blanc-Sablon
+      - America/Boa_Vista
+      - America/Bogota
+      - America/Boise
+      - America/Cambridge_Bay
+      - America/Campo_Grande
+      - America/Cancun
+      - America/Caracas
+      - America/Cayenne
+      - America/Cayman
+      - America/Chicago
+      - America/Chihuahua
+      - America/Ciudad_Juarez
+      - America/Costa_Rica
+      - America/Creston
+      - America/Cuiaba
+      - America/Curacao
+      - America/Danmarkshavn
+      - America/Dawson
+      - America/Dawson_Creek
+      - America/Denver
+      - America/Detroit
+      - America/Dominica
+      - America/Edmonton
+      - America/Eirunepe
+      - America/El_Salvador
+      - America/Fort_Nelson
+      - America/Fortaleza
+      - America/Glace_Bay
+      - America/Goose_Bay
+      - America/Grand_Turk
+      - America/Grenada
+      - America/Guadeloupe
+      - America/Guatemala
+      - America/Guayaquil
+      - America/Guyana
+      - America/Halifax
+      - America/Havana
+      - America/Hermosillo
+      - America/Indiana/Indianapolis
+      - America/Indiana/Knox
+      - America/Indiana/Marengo
+      - America/Indiana/Petersburg
+      - America/Indiana/Tell_City
+      - America/Indiana/Vevay
+      - America/Indiana/Vincennes
+      - America/Indiana/Winamac
+      - America/Inuvik
+      - America/Iqaluit
+      - America/Jamaica
+      - America/Juneau
+      - America/Kentucky/Louisville
+      - America/Kentucky/Monticello
+      - America/Kralendijk
+      - America/La_Paz
+      - America/Lima
+      - America/Los_Angeles
+      - America/Lower_Princes
+      - America/Maceio
+      - America/Managua
+      - America/Manaus
+      - America/Marigot
+      - America/Martinique
+      - America/Matamoros
+      - America/Mazatlan
+      - America/Menominee
+      - America/Merida
+      - America/Metlakatla
+      - America/Mexico_City
+      - America/Miquelon
+      - America/Moncton
+      - America/Monterrey
+      - America/Montevideo
+      - America/Montserrat
+      - America/Nassau
+      - America/New_York
+      - America/Nome
+      - America/Noronha
+      - America/North_Dakota/Beulah
+      - America/North_Dakota/Center
+      - America/North_Dakota/New_Salem
+      - America/Nuuk
+      - America/Ojinaga
+      - America/Panama
+      - America/Paramaribo
+      - America/Phoenix
+      - America/Port_of_Spain
+      - America/Port-au-Prince
+      - America/Porto_Velho
+      - America/Puerto_Rico
+      - America/Punta_Arenas
+      - America/Rankin_Inlet
+      - America/Recife
+      - America/Regina
+      - America/Resolute
+      - America/Rio_Branco
+      - America/Santarem
+      - America/Santiago
+      - America/Santo_Domingo
+      - America/Sao_Paulo
+      - America/Scoresbysund
+      - America/Sitka
+      - America/St_Barthelemy
+      - America/St_Johns
+      - America/St_Kitts
+      - America/St_Lucia
+      - America/St_Thomas
+      - America/St_Vincent
+      - America/Swift_Current
+      - America/Tegucigalpa
+      - America/Thule
+      - America/Tijuana
+      - America/Toronto
+      - America/Tortola
+      - America/Vancouver
+      - America/Whitehorse
+      - America/Winnipeg
+      - America/Yakutat
+      - Antarctica/Casey
+      - Antarctica/Davis
+      - Antarctica/DumontDUrville
+      - Antarctica/Macquarie
+      - Antarctica/Mawson
+      - Antarctica/McMurdo
+      - Antarctica/Palmer
+      - Antarctica/Rothera
+      - Antarctica/Syowa
+      - Antarctica/Troll
+      - Antarctica/Vostok
+      - Arctic/Longyearbyen
+      - Asia/Aden
+      - Asia/Almaty
+      - Asia/Amman
+      - Asia/Anadyr
+      - Asia/Aqtau
+      - Asia/Aqtobe
+      - Asia/Ashgabat
+      - Asia/Atyrau
+      - Asia/Baghdad
+      - Asia/Bahrain
+      - Asia/Baku
+      - Asia/Bangkok
+      - Asia/Barnaul
+      - Asia/Beirut
+      - Asia/Bishkek
+      - Asia/Brunei
+      - Asia/Chita
+      - Asia/Choibalsan
+      - Asia/Colombo
+      - Asia/Damascus
+      - Asia/Dhaka
+      - Asia/Dili
+      - Asia/Dubai
+      - Asia/Dushanbe
+      - Asia/Famagusta
+      - Asia/Gaza
+      - Asia/Hebron
+      - Asia/Ho_Chi_Minh
+      - Asia/Hong_Kong
+      - Asia/Hovd
+      - Asia/Irkutsk
+      - Asia/Jakarta
+      - Asia/Jayapura
+      - Asia/Jerusalem
+      - Asia/Kabul
+      - Asia/Kamchatka
+      - Asia/Karachi
+      - Asia/Kathmandu
+      - Asia/Khandyga
+      - Asia/Kolkata
+      - Asia/Krasnoyarsk
+      - Asia/Kuala_Lumpur
+      - Asia/Kuching
+      - Asia/Kuwait
+      - Asia/Macau
+      - Asia/Magadan
+      - Asia/Makassar
+      - Asia/Manila
+      - Asia/Muscat
+      - Asia/Nicosia
+      - Asia/Novokuznetsk
+      - Asia/Novosibirsk
+      - Asia/Omsk
+      - Asia/Oral
+      - Asia/Phnom_Penh
+      - Asia/Pontianak
+      - Asia/Pyongyang
+      - Asia/Qatar
+      - Asia/Qostanay
+      - Asia/Qyzylorda
+      - Asia/Riyadh
+      - Asia/Sakhalin
+      - Asia/Samarkand
+      - Asia/Seoul
+      - Asia/Shanghai
+      - Asia/Singapore
+      - Asia/Srednekolymsk
+      - Asia/Taipei
+      - Asia/Tashkent
+      - Asia/Tbilisi
+      - Asia/Tehran
+      - Asia/Thimphu
+      - Asia/Tokyo
+      - Asia/Tomsk
+      - Asia/Ulaanbaatar
+      - Asia/Urumqi
+      - Asia/Ust-Nera
+      - Asia/Vientiane
+      - Asia/Vladivostok
+      - Asia/Yakutsk
+      - Asia/Yangon
+      - Asia/Yekaterinburg
+      - Asia/Yerevan
+      - Atlantic/Azores
+      - Atlantic/Bermuda
+      - Atlantic/Canary
+      - Atlantic/Cape_Verde
+      - Atlantic/Faroe
+      - Atlantic/Madeira
+      - Atlantic/Reykjavik
+      - Atlantic/South_Georgia
+      - Atlantic/St_Helena
+      - Atlantic/Stanley
+      - Australia/Adelaide
+      - Australia/Brisbane
+      - Australia/Broken_Hill
+      - Australia/Darwin
+      - Australia/Eucla
+      - Australia/Hobart
+      - Australia/Lindeman
+      - Australia/Lord_Howe
+      - Australia/Melbourne
+      - Australia/Perth
+      - Australia/Sydney
+      - Europe/Amsterdam
+      - Europe/Andorra
+      - Europe/Astrakhan
+      - Europe/Athens
+      - Europe/Belgrade
+      - Europe/Berlin
+      - Europe/Bratislava
+      - Europe/Brussels
+      - Europe/Bucharest
+      - Europe/Budapest
+      - Europe/Busingen
+      - Europe/Chisinau
+      - Europe/Copenhagen
+      - Europe/Dublin
+      - Europe/Gibraltar
+      - Europe/Guernsey
+      - Europe/Helsinki
+      - Europe/Isle_of_Man
+      - Europe/Istanbul
+      - Europe/Jersey
+      - Europe/Kaliningrad
+      - Europe/Kirov
+      - Europe/Kyiv
+      - Europe/Lisbon
+      - Europe/Ljubljana
+      - Europe/London
+      - Europe/Luxembourg
+      - Europe/Madrid
+      - Europe/Malta
+      - Europe/Mariehamn
+      - Europe/Minsk
+      - Europe/Monaco
+      - Europe/Moscow
+      - Europe/Oslo
+      - Europe/Paris
+      - Europe/Podgorica
+      - Europe/Prague
+      - Europe/Riga
+      - Europe/Rome
+      - Europe/Samara
+      - Europe/San_Marino
+      - Europe/Sarajevo
+      - Europe/Saratov
+      - Europe/Simferopol
+      - Europe/Skopje
+      - Europe/Sofia
+      - Europe/Stockholm
+      - Europe/Tallinn
+      - Europe/Tirane
+      - Europe/Ulyanovsk
+      - Europe/Vaduz
+      - Europe/Vatican
+      - Europe/Vienna
+      - Europe/Vilnius
+      - Europe/Volgograd
+      - Europe/Warsaw
+      - Europe/Zagreb
+      - Europe/Zurich
+      - Indian/Antananarivo
+      - Indian/Chagos
+      - Indian/Christmas
+      - Indian/Cocos
+      - Indian/Comoro
+      - Indian/Kerguelen
+      - Indian/Mahe
+      - Indian/Maldives
+      - Indian/Mauritius
+      - Indian/Mayotte
+      - Indian/Reunion
+      - Pacific/Apia
+      - Pacific/Auckland
+      - Pacific/Bougainville
+      - Pacific/Chatham
+      - Pacific/Chuuk
+      - Pacific/Easter
+      - Pacific/Efate
+      - Pacific/Fakaofo
+      - Pacific/Fiji
+      - Pacific/Funafuti
+      - Pacific/Galapagos
+      - Pacific/Gambier
+      - Pacific/Guadalcanal
+      - Pacific/Guam
+      - Pacific/Honolulu
+      - Pacific/Kanton
+      - Pacific/Kiritimati
+      - Pacific/Kosrae
+      - Pacific/Kwajalein
+      - Pacific/Majuro
+      - Pacific/Marquesas
+      - Pacific/Midway
+      - Pacific/Nauru
+      - Pacific/Niue
+      - Pacific/Norfolk
+      - Pacific/Noumea
+      - Pacific/Pago_Pago
+      - Pacific/Palau
+      - Pacific/Pitcairn
+      - Pacific/Pohnpei
+      - Pacific/Port_Moresby
+      - Pacific/Rarotonga
+      - Pacific/Saipan
+      - Pacific/Tahiti
+      - Pacific/Tarawa
+      - Pacific/Tongatapu
+      - Pacific/Wake
+      - Pacific/Wallis
+      - US/Alaska
+      - US/Central
+      - US/Eastern
+      - US/Hawaii
+      - US/Mountain
+      - US/Pacific
+      default: Europe/Berlin
+      description: The agent's timezone.
+      title: timezone
+    LiveTransferUpdatePhoneBookConfigTransferMode:
+      type: string
+      enum:
+      - cold_transfer
+      - warm_transfer
+      - warm_transfer_with_context
+      description: Transfer mode.
+      title: LiveTransferUpdatePhoneBookConfigTransferMode
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType:
+      type: string
+      enum:
+      - string
+      - int
+      - float
+      - bool
+      - list
+      - money
+      - phone_number
+      - email
+      - datetime
+      - utc_datetime
+      default: string
+      description: Type of the variable
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration:
+      type: string
+      enum:
+      - GMeet
+      - Zoom
+      description: The selected option will be the meeting type that will be created when the booking is done
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom:
+      type: object
+      properties:
+        event_id:
+          type: string
+          description: The event id can be obtained from the cal.com calendar
+        integration:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration'
+          description: The selected option will be the meeting type that will be created when the booking is done
+        sms_boolean:
+          type: boolean
+          default: false
+          description: If the value is true the SMS message from the sms_message field will be send
+        sms_message:
+          type: string
+          description: Text to be sent in the sms
+        user_email:
+          type: string
+          description: Email that will be used to create the meeting
+      required:
+      - event_id
+      - user_email
+      description: 'Important: You need to be connected to the Cal.com integration'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems
+    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractor:
+      type: object
+      properties:
+        YES_NO:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorYesNo'
+        SINGLE_CHOICE:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorSingleChoice'
+        OPEN_QUESTION:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorOpenQuestion'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractor
+    Get-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-actionRequestBadRequestError
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded:
+      type: object
+      properties:
+        sms_message_text:
+          type: string
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaLiveTransfer:
+      oneOf:
+      - $ref: '#/components/schemas/LiveTransferUpdateDirectPhoneConfig'
+      - $ref: '#/components/schemas/LiveTransferUpdatePhoneBookConfig'
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaLiveTransfer
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItems:
+      type: object
+      properties:
+        model_id:
+          type: string
+        attachment_type:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsAttachmentType'
+        input_variables_mapping:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItems'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItems
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItems:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsType'
+        description:
+          type: string
+        example:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsExample'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItems
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionIntegration:
+      type: string
+      enum:
+      - ghl
+      - hubspot
+      - salesforce
+      - salesforce-sandbox
+      description: The possible integrations that can be selected to retrieve information
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionIntegration
+    ActionsPostRequestBodyContentApplicationJsonSchemaIncallSms:
+      type: object
+      properties:
+        message_body:
+          type: string
+          description: The SMS body sent to the caller. Supports placeholder variables like `<user_name>`.
+        wait_for_reply:
+          type: boolean
+          default: false
+          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
+        timeout_seconds:
+          type: integer
+          description: Maximum time to wait for a reply when `wait_for_reply` is true.
+        fallback_message:
+          type: string
+          description: Message the agent speaks if the timeout fires with no reply.
+        message_before_action:
+          type: string
+          description: Message the agent speaks before the SMS is sent.
+      required:
+      - message_body
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaIncallSms
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallWhatsapp:
+      type: object
+      properties:
+        content_sid:
+          type: string
+          description: Twilio Content template SID (for example `HX...`) used for the outbound WhatsApp message.
+        content_variables:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Values that fill the template placeholders. Keys match the numeric placeholders in the template body (for example `{"1": "<user_name>"}`).'
+        wait_for_reply:
+          type: boolean
+          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
+        timeout_seconds:
+          type: integer
+          description: Maximum time to wait for a reply when `wait_for_reply` is true.
+        fallback_message:
+          type: string
+          description: Message the agent speaks if the timeout fires with no reply.
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallWhatsapp
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the variable that will be used during the call
+        description:
+          type: string
+          description: Description of the functionality of the variable
+        example:
+          type: string
+          description: Example of the value/answer that can be given to fill the variable
+        type:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType'
+          default: string
+          description: Type of the variable
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems
+    ActionsAttachPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties: {}
+      title: ActionsAttachPostResponsesContentApplicationJsonSchemaResponse
+    initialize-action_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsInitializePostResponsesContentApplicationJsonSchemaResponse'
+      title: initialize-action_Response_200
+    ? ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsLlmConfig
+    : type: object
+      properties:
+        description:
+          type: string
+          description: Description of the variable.
+        example:
+          type: string
+          description: Example of the variable.
+        required:
+          type: boolean
+          description: Whether the variable is required.
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsLlmConfig
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestion:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: Custom evaluation name.
+        text:
+          type: string
+          description: Custom evaluation description.
+        category:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestionCategory'
+          description: Custom evalution category.
+        expected_result:
+          type: string
+          description: The expected result, which depends on the category. For pass_fail evaluations, the expected result is either true or false. For numeric evaluations, it is an integer between 1 and 10.
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestion
+    LiveTransferUpdateDirectPhoneConfig:
+      type: object
+      properties:
+        transfer_mode:
+          $ref: '#/components/schemas/LiveTransferUpdateDirectPhoneConfigTransferMode'
+          description: Transfer mode.
+        message_to_transfer_target:
+          type: string
+          description: The message the human agent will hear after the call is transferred to them.
+        phone:
+          type: string
+          description: Phone number to be called for transferring the call
+        instructions:
+          type: string
+          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
+        timeout:
+          type: integer
+          description: How long to wait for the transfer call to happen before stop trying to do the transfer
+        digits:
+          type: string
+          description: Extension digits for the transfer call
+        initiating_msg:
+          type: string
+          description: Message that the agent will say before starting the transfer call
+        goodbye_msg:
+          type: string
+          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
+        failed_msg:
+          type: string
+          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
+        enable_background_music:
+          type: boolean
+        stop_recording_after_transfer:
+          type: boolean
+          description: Whether the call should stop being recorded once it's transferred.
+        human_detection:
+          type: boolean
+          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
+        human_detection_timeout_seconds:
+          type: integer
+          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
+        summarization_prompt:
+          type: string
+          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
+        preserve_caller_id:
+          type: boolean
+          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
+        screened:
+          type: boolean
+          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
+        human_availability:
+          $ref: '#/components/schemas/HumanAvailabilityPublic'
+      required:
+      - transfer_mode
+      - phone
+      - instructions
+      - initiating_msg
+      title: LiveTransferUpdateDirectPhoneConfig
+    Delete-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-actionRequestBadRequestError
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHttpMode:
+      type: string
+      enum:
+      - GET
+      - POST
+      - PATCH
+      - PUT
+      default: GET
+      description: Select the method that will be used
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHttpMode
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems
+    Create-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-actionRequestBadRequestError
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHttpMode:
+      type: string
+      enum:
+      - GET
+      - POST
+      - PATCH
+      - PUT
+      default: GET
+      description: Select the method that will be used
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHttpMode
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration:
+      type: string
+      enum:
+      - GMeet
+      - Zoom
+      description: The selected option will be the meeting type that will be created when the booking is done
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallSms:
+      type: object
+      properties:
+        message_body:
+          type: string
+          description: The SMS body sent to the caller. Supports placeholder variables like `<user_name>`.
+        wait_for_reply:
+          type: boolean
+          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
+        timeout_seconds:
+          type: integer
+          description: Maximum time to wait for a reply when `wait_for_reply` is true.
+        fallback_message:
+          type: string
+          description: Message the agent speaks if the timeout fires with no reply.
+        message_before_action:
+          type: string
+          description: Message the agent speaks before the SMS is sent.
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallSms
+    ActionsPostRequestBodyContentApplicationJsonSchemaSendSms:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The content/text of the SMS message
+        instructions:
+          type: string
+          description: The instructions that will trigger the SMS message to be sent
+      required:
+      - content
+      - instructions
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaSendSms
+    Attach-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Attach-actionRequestBadRequestError
+    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorOpenQuestion:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The title that will identify the action
+        description:
+          type: string
+          description: The description of what the action is expected to do
+        examples:
+          type: array
+          items:
+            type: string
+          description: Examples of possible answers that can match the description of the action
+      required:
+      - identifier
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorOpenQuestion
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaInformationExtractor:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The title that will identify the action
+        description:
+          type: string
+          description: The description of what the action is expected to do
+        choices:
+          type: array
+          items:
+            type: string
+          description: The possible choices that will answer the expected description of the action
+        examples:
+          type: array
+          items:
+            type: string
+          description: Examples of possible answers that can match the description of the action
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaInformationExtractor
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBooking:
+      type: object
+      properties:
+        first_appt_date:
+          type: string
+          format: date
+          description: The initial date that will be the used to start searching for booking appointments, the format is YYYY-MM-DD
+        max_time_slots:
+          type: integer
+          default: 3
+          description: The amount of slots that the agent will recommend per day when trying to book an appointment. The limit is 3
+        min_hours_diff:
+          type: integer
+          default: 3
+          description: The difference in hours between appointments that will be suggested by the agent.
+        no_of_days:
+          type: integer
+          default: 3
+          description: Number of days that the agent will suggest appointments
+        timezone:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone'
+          description: '[List of possible time zones](/time-zones). The default is Europe/Berlin'
+        CALCOM:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom'
+          description: 'Important: You need to be connected to the Cal.com integration'
+        GHL:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl'
+          description: 'Important: You need to be connected to the GHL integration'
+      required:
+      - first_appt_date
+      - max_time_slots
+      - min_hours_diff
+      - no_of_days
+      - timezone
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBooking
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm:
+      type: string
+      enum:
+      - confirmed
+      - new
+      description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm
+    ActionsInitializePostRequestBodyContentApplicationJsonSchemaVariablesItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsInitializePostRequestBodyContentApplicationJsonSchemaVariablesItems
+    HumanAvailabilityScheduleItemPublicWeekday:
+      type: string
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      description: Lowercase full weekday name.
+      title: HumanAvailabilityScheduleItemPublicWeekday
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionIntegration:
+      type: string
+      enum:
+      - ghl
+      - hubspot
+      - salesforce
+      - salesforce-sandbox
+      description: The possible integrations that can be selected to retrieve information
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionIntegration
+    ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded:
+      type: object
+      properties:
+        sms_message_text:
+          type: string
+      title: ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionActionSound:
+      type: string
+      enum:
+      - ''
+      - typing
+      - ambient-background
+      - modern-jazz
+      - inspirational-symphony-classical-music
+      description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionActionSound
+    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsAttachmentType:
+      type: string
+      enum:
+      - before
+      - during
+      - after
+      default: during
+      description: When this action is available in the conversation. Optional and defaults to `during` when omitted or null.
+      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsAttachmentType
+    ActionsActionIdPutResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        action_id:
+          type: string
+      title: ActionsActionIdPutResponsesContentApplicationJsonSchemaResponse
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsActionType:
+      type: string
+      enum:
+      - REAL_TIME_BOOKING
+      - INFORMATION_EXTRACTOR
+      - LIVE_TRANSFER
+      - SEND_SMS
+      - INCALL_SMS
+      - INCALL_WHATSAPP
+      - CUSTOM_ACTION
+      - CUSTOM_EVAL
+      description: Action type.
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsActionType
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone:
+      type: string
+      enum:
+      - Africa/Accra
+      - Africa/Addis_Ababa
+      - Africa/Algiers
+      - Africa/Asmara
+      - Africa/Bamako
+      - Africa/Bangui
+      - Africa/Banjul
+      - Africa/Bissau
+      - Africa/Blantyre
+      - Africa/Brazzaville
+      - Africa/Bujumbura
+      - Africa/Cairo
+      - Africa/Casablanca
+      - Africa/Ceuta
+      - Africa/Conakry
+      - Africa/Dakar
+      - Africa/Dar_es_Salaam
+      - Africa/Djibouti
+      - Africa/Douala
+      - Africa/El_Aaiun
+      - Africa/Freetown
+      - Africa/Gaborone
+      - Africa/Harare
+      - Africa/Johannesburg
+      - Africa/Juba
+      - Africa/Kampala
+      - Africa/Khartoum
+      - Africa/Kigali
+      - Africa/Kinshasa
+      - Africa/Lagos
+      - Africa/Libreville
+      - Africa/Lome
+      - Africa/Luanda
+      - Africa/Lubumbashi
+      - Africa/Lusaka
+      - Africa/Malabo
+      - Africa/Maputo
+      - Africa/Maseru
+      - Africa/Mbabane
+      - Africa/Mogadishu
+      - Africa/Monrovia
+      - Africa/Nairobi
+      - Africa/Ndjamena
+      - Africa/Niamey
+      - Africa/Nouakchott
+      - Africa/Ouagadougou
+      - Africa/Porto-Novo
+      - Africa/Sao_Tome
+      - Africa/Tripoli
+      - Africa/Tunis
+      - Africa/Windhoek
+      - America/Adak
+      - America/Anchorage
+      - America/Anguilla
+      - America/Antigua
+      - America/Araguaina
+      - America/Argentina/Buenos_Aires
+      - America/Argentina/Catamarca
+      - America/Argentina/Cordoba
+      - America/Argentina/Jujuy
+      - America/Argentina/La_Rioja
+      - America/Argentina/Mendoza
+      - America/Argentina/Rio_Gallegos
+      - America/Argentina/Salta
+      - America/Argentina/San_Juan
+      - America/Argentina/San_Luis
+      - America/Argentina/Tucuman
+      - America/Argentina/Ushuaia
+      - America/Aruba
+      - America/Asuncion
+      - America/Atikokan
+      - America/Bahia
+      - America/Bahia_Banderas
+      - America/Barbados
+      - America/Belem
+      - America/Belize
+      - America/Blanc-Sablon
+      - America/Boa_Vista
+      - America/Bogota
+      - America/Boise
+      - America/Cambridge_Bay
+      - America/Campo_Grande
+      - America/Cancun
+      - America/Caracas
+      - America/Cayenne
+      - America/Cayman
+      - America/Chicago
+      - America/Chihuahua
+      - America/Ciudad_Juarez
+      - America/Costa_Rica
+      - America/Creston
+      - America/Cuiaba
+      - America/Curacao
+      - America/Danmarkshavn
+      - America/Dawson
+      - America/Dawson_Creek
+      - America/Denver
+      - America/Detroit
+      - America/Dominica
+      - America/Edmonton
+      - America/Eirunepe
+      - America/El_Salvador
+      - America/Fort_Nelson
+      - America/Fortaleza
+      - America/Glace_Bay
+      - America/Goose_Bay
+      - America/Grand_Turk
+      - America/Grenada
+      - America/Guadeloupe
+      - America/Guatemala
+      - America/Guayaquil
+      - America/Guyana
+      - America/Halifax
+      - America/Havana
+      - America/Hermosillo
+      - America/Indiana/Indianapolis
+      - America/Indiana/Knox
+      - America/Indiana/Marengo
+      - America/Indiana/Petersburg
+      - America/Indiana/Tell_City
+      - America/Indiana/Vevay
+      - America/Indiana/Vincennes
+      - America/Indiana/Winamac
+      - America/Inuvik
+      - America/Iqaluit
+      - America/Jamaica
+      - America/Juneau
+      - America/Kentucky/Louisville
+      - America/Kentucky/Monticello
+      - America/Kralendijk
+      - America/La_Paz
+      - America/Lima
+      - America/Los_Angeles
+      - America/Lower_Princes
+      - America/Maceio
+      - America/Managua
+      - America/Manaus
+      - America/Marigot
+      - America/Martinique
+      - America/Matamoros
+      - America/Mazatlan
+      - America/Menominee
+      - America/Merida
+      - America/Metlakatla
+      - America/Mexico_City
+      - America/Miquelon
+      - America/Moncton
+      - America/Monterrey
+      - America/Montevideo
+      - America/Montserrat
+      - America/Nassau
+      - America/New_York
+      - America/Nome
+      - America/Noronha
+      - America/North_Dakota/Beulah
+      - America/North_Dakota/Center
+      - America/North_Dakota/New_Salem
+      - America/Nuuk
+      - America/Ojinaga
+      - America/Panama
+      - America/Paramaribo
+      - America/Phoenix
+      - America/Port_of_Spain
+      - America/Port-au-Prince
+      - America/Porto_Velho
+      - America/Puerto_Rico
+      - America/Punta_Arenas
+      - America/Rankin_Inlet
+      - America/Recife
+      - America/Regina
+      - America/Resolute
+      - America/Rio_Branco
+      - America/Santarem
+      - America/Santiago
+      - America/Santo_Domingo
+      - America/Sao_Paulo
+      - America/Scoresbysund
+      - America/Sitka
+      - America/St_Barthelemy
+      - America/St_Johns
+      - America/St_Kitts
+      - America/St_Lucia
+      - America/St_Thomas
+      - America/St_Vincent
+      - America/Swift_Current
+      - America/Tegucigalpa
+      - America/Thule
+      - America/Tijuana
+      - America/Toronto
+      - America/Tortola
+      - America/Vancouver
+      - America/Whitehorse
+      - America/Winnipeg
+      - America/Yakutat
+      - Antarctica/Casey
+      - Antarctica/Davis
+      - Antarctica/DumontDUrville
+      - Antarctica/Macquarie
+      - Antarctica/Mawson
+      - Antarctica/McMurdo
+      - Antarctica/Palmer
+      - Antarctica/Rothera
+      - Antarctica/Syowa
+      - Antarctica/Troll
+      - Antarctica/Vostok
+      - Arctic/Longyearbyen
+      - Asia/Aden
+      - Asia/Almaty
+      - Asia/Amman
+      - Asia/Anadyr
+      - Asia/Aqtau
+      - Asia/Aqtobe
+      - Asia/Ashgabat
+      - Asia/Atyrau
+      - Asia/Baghdad
+      - Asia/Bahrain
+      - Asia/Baku
+      - Asia/Bangkok
+      - Asia/Barnaul
+      - Asia/Beirut
+      - Asia/Bishkek
+      - Asia/Brunei
+      - Asia/Chita
+      - Asia/Choibalsan
+      - Asia/Colombo
+      - Asia/Damascus
+      - Asia/Dhaka
+      - Asia/Dili
+      - Asia/Dubai
+      - Asia/Dushanbe
+      - Asia/Famagusta
+      - Asia/Gaza
+      - Asia/Hebron
+      - Asia/Ho_Chi_Minh
+      - Asia/Hong_Kong
+      - Asia/Hovd
+      - Asia/Irkutsk
+      - Asia/Jakarta
+      - Asia/Jayapura
+      - Asia/Jerusalem
+      - Asia/Kabul
+      - Asia/Kamchatka
+      - Asia/Karachi
+      - Asia/Kathmandu
+      - Asia/Khandyga
+      - Asia/Kolkata
+      - Asia/Krasnoyarsk
+      - Asia/Kuala_Lumpur
+      - Asia/Kuching
+      - Asia/Kuwait
+      - Asia/Macau
+      - Asia/Magadan
+      - Asia/Makassar
+      - Asia/Manila
+      - Asia/Muscat
+      - Asia/Nicosia
+      - Asia/Novokuznetsk
+      - Asia/Novosibirsk
+      - Asia/Omsk
+      - Asia/Oral
+      - Asia/Phnom_Penh
+      - Asia/Pontianak
+      - Asia/Pyongyang
+      - Asia/Qatar
+      - Asia/Qostanay
+      - Asia/Qyzylorda
+      - Asia/Riyadh
+      - Asia/Sakhalin
+      - Asia/Samarkand
+      - Asia/Seoul
+      - Asia/Shanghai
+      - Asia/Singapore
+      - Asia/Srednekolymsk
+      - Asia/Taipei
+      - Asia/Tashkent
+      - Asia/Tbilisi
+      - Asia/Tehran
+      - Asia/Thimphu
+      - Asia/Tokyo
+      - Asia/Tomsk
+      - Asia/Ulaanbaatar
+      - Asia/Urumqi
+      - Asia/Ust-Nera
+      - Asia/Vientiane
+      - Asia/Vladivostok
+      - Asia/Yakutsk
+      - Asia/Yangon
+      - Asia/Yekaterinburg
+      - Asia/Yerevan
+      - Atlantic/Azores
+      - Atlantic/Bermuda
+      - Atlantic/Canary
+      - Atlantic/Cape_Verde
+      - Atlantic/Faroe
+      - Atlantic/Madeira
+      - Atlantic/Reykjavik
+      - Atlantic/South_Georgia
+      - Atlantic/St_Helena
+      - Atlantic/Stanley
+      - Australia/Adelaide
+      - Australia/Brisbane
+      - Australia/Broken_Hill
+      - Australia/Darwin
+      - Australia/Eucla
+      - Australia/Hobart
+      - Australia/Lindeman
+      - Australia/Lord_Howe
+      - Australia/Melbourne
+      - Australia/Perth
+      - Australia/Sydney
+      - Europe/Amsterdam
+      - Europe/Andorra
+      - Europe/Astrakhan
+      - Europe/Athens
+      - Europe/Belgrade
+      - Europe/Berlin
+      - Europe/Bratislava
+      - Europe/Brussels
+      - Europe/Bucharest
+      - Europe/Budapest
+      - Europe/Busingen
+      - Europe/Chisinau
+      - Europe/Copenhagen
+      - Europe/Dublin
+      - Europe/Gibraltar
+      - Europe/Guernsey
+      - Europe/Helsinki
+      - Europe/Isle_of_Man
+      - Europe/Istanbul
+      - Europe/Jersey
+      - Europe/Kaliningrad
+      - Europe/Kirov
+      - Europe/Kyiv
+      - Europe/Lisbon
+      - Europe/Ljubljana
+      - Europe/London
+      - Europe/Luxembourg
+      - Europe/Madrid
+      - Europe/Malta
+      - Europe/Mariehamn
+      - Europe/Minsk
+      - Europe/Monaco
+      - Europe/Moscow
+      - Europe/Oslo
+      - Europe/Paris
+      - Europe/Podgorica
+      - Europe/Prague
+      - Europe/Riga
+      - Europe/Rome
+      - Europe/Samara
+      - Europe/San_Marino
+      - Europe/Sarajevo
+      - Europe/Saratov
+      - Europe/Simferopol
+      - Europe/Skopje
+      - Europe/Sofia
+      - Europe/Stockholm
+      - Europe/Tallinn
+      - Europe/Tirane
+      - Europe/Ulyanovsk
+      - Europe/Vaduz
+      - Europe/Vatican
+      - Europe/Vienna
+      - Europe/Vilnius
+      - Europe/Volgograd
+      - Europe/Warsaw
+      - Europe/Zagreb
+      - Europe/Zurich
+      - Indian/Antananarivo
+      - Indian/Chagos
+      - Indian/Christmas
+      - Indian/Cocos
+      - Indian/Comoro
+      - Indian/Kerguelen
+      - Indian/Mahe
+      - Indian/Maldives
+      - Indian/Mauritius
+      - Indian/Mayotte
+      - Indian/Reunion
+      - Pacific/Apia
+      - Pacific/Auckland
+      - Pacific/Bougainville
+      - Pacific/Chatham
+      - Pacific/Chuuk
+      - Pacific/Easter
+      - Pacific/Efate
+      - Pacific/Fakaofo
+      - Pacific/Fiji
+      - Pacific/Funafuti
+      - Pacific/Galapagos
+      - Pacific/Gambier
+      - Pacific/Guadalcanal
+      - Pacific/Guam
+      - Pacific/Honolulu
+      - Pacific/Kanton
+      - Pacific/Kiritimati
+      - Pacific/Kosrae
+      - Pacific/Kwajalein
+      - Pacific/Majuro
+      - Pacific/Marquesas
+      - Pacific/Midway
+      - Pacific/Nauru
+      - Pacific/Niue
+      - Pacific/Norfolk
+      - Pacific/Noumea
+      - Pacific/Pago_Pago
+      - Pacific/Palau
+      - Pacific/Pitcairn
+      - Pacific/Pohnpei
+      - Pacific/Port_Moresby
+      - Pacific/Rarotonga
+      - Pacific/Saipan
+      - Pacific/Tahiti
+      - Pacific/Tarawa
+      - Pacific/Tongatapu
+      - Pacific/Wake
+      - Pacific/Wallis
+      - US/Alaska
+      - US/Central
+      - US/Eastern
+      - US/Hawaii
+      - US/Mountain
+      - US/Pacific
+      description: '[List of possible time zones](/time-zones). The default is Europe/Berlin'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone
+    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsLlmConfig:
+      type: object
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the variable.
+        example:
+          type:
+          - string
+          - 'null'
+          description: Example of the variable.
+        required:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the variable is required.
+      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsLlmConfig
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestionCategory:
+      type: string
+      enum:
+      - pass_fail
+      - numeric
+      - descriptive
+      - likert_scale
+      description: Custom evalution category.
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestionCategory
+    LiveTransferUpdateDirectPhoneConfigTransferMode:
+      type: string
+      enum:
+      - cold_transfer
+      - warm_transfer
+      - warm_transfer_with_context
+      description: Transfer mode.
+      title: LiveTransferUpdateDirectPhoneConfigTransferMode
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

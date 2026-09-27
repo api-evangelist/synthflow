@@ -1,0 +1,645 @@
+openapi: 3.2.0
+info:
+  title: PLATFORM Simulation Cases API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+  description: Global
+- url: https://api.us.synthflow.ai/v2
+  description: United States
+- url: https://api.eu.synthflow.ai/v2
+  description: European Union
+tags:
+- name: Simulation Cases
+paths:
+  /simulation_cases:
+    post:
+      operationId: create-simulation-case
+      summary: Create a simulation case
+      description: Create a new simulation case for a workspace.
+      tags:
+      - Simulation Cases
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create-simulation-case_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create-simulation-caseRequestBadRequestError'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create-simulation-caseRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationCaseCreateIn'
+    get:
+      operationId: list-simulation-cases
+      summary: List simulation cases
+      description: List simulation cases with pagination and optional filtering.
+      tags:
+      - Simulation Cases
+      parameters:
+      - name: page_number
+        in: query
+        description: Page number.
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: page_size
+        in: query
+        description: Number of items per page.
+        required: false
+        schema:
+          type: integer
+          default: 10
+      - name: search
+        in: query
+        description: Search term for simulation case names.
+        required: false
+        schema:
+          type: string
+      - name: simulation_case_type
+        in: query
+        description: Filter by simulation case type.
+        required: false
+        schema:
+          $ref: '#/components/schemas/SimulationCasesGetParametersSimulationCaseType'
+      - name: suite_id
+        in: query
+        description: Filter by simulation suite ID.
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list-simulation-cases_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-simulation-casesRequestBadRequestError'
+  /simulation_cases/{simulation_case_id}:
+    get:
+      operationId: get-simulation-case
+      summary: Get a simulation case
+      description: Retrieve a simulation case by ID.
+      tags:
+      - Simulation Cases
+      parameters:
+      - name: simulation_case_id
+        in: path
+        description: Simulation case ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get-simulation-case_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-simulation-caseRequestBadRequestError'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-simulation-caseRequestNotFoundError'
+    put:
+      operationId: update-simulation-case
+      summary: Update a simulation case
+      description: Update an existing simulation case.
+      tags:
+      - Simulation Cases
+      parameters:
+      - name: simulation_case_id
+        in: path
+        description: Simulation case ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/update-simulation-case_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-simulation-caseRequestBadRequestError'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-simulation-caseRequestNotFoundError'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-simulation-caseRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationCaseUpdateIn'
+    delete:
+      operationId: delete-simulation-case
+      summary: Delete a simulation case
+      description: Delete a simulation case by ID.
+      tags:
+      - Simulation Cases
+      parameters:
+      - name: simulation_case_id
+        in: path
+        description: Simulation case ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: '204'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete-simulation-caseRequestBadRequestError'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete-simulation-caseRequestNotFoundError'
+  /simulation_cases/generate:
+    post:
+      operationId: generate-simulation-cases
+      summary: Generate test cases
+      description: Generate test cases for an agent. Supports both custom prompt and flow designer agents. You can optionally specify scenarios to ensure the generated tests cover specific situations. The response is streamed as NDJSON, providing progress and results incrementally.
+      tags:
+      - Simulation Cases
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Generate-simulation-casesRequestBadRequestError'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Generate-simulation-casesRequestNotFoundError'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Generate-simulation-casesRequestUnprocessableEntityError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationCaseGenerateIn'
+  /simulation_cases/by_agent:
+    get:
+      operationId: list-simulation-cases-by-agent
+      summary: List simulation cases by agent
+      description: List all simulation cases created for a specific agent.
+      tags:
+      - Simulation Cases
+      parameters:
+      - name: agent_id
+        in: query
+        description: Agent ID whose cases to list.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list-simulation-cases-by-agent_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-simulation-cases-by-agentRequestBadRequestError'
+components:
+  schemas:
+    Create-simulation-caseRequestUnprocessableEntityError:
+      type: object
+      properties: {}
+      title: Create-simulation-caseRequestUnprocessableEntityError
+    List-simulation-cases-by-agentRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-simulation-cases-by-agentRequestBadRequestError
+    SimulationCaseGenerateIn:
+      type: object
+      properties:
+        agent_id:
+          type: string
+          description: ID of the agent used to generate cases.
+        suite_id:
+          type: string
+          format: uuid
+          description: ID of the simulation suite to add generated cases to.
+        include_tests:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationCaseGenerateInIncludeTestsItems'
+          description: Tests to include in the generated cases.
+      required:
+      - agent_id
+      - include_tests
+      description: Input payload to generate simulation cases.
+      title: SimulationCaseGenerateIn
+    pagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      title: pagination
+    SimulationCaseGenerateInIncludeTestsItems:
+      type: string
+      enum:
+      - csat_score
+      - accuracy_of_responses
+      - script_compliance
+      - angry_user
+      - repetitive_phrases
+      - conversational_naturalness
+      - task_completion
+      title: SimulationCaseGenerateInIncludeTestsItems
+    get-simulation-case_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationCaseReadOut'
+      title: get-simulation-case_Response_200
+    SimulationCasesGetParametersSimulationCaseType:
+      type: string
+      enum:
+      - custom
+      - agent_based
+      title: SimulationCasesGetParametersSimulationCaseType
+    SimulationCaseCreateIn:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the simulation case.
+        prompt:
+          type: string
+          description: Prompt used during the simulation case.
+        type:
+          $ref: '#/components/schemas/SimulationCaseCreateInType'
+          description: Simulation case type.
+        success_criteria:
+          type: array
+          items:
+            type: string
+          description: Success criteria evaluated for the case.
+        call_success_type:
+          $ref: '#/components/schemas/SimulationCaseCreateInCallSuccessType'
+          description: Success logic for the case.
+        suite_id:
+          type: string
+          format: uuid
+          description: ID of the simulation suite to add this case to. Required for v2 simulation suites.
+        base_agent_id:
+          type:
+          - string
+          - 'null'
+          description: Agent ID to base the generated case on.
+      required:
+      - name
+      - prompt
+      - type
+      - success_criteria
+      - call_success_type
+      description: Input payload to create a simulation case.
+      title: SimulationCaseCreateIn
+    SimulationCaseReadOutType:
+      type: string
+      enum:
+      - custom
+      - agent_based
+      title: SimulationCaseReadOutType
+    SimulationCaseUpdateInCallSuccessType:
+      type: string
+      enum:
+      - all
+      - any
+      title: SimulationCaseUpdateInCallSuccessType
+    Generate-simulation-casesRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Generate-simulation-casesRequestNotFoundError
+    Update-simulation-caseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-simulation-caseRequestBadRequestError
+    SimulationCasesGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/pagination'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationCaseReadOut'
+      title: SimulationCasesGetResponsesContentApplicationJsonSchemaResponse
+    SimulationCaseReadOutBaseAgent:
+      type: object
+      properties:
+        model_id:
+          type: string
+        agent_name:
+          type: string
+        agent_type:
+          type: string
+        voice_engine_type:
+          type: string
+        phone_number:
+          type:
+          - string
+          - 'null'
+        updated_at:
+          type: string
+          format: date-time
+        image_url:
+          type:
+          - string
+          - 'null'
+      title: SimulationCaseReadOutBaseAgent
+    SimulationCaseCreateInCallSuccessType:
+      type: string
+      enum:
+      - all
+      - any
+      description: Success logic for the case.
+      title: SimulationCaseCreateInCallSuccessType
+    Delete-simulation-caseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-simulation-caseRequestBadRequestError
+    SimulationCaseCreateInType:
+      type: string
+      enum:
+      - custom
+      - agent_based
+      description: Simulation case type.
+      title: SimulationCaseCreateInType
+    Create-simulation-caseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-simulation-caseRequestBadRequestError
+    Update-simulation-caseRequestUnprocessableEntityError:
+      type: object
+      properties: {}
+      title: Update-simulation-caseRequestUnprocessableEntityError
+    list-simulation-cases-by-agent_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationCaseReadOut'
+      title: list-simulation-cases-by-agent_Response_200
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    SimulationCaseReadOutCallSuccessType:
+      type: string
+      enum:
+      - all
+      - any
+      title: SimulationCaseReadOutCallSuccessType
+    Update-simulation-caseRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Update-simulation-caseRequestNotFoundError
+    SimulationCaseReadOut:
+      type: object
+      properties:
+        simulation_case_id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+        suite_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: ID of the simulation suite this case belongs to.
+        name:
+          type: string
+        prompt:
+          type: string
+        type:
+          $ref: '#/components/schemas/SimulationCaseReadOutType'
+        success_criteria:
+          type: array
+          items:
+            type: string
+        call_success_type:
+          $ref: '#/components/schemas/SimulationCaseReadOutCallSuccessType'
+        base_agent:
+          oneOf:
+          - $ref: '#/components/schemas/SimulationCaseReadOutBaseAgent'
+          - type: 'null'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      description: Simulation case details.
+      title: SimulationCaseReadOut
+    Delete-simulation-caseRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Delete-simulation-caseRequestNotFoundError
+    list-simulation-cases_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationCasesGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-simulation-cases_Response_200
+    SimulationCaseUpdateIn:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        prompt:
+          type:
+          - string
+          - 'null'
+        success_criteria:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        call_success_type:
+          oneOf:
+          - $ref: '#/components/schemas/SimulationCaseUpdateInCallSuccessType'
+          - type: 'null'
+        suite_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: ID of the simulation suite to assign this case to.
+      description: Fields that can be updated for a simulation case.
+      title: SimulationCaseUpdateIn
+    Get-simulation-caseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-simulation-caseRequestBadRequestError
+    Generate-simulation-casesRequestUnprocessableEntityError:
+      type: object
+      properties: {}
+      title: Generate-simulation-casesRequestUnprocessableEntityError
+    create-simulation-case_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationCasesPostResponsesContentApplicationJsonSchemaResponse'
+      title: create-simulation-case_Response_200
+    update-simulation-case_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationCaseReadOut'
+      title: update-simulation-case_Response_200
+    List-simulation-casesRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-simulation-casesRequestBadRequestError
+    Generate-simulation-casesRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Generate-simulation-casesRequestBadRequestError
+    SimulationCasesPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        simulation_case:
+          $ref: '#/components/schemas/SimulationCaseReadOut'
+      title: SimulationCasesPostResponsesContentApplicationJsonSchemaResponse
+    Get-simulation-caseRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Get-simulation-caseRequestNotFoundError
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

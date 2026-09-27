@@ -262,26 +262,27 @@ paths:
               $ref: '#/components/schemas/InvokeMCPToolRequest'
 components:
   schemas:
-    MCPServerIn:
+    AgentMCPConfigOut:
       type: object
       properties:
-        id:
-          type: string
-          description: Stable config ID. Omit for new entries (auto-generated).
-        mcp_url:
-          type: string
-          format: uri
-          description: The HTTPS URL of the MCP server (SSE endpoint)
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-          description: Custom headers to send with MCP requests (e.g. Authorization, API keys)
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerOut'
+          description: List of MCP server configurations with redacted headers
       required:
-      - mcp_url
-      title: MCPServerIn
+      - servers
+      title: AgentMCPConfigOut
+    DiscoverToolsResponse:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerDiscoveryResult'
+      required:
+      - servers
+      title: DiscoverToolsResponse
     MCPToolDefinition:
       type: object
       properties:
@@ -308,80 +309,6 @@ components:
       - original_tool_name
       description: A tool returned by MCP discovery (enriched with namespace)
       title: MCPToolDefinition
-    DiscoverToolsResponse:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServerDiscoveryResult'
-      required:
-      - servers
-      title: DiscoverToolsResponse
-    ServerDiscoveryResult:
-      type: object
-      properties:
-        config_id:
-          type: string
-          description: Stable ID of the MCP server config entry in Vault
-        server_name:
-          type: string
-          description: Raw serverInfo.name from MCP initialize
-        server_title:
-          type: string
-          description: serverInfo.title with noise words stripped
-        server_version:
-          type: string
-        namespace:
-          type: string
-          description: Derived namespace used as tool name prefix
-        tools:
-          type: array
-          items:
-            $ref: '#/components/schemas/MCPToolDefinition'
-        error:
-          type: string
-          description: Non-empty if this server failed discovery
-      required:
-      - server_name
-      - namespace
-      - tools
-      title: ServerDiscoveryResult
-    AgentMCPConfigOut:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MCPServerOut'
-          description: List of MCP server configurations with redacted headers
-      required:
-      - servers
-      title: AgentMCPConfigOut
-    AgentMCPConfigIn:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MCPServerIn'
-          description: List of MCP server configurations
-      required:
-      - servers
-      title: AgentMCPConfigIn
-    InvokeMCPToolResponse:
-      type: object
-      properties:
-        result:
-          type: string
-          description: Tool result text (empty on error)
-        is_error:
-          type: boolean
-          description: True if the MCP server returned an error for this tool call
-        error:
-          type: string
-          description: Error message if the invocation failed
-      title: InvokeMCPToolResponse
     InvokeMCPToolRequest:
       type: object
       properties:
@@ -422,6 +349,79 @@ components:
       - mcp_url
       - has_headers
       title: MCPServerOut
+    InvokeMCPToolResponse:
+      type: object
+      properties:
+        result:
+          type: string
+          description: Tool result text (empty on error)
+        is_error:
+          type: boolean
+          description: True if the MCP server returned an error for this tool call
+        error:
+          type: string
+          description: Error message if the invocation failed
+      title: InvokeMCPToolResponse
+    AgentMCPConfigIn:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerIn'
+          description: List of MCP server configurations
+      required:
+      - servers
+      title: AgentMCPConfigIn
+    ServerDiscoveryResult:
+      type: object
+      properties:
+        config_id:
+          type: string
+          description: Stable ID of the MCP server config entry in Vault
+        server_name:
+          type: string
+          description: Raw serverInfo.name from MCP initialize
+        server_title:
+          type: string
+          description: serverInfo.title with noise words stripped
+        server_version:
+          type: string
+        namespace:
+          type: string
+          description: Derived namespace used as tool name prefix
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPToolDefinition'
+        error:
+          type: string
+          description: Non-empty if this server failed discovery
+      required:
+      - server_name
+      - namespace
+      - tools
+      title: ServerDiscoveryResult
+    MCPServerIn:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable config ID. Omit for new entries (auto-generated).
+        mcp_url:
+          type: string
+          format: uri
+          description: The HTTPS URL of the MCP server (SSE endpoint)
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: Custom headers to send with MCP requests (e.g. Authorization, API keys)
+      required:
+      - mcp_url
+      title: MCPServerIn
   securitySchemes:
     sec0:
       type: http

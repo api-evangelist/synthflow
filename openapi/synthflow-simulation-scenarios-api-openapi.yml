@@ -1,0 +1,376 @@
+openapi: 3.2.0
+info:
+  title: PLATFORM Simulation Scenarios API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+  description: Global
+- url: https://api.us.synthflow.ai/v2
+  description: United States
+- url: https://api.eu.synthflow.ai/v2
+  description: European Union
+tags:
+- name: Simulation Scenarios
+paths:
+  /simulation_scenarios:
+    post:
+      operationId: create-simulation-scenario
+      summary: Create a simulation scenario
+      description: Create a new simulation scenario. Scenarios are templates used when generating test cases to ensure coverage of specific situations.
+      tags:
+      - Simulation Scenarios
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create-simulation-scenario_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create-simulation-scenarioRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationScenarioCreateIn'
+    get:
+      operationId: list-simulation-scenarios
+      summary: List simulation scenarios
+      description: List simulation scenarios with pagination and optional filtering.
+      tags:
+      - Simulation Scenarios
+      parameters:
+      - name: page_number
+        in: query
+        description: Page number.
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: page_size
+        in: query
+        description: Number of items per page.
+        required: false
+        schema:
+          type: integer
+          default: 10
+      - name: search
+        in: query
+        description: Search term for simulation scenario names.
+        required: false
+        schema:
+          type: string
+      - name: start_date
+        in: query
+        description: Filter by created_at >= start_date (ISO format).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: end_date
+        in: query
+        description: Filter by created_at <= end_date (ISO format).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list-simulation-scenarios_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-simulation-scenariosRequestBadRequestError'
+  /simulation_scenarios/{scenario_id}:
+    get:
+      operationId: get-simulation-scenario
+      summary: Get a simulation scenario
+      description: Retrieve a simulation scenario by ID.
+      tags:
+      - Simulation Scenarios
+      parameters:
+      - name: scenario_id
+        in: path
+        description: Simulation scenario ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get-simulation-scenario_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-simulation-scenarioRequestBadRequestError'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-simulation-scenarioRequestNotFoundError'
+    put:
+      operationId: update-simulation-scenario
+      summary: Update a simulation scenario
+      description: Update an existing simulation scenario.
+      tags:
+      - Simulation Scenarios
+      parameters:
+      - name: scenario_id
+        in: path
+        description: Simulation scenario ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/update-simulation-scenario_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-simulation-scenarioRequestBadRequestError'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-simulation-scenarioRequestNotFoundError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationScenarioUpdateIn'
+    delete:
+      operationId: delete-simulation-scenario
+      summary: Delete a simulation scenario
+      description: Delete a simulation scenario by ID.
+      tags:
+      - Simulation Scenarios
+      parameters:
+      - name: scenario_id
+        in: path
+        description: Simulation scenario ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: '204'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete-simulation-scenarioRequestBadRequestError'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete-simulation-scenarioRequestNotFoundError'
+components:
+  schemas:
+    SimulationScenarioUpdateIn:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the simulation scenario
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the simulation scenario
+      title: SimulationScenarioUpdateIn
+    SimulationScenarioReadOut:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the simulation scenario
+        name:
+          type: string
+          description: Name of the simulation scenario template
+        description:
+          type: string
+          description: Description of what the scenario template should verify when generating test cases
+        workspace_id:
+          type: string
+          description: Workspace ID this simulation scenario belongs to
+        created_at:
+          type: string
+          format: date-time
+          description: When the simulation scenario was created
+        updated_at:
+          type: string
+          format: date-time
+          description: When the simulation scenario was last updated
+      title: SimulationScenarioReadOut
+    Get-simulation-scenarioRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-simulation-scenarioRequestBadRequestError
+    Update-simulation-scenarioRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Update-simulation-scenarioRequestNotFoundError
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    update-simulation-scenario_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationScenarioReadOut'
+      title: update-simulation-scenario_Response_200
+    create-simulation-scenario_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationScenarioReadOut'
+      title: create-simulation-scenario_Response_200
+    Delete-simulation-scenarioRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Delete-simulation-scenarioRequestNotFoundError
+    Get-simulation-scenarioRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Get-simulation-scenarioRequestNotFoundError
+    get-simulation-scenario_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationScenarioReadOut'
+      title: get-simulation-scenario_Response_200
+    SimulationScenarioCreateIn:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the simulation scenario template
+        description:
+          type: string
+          description: Description of what the scenario template should verify when generating test cases
+      required:
+      - name
+      - description
+      title: SimulationScenarioCreateIn
+    List-simulation-scenariosRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-simulation-scenariosRequestBadRequestError
+    Delete-simulation-scenarioRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-simulation-scenarioRequestBadRequestError
+    PaginatedSimulationScenariosList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationScenarioReadOut'
+          description: List of simulation scenarios
+        total:
+          type: integer
+          description: Total number of simulation scenarios
+        page_number:
+          type: integer
+          description: Current page number
+        page_size:
+          type: integer
+          description: Number of items per page
+      required:
+      - items
+      - total
+      - page_number
+      - page_size
+      title: PaginatedSimulationScenariosList
+    Create-simulation-scenarioRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-simulation-scenarioRequestBadRequestError
+    Update-simulation-scenarioRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-simulation-scenarioRequestBadRequestError
+    list-simulation-scenarios_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/PaginatedSimulationScenariosList'
+      title: list-simulation-scenarios_Response_200
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

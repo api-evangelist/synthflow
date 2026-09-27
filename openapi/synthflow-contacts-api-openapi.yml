@@ -13,6 +13,31 @@ tags:
 - name: Contacts
 paths:
   /contacts:
+    get:
+      operationId: list-contacts
+      summary: List contacts
+      tags:
+      - Contacts
+      parameters:
+      - name: search
+        in: query
+        description: The contact's phone number.
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list-contacts_Response_200'
     post:
       operationId: create-a-contact
       summary: Create a contact
@@ -55,6 +80,54 @@ paths:
               - name
               - phone_number
   /contacts/{contact_id}:
+    get:
+      operationId: getAContact
+      summary: Get a contact
+      tags:
+      - Contacts
+      parameters:
+      - name: contact_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAContact_Response_200'
+    delete:
+      operationId: deleteAContact
+      summary: Delete a contact
+      tags:
+      - Contacts
+      parameters:
+      - name: contact_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteAContact_Response_200'
     patch:
       operationId: update-a-contact
       summary: Update a contact
@@ -100,6 +173,108 @@ paths:
                   $ref: '#/components/schemas/ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata'
 components:
   schemas:
+    ContactsGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItems'
+        total:
+          type: integer
+        page_size:
+          type: integer
+        page_number:
+          type: integer
+      title: ContactsGetResponsesContentApplicationJsonSchemaResponse
+    ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItemsContactMetadata:
+      type: object
+      properties: {}
+      title: ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItemsContactMetadata
+    ContactsContactIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        phone_number:
+          type: string
+        email:
+          type: string
+        contact_metadata:
+          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaResponseContactMetadata'
+        workspace_id:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        memory_store_ids:
+          type: array
+          items:
+            description: Any type
+      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaResponse
+    list-contacts_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-contacts_Response_200
+    ContactsContactIdGetResponsesContentApplicationJsonSchemaResponseContactMetadata:
+      type: object
+      properties:
+        company:
+          type: string
+      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaResponseContactMetadata
+    ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItems:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        phone_number:
+          type: string
+        email:
+          type: string
+        contact_metadata:
+          $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItemsContactMetadata'
+        workspace_id:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        memory_store_ids:
+          type: array
+          items:
+            description: Any type
+      title: ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItems
+    getAContact_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: getAContact_Response_200
+    deleteAContact_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: deleteAContact_Response_200
+    Contacts_create-a-contact_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaResponse'
+      title: Contacts_create-a-contact_Response_200
     ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata:
       type: object
       properties: {}
@@ -117,14 +292,6 @@ components:
           type: string
       description: Additional metadata for the contact.
       title: ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata
-    Contacts_create-a-contact_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/ContactsPostResponsesContentApplicationJsonSchemaResponse'
-      title: Contacts_create-a-contact_Response_200
     ContactsPostResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:

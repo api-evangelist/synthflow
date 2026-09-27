@@ -1,0 +1,163 @@
+openapi: 3.2.0
+info:
+  title: PLATFORM Voices API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+  description: Global
+- url: https://api.us.synthflow.ai/v2
+  description: United States
+- url: https://api.eu.synthflow.ai/v2
+  description: European Union
+tags:
+- name: Voices
+paths:
+  /voices:
+    get:
+      operationId: get-voices
+      summary: Get voices
+      description: Lists all the voices assigned to a workspace.
+      tags:
+      - Voices
+      parameters:
+      - name: workspace
+        in: query
+        description: Workspace ID. You can find it in your dashboard.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Voices displayed per page.
+        required: false
+        schema:
+          type: integer
+          default: 50
+      - name: offset
+        in: query
+        description: Index of the first voice to be returned.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: search
+        in: query
+        description: Search voices by name.
+        required: false
+        schema:
+          type: string
+      - name: provider
+        in: query
+        description: Voice provider to filter by.
+        required: false
+        schema:
+          $ref: '#/components/schemas/VoicesGetParametersProvider'
+          default: elevenlabs
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get-voices_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-voicesRequestBadRequestError'
+components:
+  schemas:
+    VoicesGetParametersProvider:
+      type: string
+      enum:
+      - elevenlabs
+      - deepgram
+      - synthflow
+      default: elevenlabs
+      title: VoicesGetParametersProvider
+    VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsProvider:
+      type: string
+      enum:
+      - elevenlabs
+      - deepgram
+      - synthflow
+      description: Voice provider (elevenlabs, deepgram, or synthflow).
+      title: VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsProvider
+    VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsGender:
+      type: string
+      enum:
+      - male
+      - female
+      - neutral
+      description: Voice gender.
+      title: VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsGender
+    VoicesGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/pagination'
+        voices:
+          type: array
+          items:
+            $ref: '#/components/schemas/VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItems'
+      title: VoicesGetResponsesContentApplicationJsonSchemaResponse
+    pagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      title: pagination
+    VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItems:
+      type: object
+      properties:
+        voice_id:
+          type: string
+        name:
+          type: string
+        preview:
+          type: string
+        workspace:
+          type: string
+        provider:
+          $ref: '#/components/schemas/VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsProvider'
+          description: Voice provider (elevenlabs, deepgram, or synthflow).
+        gender:
+          oneOf:
+          - $ref: '#/components/schemas/VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsGender'
+          - type: 'null'
+          description: Voice gender.
+        languages:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: ISO language codes supported by this voice.
+      title: VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItems
+    Get-voicesRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-voicesRequestBadRequestError
+    get-voices_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/VoicesGetResponsesContentApplicationJsonSchemaResponse'
+      title: get-voices_Response_200
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

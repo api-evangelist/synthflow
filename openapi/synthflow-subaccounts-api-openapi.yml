@@ -1,0 +1,712 @@
+openapi: 3.2.0
+info:
+  title: PLATFORM Subaccounts API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+  description: Global
+- url: https://api.us.synthflow.ai/v2
+  description: United States
+- url: https://api.eu.synthflow.ai/v2
+  description: European Union
+tags:
+- name: Subaccounts
+paths:
+  /subaccounts:
+    post:
+      operationId: create-subaccount
+      summary: Create a subaccount
+      description: ''
+      tags:
+      - Subaccounts
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create-subaccount_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create-subaccountRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subaccount_name:
+                  type: string
+                  description: The name for the new subaccount. This should be a unique identifier that distinguishes it from other subaccounts within the main account.
+                user_email:
+                  type: string
+                  description: This is the email address of the user you wish to invite to the subaccount. When this optional parameter is filled in, a "sign in" link will be generated and sent back in the response. The user can use this link to sign in and set up their account.
+                twilio_account_sid:
+                  type: string
+                  description: This is the Twilio SID of the subaccount.
+                twilio_auth_token:
+                  type: string
+                  description: This is the Twilio Token of the subaccount.
+                concurrency:
+                  type: integer
+                  description: The maximum number of calls the subaccount can handle at the same time.
+                max_agents:
+                  type:
+                  - integer
+                  - 'null'
+                  description: The maximum number of agents the subaccount is allowed to create. Null if no limit is set.
+                max_minutes:
+                  type:
+                  - integer
+                  - 'null'
+                  description: The maximum number of minutes allocated to this subaccount. Null if no limit is set.
+                max_workflow_runs:
+                  type:
+                  - integer
+                  - 'null'
+                  description: The maximum number of workflow runs allocated to this subaccount. Null if no limit is set.
+                grant_permissions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SubaccountsPostRequestBodyContentApplicationJsonSchemaGrantPermissionsItems'
+                  description: Permissions to grant to the subaccount. Duplicate values are not allowed, and any value also present in `revoke_permissions` is rejected by the API.
+                revoke_permissions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SubaccountsPostRequestBodyContentApplicationJsonSchemaRevokePermissionsItems'
+                  description: Permissions to revoke from the subaccount. Duplicate values are not allowed, and any value also present in `grant_permissions` is rejected by the API.
+              required:
+              - subaccount_name
+  /subaccounts/{subaccount_id}:
+    put:
+      operationId: update-subaccount
+      summary: Update a subaccount
+      description: ''
+      tags:
+      - Subaccounts
+      parameters:
+      - name: subaccount_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/subaccount_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/update-subaccount_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-subaccountRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subaccount_name:
+                  type: string
+                  description: The name for the new subaccount. This should be a unique identifier that distinguishes it from other subaccounts within the main account.
+                invite_user_email:
+                  type: string
+                  description: This is the email address of the user you wish to invite to the subaccount. When this optional parameter is filled in, a "sign in" link will be generated and sent back in the response. The user can use this link to sign in and set up their account.
+                pricing_tiers_attach:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaPricingTiersAttachItems'
+                  description: Pricing tier IDs that this subaccount can choose from when selecting a subscription plan.
+                pricing_tiers_detach:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaPricingTiersDetachItems'
+                  description: Pricing tiers will be removed from this subaccount and will no longer be available for selection when choosing a subscription plan.
+                import_subscription:
+                  $ref: '#/components/schemas/SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaImportSubscription'
+                  description: This section is used when you want to import an existing Stripe subscription for the subaccount
+                twilio_account_sid:
+                  type: string
+                  description: This is the Twilio SID of the subaccount.
+                twilio_auth_token:
+                  type: string
+                  description: This is the Twilio Token of the subaccount.
+                concurrency:
+                  type: integer
+                  description: The maximum calls the subaccount can handle at once.
+                max_agents:
+                  type:
+                  - integer
+                  - 'null'
+                  description: The maximum number of agents the subaccount is allowed to create. Null if no limit is set.
+                max_minutes:
+                  type:
+                  - integer
+                  - 'null'
+                  description: The maximum number of minutes allocated to this subaccount. Null if no limit is set.
+                max_workflow_runs:
+                  type:
+                  - integer
+                  - 'null'
+                  description: The maximum number of workflow runs allocated to this subaccount. Null if no limit is set.
+                grant_permissions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaGrantPermissionsItems'
+                  description: Permissions to grant to the subaccount. Duplicate values are not allowed, and any value also present in `revoke_permissions` is rejected by the API.
+                revoke_permissions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaRevokePermissionsItems'
+                  description: Permissions to revoke from the subaccount. Duplicate values are not allowed, and any value also present in `grant_permissions` is rejected by the API.
+                operation_type:
+                  $ref: '#/components/schemas/SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaOperationType'
+                  description: The type of operation to perform. You can import objects from the parent workspace to a subaccount or return objects from a subaccount in some cases.
+                products:
+                  $ref: '#/components/schemas/SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaProducts'
+                  description: Objects to be imported to or returned from the subaccount_id
+    delete:
+      operationId: delete-subaccount
+      summary: Delete a subaccount
+      description: Deletes a subaccount by ID.
+      tags:
+      - Subaccounts
+      parameters:
+      - name: subaccount_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/subaccount_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/delete-subaccount_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete-subaccountRequestBadRequestError'
+    get:
+      operationId: get-subaccount
+      summary: Get a subaccount
+      description: Retrieves detailed metadata about a specific subaccount by ID.
+      tags:
+      - Subaccounts
+      parameters:
+      - name: subaccount_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/subaccount_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get-subaccount_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-subaccountRequestBadRequestError'
+  /subaccounts/:
+    get:
+      operationId: list-subaccounts
+      summary: List subaccounts
+      description: ''
+      tags:
+      - Subaccounts
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list-subaccounts_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List-subaccountsRequestBadRequestError'
+components:
+  schemas:
+    SubaccountsSubaccountIdDeleteResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+      title: SubaccountsSubaccountIdDeleteResponsesContentApplicationJsonSchemaResponse
+    SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItems:
+      type: object
+      properties:
+        subaccount_id:
+          $ref: '#/components/schemas/subaccount_id'
+        agency_id:
+          type: string
+        name:
+          type: string
+        pricing_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPricingTiersItems'
+        permissions:
+          $ref: '#/components/schemas/SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPermissions'
+        subscription:
+          $ref: '#/components/schemas/SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsSubscription'
+        minutes_used:
+          type: integer
+          default: 0
+        max_minutes:
+          type:
+          - integer
+          - 'null'
+          description: The maximum number of minutes allocated to this subaccount. Null if no limit is set.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsMembersItems'
+      title: SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItems
+    SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaProductsPhoneNumbersItems:
+      type: object
+      properties:
+        number:
+          type: string
+          description: The E.164 formatted phone number
+      title: SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaProductsPhoneNumbersItems
+    SubaccountsPostRequestBodyContentApplicationJsonSchemaRevokePermissionsItems:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      - widget
+      - chat
+      - assistants
+      - knowledge_base
+      - actions
+      - workflows
+      - contacts
+      - phone_numbers
+      - logs
+      - simulations
+      - analytics
+      title: SubaccountsPostRequestBodyContentApplicationJsonSchemaRevokePermissionsItems
+    SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPermissions:
+      type: object
+      properties:
+        assistants:
+          type: boolean
+          description: Whether this subaccount can create and manage agents.
+        knowledge_base:
+          type: boolean
+          description: Whether this subaccount can access and manage knowledge bases.
+        actions:
+          type: boolean
+          description: Whether this subaccount can create and manage actions.
+        workflows:
+          type: boolean
+          description: Whether this subaccount can create and manage workflows.
+        contacts:
+          type: boolean
+          description: Whether this subaccount can create and manage contacts.
+        phone_numbers:
+          type: boolean
+          description: Whether this subaccount can acquire and manage phone numbers.
+        inbound:
+          type: boolean
+          description: Whether this subaccount can create and manage inbound voice agents.
+        outbound:
+          type: boolean
+          description: Whether this subaccount can create and manage outbound voice agents.
+        widget:
+          type: boolean
+          description: Whether this subaccount can create and manage web widget agents.
+        chat:
+          type: boolean
+          description: Whether this subaccount can create and manage chat agents.
+        logs:
+          type: boolean
+          description: Whether this subaccount can access call, chat, API, and webhook logs.
+        simulations:
+          type: boolean
+          description: Whether this subaccount can access call simulations and evaluations.
+        analytics:
+          type: boolean
+          description: Whether this subaccount can view the analytics dashboard.
+      title: SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPermissions
+    SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaGrantPermissionsItems:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      - widget
+      - chat
+      - assistants
+      - knowledge_base
+      - actions
+      - workflows
+      - contacts
+      - phone_numbers
+      - logs
+      - simulations
+      - analytics
+      title: SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaGrantPermissionsItems
+    subaccount_id:
+      type: string
+      description: Subaccount ID.
+      title: subaccount_id
+    Update-subaccountRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-subaccountRequestBadRequestError
+    SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsSubscription:
+      type: object
+      properties:
+        stripe_subscription_id:
+          type: string
+        synthflow_price_id:
+          type: string
+      title: SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsSubscription
+    List-subaccountsRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-subaccountsRequestBadRequestError
+    delete-subaccount_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SubaccountsSubaccountIdDeleteResponsesContentApplicationJsonSchemaResponse'
+      title: delete-subaccount_Response_200
+    create-subaccount_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SubaccountsPostResponsesContentApplicationJsonSchemaResponse'
+      title: create-subaccount_Response_200
+    SubaccountsPostRequestBodyContentApplicationJsonSchemaGrantPermissionsItems:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      - widget
+      - chat
+      - assistants
+      - knowledge_base
+      - actions
+      - workflows
+      - contacts
+      - phone_numbers
+      - logs
+      - simulations
+      - analytics
+      title: SubaccountsPostRequestBodyContentApplicationJsonSchemaGrantPermissionsItems
+    SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        subaccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItems'
+      title: SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponse
+    SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsSubscription:
+      type: object
+      properties:
+        stripe_subscription_id:
+          type: string
+        synthflow_price_id:
+          type: string
+      title: SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsSubscription
+    SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaProducts:
+      type: object
+      properties:
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaProductsPhoneNumbersItems'
+          description: The list of numbers to be imported to or returned from the subaccount_id
+      description: Objects to be imported to or returned from the subaccount_id
+      title: SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaProducts
+    SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaRevokePermissionsItems:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      - widget
+      - chat
+      - assistants
+      - knowledge_base
+      - actions
+      - workflows
+      - contacts
+      - phone_numbers
+      - logs
+      - simulations
+      - analytics
+      title: SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaRevokePermissionsItems
+    get-subaccount_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: get-subaccount_Response_200
+    SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsMembersItems:
+      type: object
+      properties:
+        email:
+          type: string
+        status:
+          type: string
+      title: SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsMembersItems
+    Get-subaccountRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-subaccountRequestBadRequestError
+    SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaOperationType:
+      type: string
+      enum:
+      - import
+      - return
+      description: The type of operation to perform. You can import objects from the parent workspace to a subaccount or return objects from a subaccount in some cases.
+      title: SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaOperationType
+    SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPricingTiersItems:
+      type: object
+      properties:
+        pricing_tier_id:
+          type: string
+      title: SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPricingTiersItems
+    SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaImportSubscription:
+      type: object
+      properties:
+        stripe_subscription_id:
+          type: string
+          description: The ID of the existing Stripe subscription you want to import. This is typically used when the subaccount already has a subscription set up in Stripe, and you want to link it to their Synthflow account.
+        synthflow_price_id:
+          type: string
+          description: The ID of the Synthflow pricing tier that corresponds to the imported Stripe subscription. This allows you to map the external Stripe subscription to an equivalent plan within Synthflow.
+      description: This section is used when you want to import an existing Stripe subscription for the subaccount
+      title: SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaImportSubscription
+    list-subaccounts_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/SubaccountsGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-subaccounts_Response_200
+    update-subaccount_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/SubaccountsSubaccountIdPutResponsesContentApplicationJsonSchemaResponse'
+      title: update-subaccount_Response_200
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    Create-subaccountRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-subaccountRequestBadRequestError
+    SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaPricingTiersAttachItems:
+      type: object
+      properties:
+        pricing_tier_id:
+          type: string
+          description: The ID of the Synthflow pricing tier.
+      required:
+      - pricing_tier_id
+      title: SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaPricingTiersAttachItems
+    Delete-subaccountRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-subaccountRequestBadRequestError
+    SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPricingTiersItems:
+      type: object
+      properties:
+        pricing_tier_id:
+          type: string
+      title: SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPricingTiersItems
+    SubaccountsPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        subaccount_id:
+          $ref: '#/components/schemas/subaccount_id'
+        api_key:
+          type: string
+          description: Subaccount API key.
+        user_email:
+          type: string
+          description: Subaccount email.
+        sign_in_link:
+          type: string
+          description: The invite link that can be used to log in to the account.
+        twilio_connected_successfully:
+          type: boolean
+          description: Whether a successful Twilio connection was established.
+      title: SubaccountsPostResponsesContentApplicationJsonSchemaResponse
+    SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItems:
+      type: object
+      properties:
+        subaccount_id:
+          $ref: '#/components/schemas/subaccount_id'
+        agency_id:
+          type: string
+        name:
+          type: string
+        pricing_tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPricingTiersItems'
+        permissions:
+          $ref: '#/components/schemas/SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPermissions'
+        subscription:
+          $ref: '#/components/schemas/SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsSubscription'
+        minutes_used:
+          type: integer
+          default: 0
+        max_minutes:
+          type:
+          - integer
+          - 'null'
+          description: The maximum number of minutes allocated to this subaccount. Null if no limit is set.
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsMembersItems'
+      title: SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItems
+    SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPermissions:
+      type: object
+      properties:
+        assistants:
+          type: boolean
+          description: Whether this subaccount can create and manage agents.
+        knowledge_base:
+          type: boolean
+          description: Whether this subaccount can access and manage knowledge bases.
+        actions:
+          type: boolean
+          description: Whether this subaccount can create and manage actions.
+        workflows:
+          type: boolean
+          description: Whether this subaccount can create and manage workflows.
+        contacts:
+          type: boolean
+          description: Whether this subaccount can create and manage contacts.
+        phone_numbers:
+          type: boolean
+          description: Whether this subaccount can acquire and manage phone numbers.
+        inbound:
+          type: boolean
+          description: Whether this subaccount can create and manage inbound voice agents.
+        outbound:
+          type: boolean
+          description: Whether this subaccount can create and manage outbound voice agents.
+        widget:
+          type: boolean
+          description: Whether this subaccount can create and manage web widget agents.
+        chat:
+          type: boolean
+          description: Whether this subaccount can create and manage chat agents.
+        logs:
+          type: boolean
+          description: Whether this subaccount can access call, chat, API, and webhook logs.
+        simulations:
+          type: boolean
+          description: Whether this subaccount can access call simulations and evaluations.
+        analytics:
+          type: boolean
+          description: Whether this subaccount can view the analytics dashboard.
+      title: SubaccountsSubaccountIdGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsPermissions
+    SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsMembersItems:
+      type: object
+      properties:
+        email:
+          type: string
+        status:
+          type: string
+      title: SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItemsMembersItems
+    SubaccountsGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        subaccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountsGetResponsesContentApplicationJsonSchemaResponseSubaccountsItems'
+      title: SubaccountsGetResponsesContentApplicationJsonSchemaResponse
+    SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaPricingTiersDetachItems:
+      type: object
+      properties:
+        pricing_tier_id:
+          type: string
+          description: The ID of the Synthflow pricing tier.
+      required:
+      - pricing_tier_id
+      title: SubaccountsSubaccountIdPutRequestBodyContentApplicationJsonSchemaPricingTiersDetachItems
+    SubaccountsSubaccountIdPutResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        subaccount_id:
+          $ref: '#/components/schemas/subaccount_id'
+        api_key:
+          type: string
+        user_email:
+          type: string
+        sign_in_link:
+          type: string
+      title: SubaccountsSubaccountIdPutResponsesContentApplicationJsonSchemaResponse
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

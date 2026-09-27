@@ -1,0 +1,779 @@
+openapi: 3.2.0
+info:
+  title: PLATFORM Knowledge Base API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+  description: Global
+- url: https://api.us.synthflow.ai/v2
+  description: United States
+- url: https://api.eu.synthflow.ai/v2
+  description: European Union
+tags:
+- name: Knowledge Base
+paths:
+  /knowledge_base:
+    get:
+      operationId: list-knowledge-bases
+      summary: List knowledge bases
+      description: Retrieves knowledge bases for the workspace.
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: limit
+        in: query
+        description: Number of knowledge bases to return per page.
+        required: false
+        schema:
+          type: integer
+          default: 25
+      - name: offset
+        in: query
+        description: Index of the first knowledge base to return.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list-knowledge-bases_Response_200'
+    post:
+      operationId: create-knowledge-base
+      summary: Create a knowledge base
+      description: Creates a new knowledge base and returns its ID.
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create-knowledge-base_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Create-knowledge-baseRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the knowledge base.
+                rag_use_condition:
+                  type: string
+                  description: When this knowledge base should be used.
+  /knowledge_base/{id}:
+    get:
+      operationId: get-knowledge-base
+      summary: Get a knowledge base
+      description: Retrieves the knowledge base's name and use condition.
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/knowledge_base_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get-knowledge-base_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-knowledge-baseRequestBadRequestError'
+    put:
+      operationId: update-knowledge-base
+      summary: Update a knowledge base
+      description: ''
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/knowledge_base_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/update-knowledge-base_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-knowledge-baseRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the knowledge base.
+                rag_use_condition:
+                  type: string
+                  description: When this knowledge base should be used.
+    delete:
+      operationId: delete-knowledge-base
+      summary: Delete a knowledge base
+      description: ''
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/knowledge_base_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/delete-knowledge-base_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delete-knowledge-baseRequestBadRequestError'
+  /knowledge_base/{knowledge_base_id}/attach:
+    post:
+      operationId: attach-knowledge-base
+      summary: Attach a knowledge base
+      description: ''
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/knowledge_base_id'
+      - name: model_id
+        in: query
+        description: id of the agent to which knowledge base needs to be attached
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/attach-knowledge-base_Response_200'
+  /knowledge_base/{knowledge_base_id}/detach:
+    post:
+      operationId: detach-knowledge-base
+      summary: Detach a knowledge base
+      description: ''
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/knowledge_base_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/detach-knowledge-base_Response_200'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model_id:
+                  type: string
+                  description: id of an agent from which knowledge base needs to be detached
+              required:
+              - model_id
+  /knowledge_base/{knowledge_base_id}/sources:
+    get:
+      operationId: listKnowledgeBaseSources
+      summary: List knowledge base sources
+      description: Returns a paginated list of sources for the specified knowledge base.
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/knowledge_base_id'
+      - name: limit
+        in: query
+        description: Maximum number of sources to return per page.
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: offset
+        in: query
+        description: Number of sources to skip before starting to return results.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: name
+        in: query
+        description: Search sources by name.
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listKnowledgeBaseSources_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListKnowledgeBaseSourcesRequestBadRequestError'
+    post:
+      operationId: attachDocumentToSource
+      summary: Add a knowledge base source
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/knowledge_base_id'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/attachDocumentToSource_Response_200'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Source name.
+                type:
+                  $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesPostRequestBodyContentApplicationJsonSchemaType'
+                  description: Source type.
+                url:
+                  type: string
+                  description: Source URL. Required when type is `pdf` (URL to a hosted PDF file) or `web` (URL to a website to scrape)
+                content:
+                  type: string
+                  description: The full text content for the knowledge base source. Required when type is `text`
+  /knowledge_base/{knowledge_base_id}/sources/{source_id}:
+    put:
+      operationId: update-knowledge-base-source
+      summary: Update a knowledge base source
+      description: 'Update an existing knowledge base source by source ID. The updatable fields depend on the existing source type:
+
+
+        - `link` / `file`: `url`
+
+        - `text`: `content`
+
+
+        You can always update `name`.'
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/knowledge_base_id'
+      - name: source_id
+        in: path
+        description: Source ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/update-knowledge-base-source_Response_200'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update-knowledge-base-sourceRequestBadRequestError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/update-knowledge-base-source_Request'
+    delete:
+      operationId: knowledgeBaseSourceDelete
+      summary: Delete a knowledge base source
+      description: ''
+      tags:
+      - Knowledge Base
+      parameters:
+      - name: knowledge_base_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/knowledge_base_id'
+      - name: source_id
+        in: path
+        description: Source ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledgeBaseSourceDelete_Response_200'
+components:
+  schemas:
+    Get-knowledge-baseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-knowledge-baseRequestBadRequestError
+    Update-knowledge-baseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-knowledge-baseRequestBadRequestError
+    knowledge_base_id:
+      type: string
+      description: Knowledge base ID.
+      title: knowledge_base_id
+    get-knowledge-base_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: get-knowledge-base_Response_200
+    KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItems:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the source.
+        type:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItemsType'
+          description: 'Source type: `text` for plain text, `web` for a scraped web page, or `pdf` for a PDF file.'
+        name:
+          type: string
+          description: Display name of the source.
+        content_preview:
+          type: string
+          description: Short preview of the source text content. Empty string when not available.
+        url:
+          type: string
+          description: URL of the source. Populated for `web` and `pdf` types. Empty string for `text` sources.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the source was created (ISO 8601).
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the source was last updated (ISO 8601).
+      title: KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItems
+    create-knowledge-base_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/KnowledgeBasePostResponsesContentApplicationJsonSchemaResponse'
+      title: create-knowledge-base_Response_200
+    attach-knowledge-base_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdAttachPostResponsesContentApplicationJsonSchemaResponse'
+      title: attach-knowledge-base_Response_200
+    KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItemsType:
+      type: string
+      enum:
+      - pdf
+      - text
+      - web
+      description: 'Source type: `text` for plain text, `web` for a scraped web page, or `pdf` for a PDF file.'
+      title: KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItemsType
+    KnowledgeBaseKnowledgeBaseIdAttachPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        knowledge_base_id:
+          $ref: '#/components/schemas/knowledge_base_id'
+        model_id:
+          type: string
+      title: KnowledgeBaseKnowledgeBaseIdAttachPostResponsesContentApplicationJsonSchemaResponse
+    KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        total_records:
+          type: integer
+          default: 0
+          description: The number of retrieved knowledge bases.
+        knowledge_bases:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems'
+      title: KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponse
+    KnowledgeBaseKnowledgeBaseIdDetachPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        model_id:
+          type: string
+      title: KnowledgeBaseKnowledgeBaseIdDetachPostResponsesContentApplicationJsonSchemaResponse
+    KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Knowledge base name.
+        id:
+          type: string
+          description: Knowledge base ID.
+        rag_use_condition:
+          type: string
+          description: When this knowledge base should be used.
+      title: KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems
+    KnowledgeBaseIdDeleteResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties: {}
+      title: KnowledgeBaseIdDeleteResponsesContentApplicationJsonSchemaResponse
+    KnowledgeBaseKnowledgeBaseIdSourcesSourceIdDeleteResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        id:
+          type: string
+          description: The ID of the deleted source.
+      title: KnowledgeBaseKnowledgeBaseIdSourcesSourceIdDeleteResponsesContentApplicationJsonSchemaResponse
+    KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        total_records:
+          type: integer
+          default: 0
+          description: The total number of knowledge bases.
+        knowledge_bases:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems'
+      title: KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponse
+    list-knowledge-bases_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-knowledge-bases_Response_200
+    update-knowledge-base_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseIdPutResponsesContentApplicationJsonSchemaResponse'
+      title: update-knowledge-base_Response_200
+    KnowledgeBasePostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        knowledge_base_id:
+          $ref: '#/components/schemas/knowledge_base_id'
+      title: KnowledgeBasePostResponsesContentApplicationJsonSchemaResponse
+    listKnowledgeBaseSources_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponse'
+      title: listKnowledgeBaseSources_Response_200
+    Create-knowledge-baseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-knowledge-baseRequestBadRequestError
+    UpdateKnowledgeBaseSourceRequest0:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated source name.
+        url:
+          type: string
+          description: Updated URL for `link` sources.
+      required:
+      - url
+      title: UpdateKnowledgeBaseSourceRequest0
+    detach-knowledge-base_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdDetachPostResponsesContentApplicationJsonSchemaResponse'
+      title: detach-knowledge-base_Response_200
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    KnowledgeBaseKnowledgeBaseIdSourcesPostRequestBodyContentApplicationJsonSchemaType:
+      type: string
+      enum:
+      - pdf
+      - text
+      - web
+      description: Source type.
+      title: KnowledgeBaseKnowledgeBaseIdSourcesPostRequestBodyContentApplicationJsonSchemaType
+    KnowledgeBaseKnowledgeBaseIdSourcesPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        source_id:
+          type: string
+          description: Unique identifier of the created source.
+      required:
+      - source_id
+      title: KnowledgeBaseKnowledgeBaseIdSourcesPostResponsesContentApplicationJsonSchemaResponse
+    KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Knowledge base name.
+        rag_use_condition:
+          type: string
+          description: When this knowledge base should be used.
+        id:
+          type: string
+          description: Knowledge base ID.
+      title: KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems
+    update-knowledge-base-source_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesSourceIdPutResponsesContentApplicationJsonSchemaResponse'
+      title: update-knowledge-base-source_Response_200
+    KnowledgeBaseIdPutResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        knowledge_base_id:
+          $ref: '#/components/schemas/knowledge_base_id'
+      title: KnowledgeBaseIdPutResponsesContentApplicationJsonSchemaResponse
+    knowledgeBaseSourceDelete_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesSourceIdDeleteResponsesContentApplicationJsonSchemaResponse'
+      title: knowledgeBaseSourceDelete_Response_200
+    update-knowledge-base-source_Request:
+      oneOf:
+      - $ref: '#/components/schemas/UpdateKnowledgeBaseSourceRequest0'
+      - $ref: '#/components/schemas/UpdateKnowledgeBaseSourceRequest1'
+      - $ref: '#/components/schemas/UpdateKnowledgeBaseSourceRequest2'
+      title: update-knowledge-base-source_Request
+    UpdateKnowledgeBaseSourceRequest2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated source name.
+        content:
+          type: string
+          description: Updated text body for `text` sources.
+      required:
+      - content
+      title: UpdateKnowledgeBaseSourceRequest2
+    Delete-knowledge-baseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-knowledge-baseRequestBadRequestError
+    ListKnowledgeBaseSourcesRequestBadRequestError:
+      type: object
+      properties: {}
+      title: ListKnowledgeBaseSourcesRequestBadRequestError
+    delete-knowledge-base_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseIdDeleteResponsesContentApplicationJsonSchemaResponse'
+      title: delete-knowledge-base_Response_200
+    Update-knowledge-base-sourceRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-knowledge-base-sourceRequestBadRequestError
+    KnowledgeBaseKnowledgeBaseIdSourcesSourceIdPutResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        source_id:
+          type: string
+          description: Source ID.
+      title: KnowledgeBaseKnowledgeBaseIdSourcesSourceIdPutResponsesContentApplicationJsonSchemaResponse
+    attachDocumentToSource_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesPostResponsesContentApplicationJsonSchemaResponse'
+      required:
+      - status
+      - response
+      title: attachDocumentToSource_Response_200
+    UpdateKnowledgeBaseSourceRequest1:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated source name.
+        url:
+          type: string
+          description: Updated URL for `file` sources.
+      required:
+      - url
+      title: UpdateKnowledgeBaseSourceRequest1
+    KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        total_records:
+          type: integer
+          description: Total number of sources in the knowledge base.
+        knowledge_base_id:
+          $ref: '#/components/schemas/knowledge_base_id'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItems'
+          description: List of knowledge base sources.
+      title: KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponse
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

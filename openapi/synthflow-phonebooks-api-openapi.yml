@@ -1,0 +1,253 @@
+openapi: 3.2.0
+info:
+  title: PLATFORM Phonebooks API
+  version: 1.0.0
+servers:
+- url: https://api.synthflow.ai/v2
+  description: Global
+- url: https://api.us.synthflow.ai/v2
+  description: United States
+- url: https://api.eu.synthflow.ai/v2
+  description: European Union
+tags:
+- name: Phonebooks
+paths:
+  /phonebooks:
+    post:
+      operationId: createAPhoneBook
+      summary: Create a phone book
+      tags:
+      - Phonebooks
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createAPhoneBook_Response_200'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Phone book name.
+              required:
+              - name
+    get:
+      operationId: listPhoneBooks
+      summary: List phone books
+      description: List all phone books in your workspace.
+      tags:
+      - Phonebooks
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listPhoneBooks_Response_200'
+  /phonebooks/{phone_book_id}:
+    delete:
+      operationId: deleteAPhoneBook
+      summary: Delete a phone book
+      tags:
+      - Phonebooks
+      parameters:
+      - name: phone_book_id
+        in: path
+        description: The ID of the phone book you want to delete.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteAPhoneBook_Response_200'
+  /phonebooks/{phone_book_id}/entries:
+    post:
+      operationId: createAPhoneBookEntry
+      summary: Create a phone book entry
+      tags:
+      - Phonebooks
+      parameters:
+      - name: phone_book_id
+        in: path
+        description: Phone book ID.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createAPhoneBookEntry_Response_200'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_number:
+                  type: string
+                transfer_condition:
+                  type: string
+              required:
+              - phone_number
+              - transfer_condition
+  /phonebooks/{phone_book_id}/entries/{entry_id}:
+    delete:
+      operationId: deleteAPhoneBookEntry
+      summary: Delete a phone book entry
+      tags:
+      - Phonebooks
+      parameters:
+      - name: phone_book_id
+        in: path
+        description: Phone book ID.
+        required: true
+        schema:
+          type: string
+      - name: entry_id
+        in: path
+        description: The ID of the phone book entry you want to delete.
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+components:
+  schemas:
+    PhonebooksPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Phone book ID.
+      title: PhonebooksPostResponsesContentApplicationJsonSchemaResponse
+    listPhoneBooks_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/PhonebooksGetResponsesContentApplicationJsonSchemaResponse'
+      title: listPhoneBooks_Response_200
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    PhonebooksPhoneBookIdEntriesPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        key:
+          type: string
+      title: PhonebooksPhoneBookIdEntriesPostResponsesContentApplicationJsonSchemaResponse
+    createAPhoneBook_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/PhonebooksPostResponsesContentApplicationJsonSchemaResponse'
+      title: createAPhoneBook_Response_200
+    PhonebooksGetResponsesContentApplicationJsonSchemaResponseItemsItems:
+      type: object
+      properties:
+        phone_book_id:
+          type: string
+          description: Phone book ID.
+        workspace_id:
+          type: string
+          description: Workspace ID.
+        name:
+          type: string
+          description: Phone book name.
+        entry_count:
+          type: number
+          format: double
+          description: Number of entries in this phone book.
+        agents:
+          type: array
+          items:
+            description: Any type
+          description: List of agents this phone book is attached to.
+      title: PhonebooksGetResponsesContentApplicationJsonSchemaResponseItemsItems
+    deleteAPhoneBook_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: deleteAPhoneBook_Response_200
+    createAPhoneBookEntry_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/PhonebooksPhoneBookIdEntriesPostResponsesContentApplicationJsonSchemaResponse'
+      title: createAPhoneBookEntry_Response_200
+    PhonebooksGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        total:
+          type: number
+          format: double
+          description: Total number of phone books in your workspace.
+        page_size:
+          type: number
+          format: double
+          description: Number of entries per page.
+        page_number:
+          type: number
+          format: double
+          description: Page number.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhonebooksGetResponsesContentApplicationJsonSchemaResponseItemsItems'
+      title: PhonebooksGetResponsesContentApplicationJsonSchemaResponse
+  securitySchemes:
+    sec0:
+      type: http
+      scheme: bearer

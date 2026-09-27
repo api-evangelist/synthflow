@@ -65,6 +65,7 @@ tags:
   - SIP
   - Simulation
   - Knowledge Base
+  - Voice AI
 tags_raw:
   - Voice
   - Voice Agents
@@ -84,6 +85,7 @@ tags_raw:
   - SIP
   - Simulations
   - Knowledge Base
+  - Voice AI
 url: https://raw.githubusercontent.com/api-evangelist/synthflow/refs/heads/main/apis.yml
 created: '2026-05-23'
 modified: '2026-08-13'
@@ -175,17 +177,6 @@ apis:
   authentication:
   - type: API Key
     description: HTTP Bearer authentication using an API key generated in the Synthflow dashboard.
-- aid: synthflow:synthflow-default-api
-  name: Synthflow Default API
-  description: The Default API from Synthflow — 49 operation(s) for default.
-  humanURL: https://docs.synthflow.ai
-  baseURL: https://api.synthflow.ai
-  tags: []
-  tags_raw:
-  - Default
-  properties:
-  - type: OpenAPI
-    url: openapi/synthflow-default-api-openapi.yml
 - aid: synthflow:synthflow-chat-api
   name: Synthflow Chat API
   description: The chat API from Synthflow — 4 operation(s) for chat.
@@ -232,6 +223,126 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/synthflow-memory-stores-api-openapi.yml
+- aid: synthflow:synthflow-actions-api
+  name: Synthflow Actions API
+  description: The Actions API from Synthflow — 5 operation(s) for actions.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Actions
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-actions-api-openapi.yml
+- aid: synthflow:synthflow-analytics-api
+  name: Synthflow Analytics API
+  description: The Analytics API from Synthflow — 1 operation(s) for analytics.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-analytics-api-openapi.yml
+- aid: synthflow:synthflow-assistants-api
+  name: Synthflow Assistants API
+  description: The Assistants API from Synthflow — 5 operation(s) for assistants.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Assistants
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-assistants-api-openapi.yml
+- aid: synthflow:synthflow-calls-api
+  name: Synthflow Calls API
+  description: The Calls API from Synthflow — 4 operation(s) for calls.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Calls
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-calls-api-openapi.yml
+- aid: synthflow:synthflow-knowledge-base-api
+  name: Synthflow Knowledge Base API
+  description: The Knowledge Base API from Synthflow — 6 operation(s) for knowledge base.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Knowledge Base
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-knowledge-base-api-openapi.yml
+- aid: synthflow:synthflow-phonebooks-api
+  name: Synthflow Phonebooks API
+  description: The Phonebooks API from Synthflow — 4 operation(s) for phonebooks.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Phonebooks
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-phonebooks-api-openapi.yml
+- aid: synthflow:synthflow-simulation-cases-api
+  name: Synthflow Simulation Cases API
+  description: The Simulation Cases API from Synthflow — 4 operation(s) for simulation cases.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Simulation Cases
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-simulation-cases-api-openapi.yml
+- aid: synthflow:synthflow-simulation-scenarios-api
+  name: Synthflow Simulation Scenarios API
+  description: The Simulation Scenarios API from Synthflow — 2 operation(s) for simulation scenarios.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Simulation Scenarios
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-simulation-scenarios-api-openapi.yml
+- aid: synthflow:synthflow-simulation-suites-api
+  name: Synthflow Simulation Suites API
+  description: The Simulation Suites API from Synthflow — 3 operation(s) for simulation suites.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Simulation Suites
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-simulation-suites-api-openapi.yml
+- aid: synthflow:synthflow-simulations-api
+  name: Synthflow Simulations API
+  description: The Simulations API from Synthflow — 4 operation(s) for simulations.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Simulations
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-simulations-api-openapi.yml
+- aid: synthflow:synthflow-subaccounts-api
+  name: Synthflow Subaccounts API
+  description: The Subaccounts API from Synthflow — 3 operation(s) for subaccounts.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Subaccounts
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-subaccounts-api-openapi.yml
+- aid: synthflow:synthflow-voices-api
+  name: Synthflow Voices API
+  description: The Voices API from Synthflow — 1 operation(s) for voices.
+  humanURL: https://docs.synthflow.ai
+  baseURL: https://api.synthflow.ai
+  tags:
+  - Voices
+  properties:
+  - type: OpenAPI
+    url: openapi/synthflow-voices-api-openapi.yml
 - aid: synthflow:synthflow-phone-numbers-api
   name: Synthflow Phone Numbers API
   description: The Phone Numbers API from Synthflow — 3 operation(s) for phone numbers.
