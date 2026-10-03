@@ -316,48 +316,30 @@ paths:
                 $ref: '#/components/schemas/detachAContactFromAMemoryStore_Response_200'
 components:
   schemas:
-    list-memory-stores_Response_200:
+    detachAMemoryStoreFromAnAgent_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: detachAMemoryStoreFromAnAgent_Response_200
+    model_id:
+      type: string
+      description: Agent ID. You can find it on the agent’s page in your dashboard.
+      title: model_id
+    getAMemoryStore_Response_200:
       type: object
       properties:
         status:
           type: string
         response:
-          $ref: '#/components/schemas/MemoryStoresGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-memory-stores_Response_200
+          $ref: '#/components/schemas/MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: getAMemoryStore_Response_200
     detachAContactFromAMemoryStore_Response_200:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/status'
       title: detachAContactFromAMemoryStore_Response_200
-    status:
-      type: string
-      description: Whether the request was successful.
-      title: status
-    getDataForASpecificMemoryStoreAndContact_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse'
-      title: getDataForASpecificMemoryStoreAndContact_Response_200
-    deleteAMemoryStore_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-      title: deleteAMemoryStore_Response_200
-    attachAContactToAMemoryStore_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-      title: attachAContactToAMemoryStore_Response_200
-    memory_store_id:
-      type: string
-      description: The ID of the memory store (group).
-      title: memory_store_id
     MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
@@ -376,26 +358,14 @@ components:
           items:
             description: Any type
       title: MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse
-    updateAMemoryStore_Response_200:
+    list-memory-stores_Response_200:
       type: object
       properties:
-        id:
+        status:
           type: string
-      title: updateAMemoryStore_Response_200
-    MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        memory_store_id:
-          type: string
-        memory_store_title:
-          type: string
-        memory:
-          type: string
-        created_at:
-          type: string
-        updated_at:
-          type: string
-      title: MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse
+        response:
+          $ref: '#/components/schemas/MemoryStoresGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-memory-stores_Response_200
     MemoryStoresGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
@@ -410,24 +380,12 @@ components:
         page_number:
           type: integer
       title: MemoryStoresGetResponsesContentApplicationJsonSchemaResponse
-    attachAMemoryStoreToAnAgent_Response_200:
+    updateAMemoryStore_Response_200:
       type: object
       properties:
-        status:
+        id:
           type: string
-      title: attachAMemoryStoreToAnAgent_Response_200
-    getAMemoryStore_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse'
-      title: getAMemoryStore_Response_200
-    model_id:
-      type: string
-      description: Agent ID. You can find it on the agent’s page in your dashboard.
-      title: model_id
+      title: updateAMemoryStore_Response_200
     MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems:
       type: object
       properties:
@@ -446,12 +404,54 @@ components:
           items:
             description: Any type
       title: MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems
-    detachAMemoryStoreFromAnAgent_Response_200:
+    attachAMemoryStoreToAnAgent_Response_200:
       type: object
       properties:
         status:
           type: string
-      title: detachAMemoryStoreFromAnAgent_Response_200
+      title: attachAMemoryStoreToAnAgent_Response_200
+    deleteAMemoryStore_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: deleteAMemoryStore_Response_200
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        memory_store_id:
+          type: string
+        memory_store_title:
+          type: string
+        memory:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      title: MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse
+    memory_store_id:
+      type: string
+      description: The ID of the memory store (group).
+      title: memory_store_id
+    attachAContactToAMemoryStore_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: attachAContactToAMemoryStore_Response_200
+    getDataForASpecificMemoryStoreAndContact_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse'
+      title: getDataForASpecificMemoryStoreAndContact_Response_200
     Memory-stores_create-a-memory-store_Response_200:
       type: object
       properties:

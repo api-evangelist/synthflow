@@ -262,117 +262,6 @@ paths:
               $ref: '#/components/schemas/InvokeMCPToolRequest'
 components:
   schemas:
-    AgentMCPConfigOut:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MCPServerOut'
-          description: List of MCP server configurations with redacted headers
-      required:
-      - servers
-      title: AgentMCPConfigOut
-    DiscoverToolsResponse:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServerDiscoveryResult'
-      required:
-      - servers
-      title: DiscoverToolsResponse
-    MCPToolDefinition:
-      type: object
-      properties:
-        namespaced_tool:
-          type: string
-          description: 'Fully qualified tool name: {namespace}__{tool_name}'
-        original_tool_name:
-          type: string
-          description: Tool name as returned by the MCP server
-        tool_description:
-          type:
-          - string
-          - 'null'
-          description: Description returned by MCP server
-        input_schema:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-          description: JSON Schema for the tool's input parameters
-      required:
-      - namespaced_tool
-      - original_tool_name
-      description: A tool returned by MCP discovery (enriched with namespace)
-      title: MCPToolDefinition
-    InvokeMCPToolRequest:
-      type: object
-      properties:
-        namespaced_tool:
-          type: string
-          description: 'Fully qualified tool name: {namespace}__{tool_name}'
-        arguments:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Tool arguments matching the tool's input_schema
-        timeout_ms:
-          type: integer
-          description: Optional caller-controlled timeout in milliseconds
-      required:
-      - namespaced_tool
-      title: InvokeMCPToolRequest
-    MCPServerOut:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stable config ID for linking actions to this server entry
-        mcp_url:
-          type: string
-          format: uri
-          description: The HTTPS URL of the MCP server (SSE endpoint)
-        has_headers:
-          type: boolean
-          description: Whether custom headers are stored in Vault
-        headers_keys:
-          type: array
-          items:
-            type: string
-          description: Names of stored header keys (values redacted)
-      required:
-      - id
-      - mcp_url
-      - has_headers
-      title: MCPServerOut
-    InvokeMCPToolResponse:
-      type: object
-      properties:
-        result:
-          type: string
-          description: Tool result text (empty on error)
-        is_error:
-          type: boolean
-          description: True if the MCP server returned an error for this tool call
-        error:
-          type: string
-          description: Error message if the invocation failed
-      title: InvokeMCPToolResponse
-    AgentMCPConfigIn:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MCPServerIn'
-          description: List of MCP server configurations
-      required:
-      - servers
-      title: AgentMCPConfigIn
     ServerDiscoveryResult:
       type: object
       properties:
@@ -422,6 +311,117 @@ components:
       required:
       - mcp_url
       title: MCPServerIn
+    AgentMCPConfigIn:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerIn'
+          description: List of MCP server configurations
+      required:
+      - servers
+      title: AgentMCPConfigIn
+    MCPToolDefinition:
+      type: object
+      properties:
+        namespaced_tool:
+          type: string
+          description: 'Fully qualified tool name: {namespace}__{tool_name}'
+        original_tool_name:
+          type: string
+          description: Tool name as returned by the MCP server
+        tool_description:
+          type:
+          - string
+          - 'null'
+          description: Description returned by MCP server
+        input_schema:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: JSON Schema for the tool's input parameters
+      required:
+      - namespaced_tool
+      - original_tool_name
+      description: A tool returned by MCP discovery (enriched with namespace)
+      title: MCPToolDefinition
+    MCPServerOut:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable config ID for linking actions to this server entry
+        mcp_url:
+          type: string
+          format: uri
+          description: The HTTPS URL of the MCP server (SSE endpoint)
+        has_headers:
+          type: boolean
+          description: Whether custom headers are stored in Vault
+        headers_keys:
+          type: array
+          items:
+            type: string
+          description: Names of stored header keys (values redacted)
+      required:
+      - id
+      - mcp_url
+      - has_headers
+      title: MCPServerOut
+    DiscoverToolsResponse:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerDiscoveryResult'
+      required:
+      - servers
+      title: DiscoverToolsResponse
+    InvokeMCPToolRequest:
+      type: object
+      properties:
+        namespaced_tool:
+          type: string
+          description: 'Fully qualified tool name: {namespace}__{tool_name}'
+        arguments:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Tool arguments matching the tool's input_schema
+        timeout_ms:
+          type: integer
+          description: Optional caller-controlled timeout in milliseconds
+      required:
+      - namespaced_tool
+      title: InvokeMCPToolRequest
+    AgentMCPConfigOut:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerOut'
+          description: List of MCP server configurations with redacted headers
+      required:
+      - servers
+      title: AgentMCPConfigOut
+    InvokeMCPToolResponse:
+      type: object
+      properties:
+        result:
+          type: string
+          description: Tool result text (empty on error)
+        is_error:
+          type: boolean
+          description: True if the MCP server returned an error for this tool call
+        error:
+          type: string
+          description: Error message if the invocation failed
+      title: InvokeMCPToolResponse
   securitySchemes:
     sec0:
       type: http

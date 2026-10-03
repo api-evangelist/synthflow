@@ -69,15 +69,151 @@ paths:
                 $ref: '#/components/schemas/analyticsExport_Response_200'
 components:
   schemas:
-    AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistory:
+    analyticsExport_Response_200:
       type: object
       properties:
-        items:
+        executed_actions:
+          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActions'
+          description: List of actions executed during the call, as well as their success and frequency rates.
+        assistant_performance:
+          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformance'
+          description: Agent performance overview.
+        call_status_stat:
+          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStat'
+          description: Call status overview.
+        recent_call_history:
+          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistory'
+          description: Log of all recent calls.
+        duration_metrics:
+          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetrics'
+          description: Duration metrics overview.
+        end_call_reason_stat:
+          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStat'
+          description: An overview of reasons calls ended. For details on all the possible reasons, see [End Call Reasons](/logs#end-call-reasons).
+        sentiment_stat:
+          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStat'
+          description: Sentiment overview.
+      title: analyticsExport_Response_200
+    AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceByMinutesUsedItems:
+      type: object
+      properties:
+        model_id:
+          type: string
+        name:
+          type: string
+        minutes_used:
+          type: integer
+        percentage_change:
+          type: integer
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceByMinutesUsedItems
+    AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceByCallsMadeItems:
+      type: object
+      properties:
+        model_id:
+          type: string
+        name:
+          type: string
+        calls_made:
+          type: integer
+        percent_change:
+          type: integer
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceByCallsMadeItems
+    AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItemsSeriesItems:
+      type: object
+      properties:
+        date:
+          type: string
+        value:
+          type: integer
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItemsSeriesItems
+    AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Action name.
+        value:
+          type: integer
+        series:
           type: array
           items:
-            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistoryItemsItems'
-      description: Log of all recent calls.
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistory
+            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItemsSeriesItems'
+        percentage_change:
+          type: integer
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItems
+    AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceBySuccessRateItems:
+      type: object
+      properties:
+        model_id:
+          type: string
+        name:
+          type: string
+        success_rate:
+          type: integer
+        percentage_change:
+          type: integer
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceBySuccessRateItems
+    AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStat:
+      type: object
+      properties:
+        positive_percentage:
+          type: integer
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStatSeriesItems'
+        positive_percentage_change:
+          type: integer
+      description: Sentiment overview.
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStat
+    AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStatItemsItems:
+      type: object
+      properties:
+        status:
+          type: string
+        value:
+          type: integer
+        percentage:
+          type: integer
+        percentage_change:
+          type: integer
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStatItemsItems
+    AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatSeriesItems:
+      type: object
+      properties:
+        date:
+          type: string
+        voicemail:
+          type: integer
+        human_goodbye:
+          type: integer
+        agent_goodbye:
+          type: integer
+        human_pick_up_cut_off:
+          type: integer
+        max_duration:
+          type: integer
+        idle_time_exceeded:
+          type: integer
+        goodbye_detected:
+          type: integer
+        user_disconnected:
+          type: integer
+        voicemail_message_left:
+          type: integer
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatSeriesItems
+    AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetricsSeriesItems:
+      type: object
+      properties:
+        date:
+          type: string
+        total_minutes:
+          type: integer
+        average_duration:
+          type: integer
+        total_calls:
+          type: integer
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetricsSeriesItems
     AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatItemsItems:
       type: object
       properties:
@@ -88,28 +224,6 @@ components:
         percentage:
           type: integer
       title: AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatItemsItems
-    AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStat:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatItemsItems'
-        series:
-          type: array
-          items:
-            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatSeriesItems'
-      description: An overview of reasons calls ended. For details on all the possible reasons, see [End Call Reasons](/logs#end-call-reasons).
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStat
-    AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActions:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItems'
-      description: List of actions executed during the call, as well as their success and frequency rates.
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActions
     AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistoryItemsItems:
       type: object
       properties:
@@ -128,6 +242,27 @@ components:
         created_at:
           type: string
       title: AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistoryItemsItems
+    AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetrics:
+      type: object
+      properties:
+        total_minutes:
+          type: integer
+        average_duration:
+          type: integer
+        total_calls:
+          type: integer
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetricsSeriesItems'
+        total_minutes_percentage_change:
+          type: integer
+        total_duration_percentage_change:
+          type: integer
+        total_calls_percentage_change:
+          type: integer
+      description: Duration metrics overview.
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetrics
     AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStat:
       type: object
       properties:
@@ -141,18 +276,15 @@ components:
             $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStatSeriesItems'
       description: Call status overview.
       title: AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStat
-    AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceByCallsMadeItems:
+    AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistory:
       type: object
       properties:
-        model_id:
-          type: string
-        name:
-          type: string
-        calls_made:
-          type: integer
-        percent_change:
-          type: integer
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceByCallsMadeItems
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistoryItemsItems'
+      description: Log of all recent calls.
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistory
     AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStatSeriesItems:
       type: object
       properties:
@@ -183,40 +315,15 @@ components:
         ringing:
           type: integer
       title: AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStatSeriesItems
-    AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStat:
+    AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActions:
       type: object
       properties:
-        positive_percentage:
-          type: integer
-        series:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStatSeriesItems'
-        positive_percentage_change:
-          type: integer
-      description: Sentiment overview.
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStat
-    AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetrics:
-      type: object
-      properties:
-        total_minutes:
-          type: integer
-        average_duration:
-          type: integer
-        total_calls:
-          type: integer
-        series:
-          type: array
-          items:
-            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetricsSeriesItems'
-        total_minutes_percentage_change:
-          type: integer
-        total_duration_percentage_change:
-          type: integer
-        total_calls_percentage_change:
-          type: integer
-      description: Duration metrics overview.
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetrics
+            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItems'
+      description: List of actions executed during the call, as well as their success and frequency rates.
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActions
     AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformance:
       type: object
       properties:
@@ -234,49 +341,19 @@ components:
             $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceBySuccessRateItems'
       description: Agent performance overview.
       title: AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformance
-    AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceByMinutesUsedItems:
+    AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStat:
       type: object
       properties:
-        model_id:
-          type: string
-        name:
-          type: string
-        minutes_used:
-          type: integer
-        percentage_change:
-          type: integer
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceByMinutesUsedItems
-    AnalyticsGetParametersTypeOfCall:
-      type: string
-      enum:
-      - inbound
-      - outbound
-      - widget
-      title: AnalyticsGetParametersTypeOfCall
-    AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetricsSeriesItems:
-      type: object
-      properties:
-        date:
-          type: string
-        total_minutes:
-          type: integer
-        average_duration:
-          type: integer
-        total_calls:
-          type: integer
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetricsSeriesItems
-    AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStatItemsItems:
-      type: object
-      properties:
-        status:
-          type: string
-        value:
-          type: integer
-        percentage:
-          type: integer
-        percentage_change:
-          type: integer
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStatItemsItems
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatItemsItems'
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatSeriesItems'
+      description: An overview of reasons calls ended. For details on all the possible reasons, see [End Call Reasons](/logs#end-call-reasons).
+      title: AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStat
     AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStatSeriesItems:
       type: object
       properties:
@@ -287,90 +364,13 @@ components:
         total:
           type: integer
       title: AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStatSeriesItems
-    AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatSeriesItems:
-      type: object
-      properties:
-        date:
-          type: string
-        voicemail:
-          type: integer
-        human_goodbye:
-          type: integer
-        agent_goodbye:
-          type: integer
-        human_pick_up_cut_off:
-          type: integer
-        max_duration:
-          type: integer
-        idle_time_exceeded:
-          type: integer
-        goodbye_detected:
-          type: integer
-        user_disconnected:
-          type: integer
-        voicemail_message_left:
-          type: integer
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStatSeriesItems
-    analyticsExport_Response_200:
-      type: object
-      properties:
-        executed_actions:
-          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActions'
-          description: List of actions executed during the call, as well as their success and frequency rates.
-        assistant_performance:
-          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformance'
-          description: Agent performance overview.
-        call_status_stat:
-          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaCallStatusStat'
-          description: Call status overview.
-        recent_call_history:
-          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaRecentCallHistory'
-          description: Log of all recent calls.
-        duration_metrics:
-          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaDurationMetrics'
-          description: Duration metrics overview.
-        end_call_reason_stat:
-          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaEndCallReasonStat'
-          description: An overview of reasons calls ended. For details on all the possible reasons, see [End Call Reasons](/logs#end-call-reasons).
-        sentiment_stat:
-          $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaSentimentStat'
-          description: Sentiment overview.
-      title: analyticsExport_Response_200
-    AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItems:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Action name.
-        value:
-          type: integer
-        series:
-          type: array
-          items:
-            $ref: '#/components/schemas/AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItemsSeriesItems'
-        percentage_change:
-          type: integer
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItems
-    AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceBySuccessRateItems:
-      type: object
-      properties:
-        model_id:
-          type: string
-        name:
-          type: string
-        success_rate:
-          type: integer
-        percentage_change:
-          type: integer
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaAssistantPerformanceBySuccessRateItems
-    AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItemsSeriesItems:
-      type: object
-      properties:
-        date:
-          type: string
-        value:
-          type: integer
-      title: AnalyticsGetResponsesContentApplicationJsonSchemaExecutedActionsItemsItemsSeriesItems
+    AnalyticsGetParametersTypeOfCall:
+      type: string
+      enum:
+      - inbound
+      - outbound
+      - widget
+      title: AnalyticsGetParametersTypeOfCall
   securitySchemes:
     sec0:
       type: http

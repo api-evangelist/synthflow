@@ -25,7 +25,7 @@
     "synthflow-webhooklogs-api-openapi.yml"
   ],
   "archived": [
-    "deleted 3 superseded output(s) from the previous generation"
+    "deleted 2 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
@@ -130,16 +130,27 @@
     "synthflow-openapi.json: declared missing tag: memoryStores",
     "synthflow-openapi.json: declared missing tag: phoneNumbers",
     "synthflow-openapi.json: declared missing tag: webhookLogs",
-    "superseded outputs removed: synthflow-default-api-openapi.yml, synthflow-phone-numbers-api-openapi.yml, synthflow-webhook-logs-api-openapi.yml",
-    "apis.yml register: written (+15 apis, 20 total)"
+    "superseded outputs removed: synthflow-phone-numbers-api-openapi.yml, synthflow-webhook-logs-api-openapi.yml",
+    "apis.yml register: written (+3 apis, 20 total)"
   ],
   "skipped": [
+    "synthflow-actions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-analytics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-assistants-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-calls-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "synthflow-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "synthflow-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "synthflow-default-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-knowledge-base-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "synthflow-mcp-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "synthflow-memory-stores-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "synthflow-phone-numbers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-phonebooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-simulation-cases-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-simulation-scenarios-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-simulation-suites-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-simulations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-subaccounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synthflow-voices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "synthflow-webhook-logs-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

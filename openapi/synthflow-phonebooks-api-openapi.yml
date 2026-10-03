@@ -158,13 +158,14 @@ paths:
           description: Successful response
 components:
   schemas:
-    PhonebooksPostResponsesContentApplicationJsonSchemaResponse:
+    createAPhoneBookEntry_Response_200:
       type: object
       properties:
-        key:
+        status:
           type: string
-          description: Phone book ID.
-      title: PhonebooksPostResponsesContentApplicationJsonSchemaResponse
+        response:
+          $ref: '#/components/schemas/PhonebooksPhoneBookIdEntriesPostResponsesContentApplicationJsonSchemaResponse'
+      title: createAPhoneBookEntry_Response_200
     listPhoneBooks_Response_200:
       type: object
       properties:
@@ -177,12 +178,6 @@ components:
       type: string
       description: Whether the request was successful.
       title: status
-    PhonebooksPhoneBookIdEntriesPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        key:
-          type: string
-      title: PhonebooksPhoneBookIdEntriesPostResponsesContentApplicationJsonSchemaResponse
     createAPhoneBook_Response_200:
       type: object
       properties:
@@ -191,6 +186,38 @@ components:
         response:
           $ref: '#/components/schemas/PhonebooksPostResponsesContentApplicationJsonSchemaResponse'
       title: createAPhoneBook_Response_200
+    deleteAPhoneBook_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: deleteAPhoneBook_Response_200
+    PhonebooksPhoneBookIdEntriesPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        key:
+          type: string
+      title: PhonebooksPhoneBookIdEntriesPostResponsesContentApplicationJsonSchemaResponse
+    PhonebooksGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        total:
+          type: number
+          format: double
+          description: Total number of phone books in your workspace.
+        page_size:
+          type: number
+          format: double
+          description: Number of entries per page.
+        page_number:
+          type: number
+          format: double
+          description: Page number.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhonebooksGetResponsesContentApplicationJsonSchemaResponseItemsItems'
+      title: PhonebooksGetResponsesContentApplicationJsonSchemaResponse
     PhonebooksGetResponsesContentApplicationJsonSchemaResponseItemsItems:
       type: object
       properties:
@@ -213,40 +240,13 @@ components:
             description: Any type
           description: List of agents this phone book is attached to.
       title: PhonebooksGetResponsesContentApplicationJsonSchemaResponseItemsItems
-    deleteAPhoneBook_Response_200:
+    PhonebooksPostResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/status'
-      title: deleteAPhoneBook_Response_200
-    createAPhoneBookEntry_Response_200:
-      type: object
-      properties:
-        status:
+        key:
           type: string
-        response:
-          $ref: '#/components/schemas/PhonebooksPhoneBookIdEntriesPostResponsesContentApplicationJsonSchemaResponse'
-      title: createAPhoneBookEntry_Response_200
-    PhonebooksGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        total:
-          type: number
-          format: double
-          description: Total number of phone books in your workspace.
-        page_size:
-          type: number
-          format: double
-          description: Number of entries per page.
-        page_number:
-          type: number
-          format: double
-          description: Page number.
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PhonebooksGetResponsesContentApplicationJsonSchemaResponseItemsItems'
-      title: PhonebooksGetResponsesContentApplicationJsonSchemaResponse
+          description: Phone book ID.
+      title: PhonebooksPostResponsesContentApplicationJsonSchemaResponse
   securitySchemes:
     sec0:
       type: http
