@@ -249,6 +249,8 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - Assistant
+  tags_raw:
   - Assistants
   properties:
   - type: OpenAPI
@@ -319,6 +321,8 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - Simulation
+  tags_raw:
   - Simulations
   properties:
   - type: OpenAPI
@@ -339,6 +343,8 @@ apis:
   humanURL: https://docs.synthflow.ai
   baseURL: https://api.synthflow.ai
   tags:
+  - Voice
+  tags_raw:
   - Voices
   properties:
   - type: OpenAPI
@@ -364,6 +370,9 @@ apis:
   - type: OpenAPI
     url: openapi/synthflow-webhook-logs-api-openapi.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/synthflow-capability-edges.yml
+    name: Synthflow Business Capability Map
   - type: AgenticAccess
     url: agentic-access/synthflow-agentic-access.yml
   - type: DomainSecurity
