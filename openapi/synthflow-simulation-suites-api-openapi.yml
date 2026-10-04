@@ -287,33 +287,185 @@ paths:
                 $ref: '#/components/schemas/Execute-simulation-suiteRequestNotFoundError'
 components:
   schemas:
-    SimulationCaseReadOutBaseAgent:
+    Get-simulation-suiteRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Get-simulation-suiteRequestNotFoundError
+    Get-simulation-suiteRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-simulation-suiteRequestBadRequestError
+    Update-simulation-suiteRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-simulation-suiteRequestBadRequestError
+    List-simulation-suitesRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-simulation-suitesRequestBadRequestError
+    SimulationCaseReadOutCallSuccessType:
+      type: string
+      enum:
+      - all
+      - any
+      title: SimulationCaseReadOutCallSuccessType
+    Update-simulation-suiteRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Update-simulation-suiteRequestNotFoundError
+    SimulationSuiteCreateIn:
       type: object
       properties:
+        name:
+          type: string
+          description: Name of the simulation suite
         model_id:
           type: string
-        agent_name:
+          description: Agent model ID this suite is for. The suite can only run on this specific agent.
+        language:
           type: string
-        agent_type:
+          default: en-US
+          description: Language locale for the persona agent and test cases (e.g., 'en-US', 'es-ES', 'fr-FR'). Must be a valid locale code. Note that 'multi' is not allowed for simulation suites.
+      required:
+      - name
+      - model_id
+      title: SimulationSuiteCreateIn
+    SimulationCaseReadOutType:
+      type: string
+      enum:
+      - custom
+      - agent_based
+      title: SimulationCaseReadOutType
+    SimulationCaseReadOut:
+      type: object
+      properties:
+        simulation_case_id:
           type: string
-        voice_engine_type:
+          format: uuid
+        workspace_id:
           type: string
-        phone_number:
+        suite_id:
           type:
           - string
           - 'null'
+          format: uuid
+          description: ID of the simulation suite this case belongs to.
+        name:
+          type: string
+        prompt:
+          type: string
+        type:
+          $ref: '#/components/schemas/SimulationCaseReadOutType'
+        success_criteria:
+          type: array
+          items:
+            type: string
+        call_success_type:
+          $ref: '#/components/schemas/SimulationCaseReadOutCallSuccessType'
+        base_agent:
+          oneOf:
+          - $ref: '#/components/schemas/SimulationCaseReadOutBaseAgent'
+          - type: 'null'
+        created_at:
+          type: string
+          format: date-time
         updated_at:
           type: string
           format: date-time
-        image_url:
+      description: Simulation case details.
+      title: SimulationCaseReadOut
+    execute-simulation-suite_Response_200:
+      type: object
+      properties:
+        session_id:
+          type: string
+          format: uuid
+        suite_id:
+          type: string
+          format: uuid
+        suite_name:
+          type: string
+        total_cases:
+          type: integer
+        status:
+          type: string
+      title: execute-simulation-suite_Response_200
+    SimulationCaseSummary:
+      type: object
+      properties:
+        simulation_case_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the simulation case
+        name:
+          type: string
+          description: Name of the simulation case
+      required:
+      - simulation_case_id
+      - name
+      title: SimulationCaseSummary
+    Execute-simulation-suiteRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Execute-simulation-suiteRequestNotFoundError
+    Create-simulation-suiteRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-simulation-suiteRequestBadRequestError
+    AgentListItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        avatar:
           type:
           - string
           - 'null'
-      title: SimulationCaseReadOutBaseAgent
+      title: AgentListItem
+    SimulationSuiteUpdateIn:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: New name for the simulation suite
+        model_id:
+          type:
+          - string
+          - 'null'
+          description: New agent model ID for the suite
+      title: SimulationSuiteUpdateIn
     Delete-simulation-suiteRequestNotFoundError:
       type: object
       properties: {}
       title: Delete-simulation-suiteRequestNotFoundError
+    PaginatedSimulationSuitesList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationSuiteListItem'
+          description: List of simulation suites
+        total:
+          type: integer
+          description: Total number of simulation suites
+        page_number:
+          type: integer
+          description: Current page number
+        page_size:
+          type: integer
+          description: Number of items per page
+      required:
+      - items
+      - total
+      - page_number
+      - page_size
+      title: PaginatedSimulationSuitesList
     SimulationSuiteListItem:
       type: object
       properties:
@@ -356,169 +508,14 @@ components:
       - model_id
       - workspace_id
       title: SimulationSuiteListItem
-    Execute-simulation-suiteRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Execute-simulation-suiteRequestBadRequestError
-    SimulationCaseReadOutCallSuccessType:
-      type: string
-      enum:
-      - all
-      - any
-      title: SimulationCaseReadOutCallSuccessType
-    SimulationCaseReadOut:
-      type: object
-      properties:
-        simulation_case_id:
-          type: string
-          format: uuid
-        workspace_id:
-          type: string
-        suite_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: ID of the simulation suite this case belongs to.
-        name:
-          type: string
-        prompt:
-          type: string
-        type:
-          $ref: '#/components/schemas/SimulationCaseReadOutType'
-        success_criteria:
-          type: array
-          items:
-            type: string
-        call_success_type:
-          $ref: '#/components/schemas/SimulationCaseReadOutCallSuccessType'
-        base_agent:
-          oneOf:
-          - $ref: '#/components/schemas/SimulationCaseReadOutBaseAgent'
-          - type: 'null'
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-      description: Simulation case details.
-      title: SimulationCaseReadOut
-    AgentListItem:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        avatar:
-          type:
-          - string
-          - 'null'
-      title: AgentListItem
-    get-simulation-suite_Response_200:
+    list-simulation-suites_Response_200:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/status'
         response:
-          $ref: '#/components/schemas/SimulationSuiteReadOut'
-      title: get-simulation-suite_Response_200
-    PaginatedSimulationSuitesList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SimulationSuiteListItem'
-          description: List of simulation suites
-        total:
-          type: integer
-          description: Total number of simulation suites
-        page_number:
-          type: integer
-          description: Current page number
-        page_size:
-          type: integer
-          description: Number of items per page
-      required:
-      - items
-      - total
-      - page_number
-      - page_size
-      title: PaginatedSimulationSuitesList
-    Get-simulation-suiteRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Get-simulation-suiteRequestBadRequestError
-    Execute-simulation-suiteRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Execute-simulation-suiteRequestNotFoundError
-    SimulationSuiteCreateIn:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the simulation suite
-        model_id:
-          type: string
-          description: Agent model ID this suite is for. The suite can only run on this specific agent.
-        language:
-          type: string
-          default: en-US
-          description: Language locale for the persona agent and test cases (e.g., 'en-US', 'es-ES', 'fr-FR'). Must be a valid locale code. Note that 'multi' is not allowed for simulation suites.
-      required:
-      - name
-      - model_id
-      title: SimulationSuiteCreateIn
-    Update-simulation-suiteRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Update-simulation-suiteRequestNotFoundError
-    create-simulation-suite_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationSuiteReadOut'
-      title: create-simulation-suite_Response_200
-    SimulationCaseSummary:
-      type: object
-      properties:
-        simulation_case_id:
-          type: string
-          format: uuid
-          description: Unique identifier for the simulation case
-        name:
-          type: string
-          description: Name of the simulation case
-      required:
-      - simulation_case_id
-      - name
-      title: SimulationCaseSummary
-    update-simulation-suite_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationSuiteReadOut'
-      title: update-simulation-suite_Response_200
-    Get-simulation-suiteRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Get-simulation-suiteRequestNotFoundError
-    status:
-      type: string
-      description: Whether the request was successful.
-      title: status
-    Update-simulation-suiteRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Update-simulation-suiteRequestBadRequestError
+          $ref: '#/components/schemas/PaginatedSimulationSuitesList'
+      title: list-simulation-suites_Response_200
     SimulationSuiteReadOut:
       type: object
       properties:
@@ -556,62 +553,65 @@ components:
           format: date-time
           description: When the suite was last updated
       title: SimulationSuiteReadOut
-    list-simulation-suites_Response_200:
+    get-simulation-suite_Response_200:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/status'
         response:
-          $ref: '#/components/schemas/PaginatedSimulationSuitesList'
-      title: list-simulation-suites_Response_200
-    List-simulation-suitesRequestBadRequestError:
-      type: object
-      properties: {}
-      title: List-simulation-suitesRequestBadRequestError
-    execute-simulation-suite_Response_200:
-      type: object
-      properties:
-        session_id:
-          type: string
-          format: uuid
-        suite_id:
-          type: string
-          format: uuid
-        suite_name:
-          type: string
-        total_cases:
-          type: integer
-        status:
-          type: string
-      title: execute-simulation-suite_Response_200
-    SimulationCaseReadOutType:
-      type: string
-      enum:
-      - custom
-      - agent_based
-      title: SimulationCaseReadOutType
-    Create-simulation-suiteRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Create-simulation-suiteRequestBadRequestError
+          $ref: '#/components/schemas/SimulationSuiteReadOut'
+      title: get-simulation-suite_Response_200
     Delete-simulation-suiteRequestBadRequestError:
       type: object
       properties: {}
       title: Delete-simulation-suiteRequestBadRequestError
-    SimulationSuiteUpdateIn:
+    create-simulation-suite_Response_200:
       type: object
       properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: New name for the simulation suite
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationSuiteReadOut'
+      title: create-simulation-suite_Response_200
+    SimulationCaseReadOutBaseAgent:
+      type: object
+      properties:
         model_id:
+          type: string
+        agent_name:
+          type: string
+        agent_type:
+          type: string
+        voice_engine_type:
+          type: string
+        phone_number:
           type:
           - string
           - 'null'
-          description: New agent model ID for the suite
-      title: SimulationSuiteUpdateIn
+        updated_at:
+          type: string
+          format: date-time
+        image_url:
+          type:
+          - string
+          - 'null'
+      title: SimulationCaseReadOutBaseAgent
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    update-simulation-suite_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationSuiteReadOut'
+      title: update-simulation-suite_Response_200
+    Execute-simulation-suiteRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Execute-simulation-suiteRequestBadRequestError
   securitySchemes:
     sec0:
       type: http

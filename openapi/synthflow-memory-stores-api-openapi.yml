@@ -316,30 +316,6 @@ paths:
                 $ref: '#/components/schemas/detachAContactFromAMemoryStore_Response_200'
 components:
   schemas:
-    detachAMemoryStoreFromAnAgent_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-      title: detachAMemoryStoreFromAnAgent_Response_200
-    model_id:
-      type: string
-      description: Agent ID. You can find it on the agent’s page in your dashboard.
-      title: model_id
-    getAMemoryStore_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse'
-      title: getAMemoryStore_Response_200
-    detachAContactFromAMemoryStore_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-      title: detachAContactFromAMemoryStore_Response_200
     MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
@@ -358,64 +334,6 @@ components:
           items:
             description: Any type
       title: MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse
-    list-memory-stores_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/MemoryStoresGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-memory-stores_Response_200
-    MemoryStoresGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems'
-        total:
-          type: integer
-        page_size:
-          type: integer
-        page_number:
-          type: integer
-      title: MemoryStoresGetResponsesContentApplicationJsonSchemaResponse
-    updateAMemoryStore_Response_200:
-      type: object
-      properties:
-        id:
-          type: string
-      title: updateAMemoryStore_Response_200
-    MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems:
-      type: object
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        workspace_id:
-          type: string
-        created_at:
-          type: string
-        updated_at:
-          type: string
-        contact_ids:
-          type: array
-          items:
-            description: Any type
-      title: MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems
-    attachAMemoryStoreToAnAgent_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-      title: attachAMemoryStoreToAnAgent_Response_200
-    deleteAMemoryStore_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-      title: deleteAMemoryStore_Response_200
     status:
       type: string
       description: Whether the request was successful.
@@ -434,16 +352,32 @@ components:
         updated_at:
           type: string
       title: MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse
-    memory_store_id:
-      type: string
-      description: The ID of the memory store (group).
-      title: memory_store_id
+    MemoryStoresGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems'
+        total:
+          type: integer
+        page_size:
+          type: integer
+        page_number:
+          type: integer
+      title: MemoryStoresGetResponsesContentApplicationJsonSchemaResponse
     attachAContactToAMemoryStore_Response_200:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/status'
       title: attachAContactToAMemoryStore_Response_200
+    attachAMemoryStoreToAnAgent_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: attachAMemoryStoreToAnAgent_Response_200
     getDataForASpecificMemoryStoreAndContact_Response_200:
       type: object
       properties:
@@ -452,6 +386,72 @@ components:
         response:
           $ref: '#/components/schemas/MemoryStoresMemoryStoreIdContactsContactIdMemoryDataGetResponsesContentApplicationJsonSchemaResponse'
       title: getDataForASpecificMemoryStoreAndContact_Response_200
+    memory_store_id:
+      type: string
+      description: The ID of the memory store (group).
+      title: memory_store_id
+    list-memory-stores_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/MemoryStoresGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-memory-stores_Response_200
+    deleteAMemoryStore_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: deleteAMemoryStore_Response_200
+    detachAContactFromAMemoryStore_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: detachAContactFromAMemoryStore_Response_200
+    getAMemoryStore_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/MemoryStoresMemoryStoreIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: getAMemoryStore_Response_200
+    updateAMemoryStore_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+      title: updateAMemoryStore_Response_200
+    model_id:
+      type: string
+      description: Agent ID. You can find it on the agent’s page in your dashboard.
+      title: model_id
+    MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        workspace_id:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        contact_ids:
+          type: array
+          items:
+            description: Any type
+      title: MemoryStoresGetResponsesContentApplicationJsonSchemaResponseItemsItems
+    detachAMemoryStoreFromAnAgent_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: detachAMemoryStoreFromAnAgent_Response_200
     Memory-stores_create-a-memory-store_Response_200:
       type: object
       properties:

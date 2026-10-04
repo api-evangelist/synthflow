@@ -262,35 +262,16 @@ paths:
               $ref: '#/components/schemas/InvokeMCPToolRequest'
 components:
   schemas:
-    ServerDiscoveryResult:
+    DiscoverToolsResponse:
       type: object
       properties:
-        config_id:
-          type: string
-          description: Stable ID of the MCP server config entry in Vault
-        server_name:
-          type: string
-          description: Raw serverInfo.name from MCP initialize
-        server_title:
-          type: string
-          description: serverInfo.title with noise words stripped
-        server_version:
-          type: string
-        namespace:
-          type: string
-          description: Derived namespace used as tool name prefix
-        tools:
+        servers:
           type: array
           items:
-            $ref: '#/components/schemas/MCPToolDefinition'
-        error:
-          type: string
-          description: Non-empty if this server failed discovery
+            $ref: '#/components/schemas/ServerDiscoveryResult'
       required:
-      - server_name
-      - namespace
-      - tools
-      title: ServerDiscoveryResult
+      - servers
+      title: DiscoverToolsResponse
     MCPServerIn:
       type: object
       properties:
@@ -311,17 +292,23 @@ components:
       required:
       - mcp_url
       title: MCPServerIn
-    AgentMCPConfigIn:
+    InvokeMCPToolRequest:
       type: object
       properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MCPServerIn'
-          description: List of MCP server configurations
+        namespaced_tool:
+          type: string
+          description: 'Fully qualified tool name: {namespace}__{tool_name}'
+        arguments:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Tool arguments matching the tool's input_schema
+        timeout_ms:
+          type: integer
+          description: Optional caller-controlled timeout in milliseconds
       required:
-      - servers
-      title: AgentMCPConfigIn
+      - namespaced_tool
+      title: InvokeMCPToolRequest
     MCPToolDefinition:
       type: object
       properties:
@@ -371,44 +358,46 @@ components:
       - mcp_url
       - has_headers
       title: MCPServerOut
-    DiscoverToolsResponse:
+    ServerDiscoveryResult:
       type: object
       properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServerDiscoveryResult'
-      required:
-      - servers
-      title: DiscoverToolsResponse
-    InvokeMCPToolRequest:
-      type: object
-      properties:
-        namespaced_tool:
+        config_id:
           type: string
-          description: 'Fully qualified tool name: {namespace}__{tool_name}'
-        arguments:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Tool arguments matching the tool's input_schema
-        timeout_ms:
-          type: integer
-          description: Optional caller-controlled timeout in milliseconds
+          description: Stable ID of the MCP server config entry in Vault
+        server_name:
+          type: string
+          description: Raw serverInfo.name from MCP initialize
+        server_title:
+          type: string
+          description: serverInfo.title with noise words stripped
+        server_version:
+          type: string
+        namespace:
+          type: string
+          description: Derived namespace used as tool name prefix
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPToolDefinition'
+        error:
+          type: string
+          description: Non-empty if this server failed discovery
       required:
-      - namespaced_tool
-      title: InvokeMCPToolRequest
-    AgentMCPConfigOut:
+      - server_name
+      - namespace
+      - tools
+      title: ServerDiscoveryResult
+    AgentMCPConfigIn:
       type: object
       properties:
         servers:
           type: array
           items:
-            $ref: '#/components/schemas/MCPServerOut'
-          description: List of MCP server configurations with redacted headers
+            $ref: '#/components/schemas/MCPServerIn'
+          description: List of MCP server configurations
       required:
       - servers
-      title: AgentMCPConfigOut
+      title: AgentMCPConfigIn
     InvokeMCPToolResponse:
       type: object
       properties:
@@ -422,6 +411,17 @@ components:
           type: string
           description: Error message if the invocation failed
       title: InvokeMCPToolResponse
+    AgentMCPConfigOut:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerOut'
+          description: List of MCP server configurations with redacted headers
+      required:
+      - servers
+      title: AgentMCPConfigOut
   securitySchemes:
     sec0:
       type: http

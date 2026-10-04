@@ -442,143 +442,6 @@ components:
       type: string
       description: Knowledge base ID.
       title: knowledge_base_id
-    KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        total_records:
-          type: integer
-          default: 0
-          description: The number of retrieved knowledge bases.
-        knowledge_bases:
-          type: array
-          items:
-            $ref: '#/components/schemas/KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems'
-      title: KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponse
-    Update-knowledge-base-sourceRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Update-knowledge-base-sourceRequestBadRequestError
-    KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Knowledge base name.
-        rag_use_condition:
-          type: string
-          description: When this knowledge base should be used.
-        id:
-          type: string
-          description: Knowledge base ID.
-      title: KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems
-    delete-knowledge-base_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/KnowledgeBaseIdDeleteResponsesContentApplicationJsonSchemaResponse'
-      title: delete-knowledge-base_Response_200
-    update-knowledge-base-source_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesSourceIdPutResponsesContentApplicationJsonSchemaResponse'
-      title: update-knowledge-base-source_Response_200
-    KnowledgeBaseKnowledgeBaseIdSourcesSourceIdDeleteResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        body:
-          type: string
-        id:
-          type: string
-          description: The ID of the deleted source.
-      title: KnowledgeBaseKnowledgeBaseIdSourcesSourceIdDeleteResponsesContentApplicationJsonSchemaResponse
-    create-knowledge-base_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/KnowledgeBasePostResponsesContentApplicationJsonSchemaResponse'
-      title: create-knowledge-base_Response_200
-    KnowledgeBaseKnowledgeBaseIdAttachPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        body:
-          type: string
-        knowledge_base_id:
-          $ref: '#/components/schemas/knowledge_base_id'
-        model_id:
-          type: string
-      title: KnowledgeBaseKnowledgeBaseIdAttachPostResponsesContentApplicationJsonSchemaResponse
-    Create-knowledge-baseRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Create-knowledge-baseRequestBadRequestError
-    Update-knowledge-baseRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Update-knowledge-baseRequestBadRequestError
-    attachDocumentToSource_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesPostResponsesContentApplicationJsonSchemaResponse'
-      required:
-      - status
-      - response
-      title: attachDocumentToSource_Response_200
-    Get-knowledge-baseRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Get-knowledge-baseRequestBadRequestError
-    KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Knowledge base name.
-        id:
-          type: string
-          description: Knowledge base ID.
-        rag_use_condition:
-          type: string
-          description: When this knowledge base should be used.
-      title: KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems
-    UpdateKnowledgeBaseSourceRequest0:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Updated source name.
-        url:
-          type: string
-          description: Updated URL for `link` sources.
-      required:
-      - url
-      title: UpdateKnowledgeBaseSourceRequest0
-    KnowledgeBaseKnowledgeBaseIdSourcesPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        source_id:
-          type: string
-          description: Unique identifier of the created source.
-      required:
-      - source_id
-      title: KnowledgeBaseKnowledgeBaseIdSourcesPostResponsesContentApplicationJsonSchemaResponse
-    KnowledgeBaseIdPutResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        body:
-          type: string
-        knowledge_base_id:
-          $ref: '#/components/schemas/knowledge_base_id'
-      title: KnowledgeBaseIdPutResponsesContentApplicationJsonSchemaResponse
     KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
@@ -593,33 +456,116 @@ components:
             $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItems'
           description: List of knowledge base sources.
       title: KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponse
-    KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItemsType:
-      type: string
-      enum:
-      - pdf
-      - text
-      - web
-      description: 'Source type: `text` for plain text, `web` for a scraped web page, or `pdf` for a PDF file.'
-      title: KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItemsType
-    status:
-      type: string
-      description: Whether the request was successful.
-      title: status
-    list-knowledge-bases_Response_200:
+    KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Knowledge base name.
+        rag_use_condition:
+          type: string
+          description: When this knowledge base should be used.
+        id:
+          type: string
+          description: Knowledge base ID.
+      title: KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems
+    listKnowledgeBaseSources_Response_200:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/status'
         response:
-          $ref: '#/components/schemas/KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-knowledge-bases_Response_200
-    KnowledgeBaseKnowledgeBaseIdSourcesSourceIdPutResponsesContentApplicationJsonSchemaResponse:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponse'
+      title: listKnowledgeBaseSources_Response_200
+    update-knowledge-base_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseIdPutResponsesContentApplicationJsonSchemaResponse'
+      title: update-knowledge-base_Response_200
+    get-knowledge-base_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: get-knowledge-base_Response_200
+    knowledgeBaseSourceDelete_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesSourceIdDeleteResponsesContentApplicationJsonSchemaResponse'
+      title: knowledgeBaseSourceDelete_Response_200
+    UpdateKnowledgeBaseSourceRequest2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated source name.
+        content:
+          type: string
+          description: Updated text body for `text` sources.
+      required:
+      - content
+      title: UpdateKnowledgeBaseSourceRequest2
+    UpdateKnowledgeBaseSourceRequest0:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated source name.
+        url:
+          type: string
+          description: Updated URL for `link` sources.
+      required:
+      - url
+      title: UpdateKnowledgeBaseSourceRequest0
+    detach-knowledge-base_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdDetachPostResponsesContentApplicationJsonSchemaResponse'
+      title: detach-knowledge-base_Response_200
+    Get-knowledge-baseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-knowledge-baseRequestBadRequestError
+    KnowledgeBaseKnowledgeBaseIdDetachPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        model_id:
+          type: string
+      title: KnowledgeBaseKnowledgeBaseIdDetachPostResponsesContentApplicationJsonSchemaResponse
+    KnowledgeBaseKnowledgeBaseIdSourcesPostResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
         source_id:
           type: string
-          description: Source ID.
-      title: KnowledgeBaseKnowledgeBaseIdSourcesSourceIdPutResponsesContentApplicationJsonSchemaResponse
+          description: Unique identifier of the created source.
+      required:
+      - source_id
+      title: KnowledgeBaseKnowledgeBaseIdSourcesPostResponsesContentApplicationJsonSchemaResponse
+    KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        total_records:
+          type: integer
+          default: 0
+          description: The number of retrieved knowledge bases.
+        knowledge_bases:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems'
+      title: KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponse
     KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItems:
       type: object
       properties:
@@ -647,56 +593,31 @@ components:
           format: date-time
           description: Timestamp when the source was last updated (ISO 8601).
       title: KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItems
-    UpdateKnowledgeBaseSourceRequest1:
+    KnowledgeBaseKnowledgeBaseIdSourcesSourceIdPutResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
-        name:
+        source_id:
           type: string
-          description: Updated source name.
-        url:
-          type: string
-          description: Updated URL for `file` sources.
-      required:
-      - url
-      title: UpdateKnowledgeBaseSourceRequest1
-    KnowledgeBaseKnowledgeBaseIdSourcesPostRequestBodyContentApplicationJsonSchemaType:
-      type: string
-      enum:
-      - pdf
-      - text
-      - web
-      description: Source type.
-      title: KnowledgeBaseKnowledgeBaseIdSourcesPostRequestBodyContentApplicationJsonSchemaType
-    KnowledgeBasePostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        body:
-          type: string
-        knowledge_base_id:
-          $ref: '#/components/schemas/knowledge_base_id'
-      title: KnowledgeBasePostResponsesContentApplicationJsonSchemaResponse
-    UpdateKnowledgeBaseSourceRequest2:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Updated source name.
-        content:
-          type: string
-          description: Updated text body for `text` sources.
-      required:
-      - content
-      title: UpdateKnowledgeBaseSourceRequest2
+          description: Source ID.
+      title: KnowledgeBaseKnowledgeBaseIdSourcesSourceIdPutResponsesContentApplicationJsonSchemaResponse
     ListKnowledgeBaseSourcesRequestBadRequestError:
       type: object
       properties: {}
       title: ListKnowledgeBaseSourcesRequestBadRequestError
+    Delete-knowledge-baseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-knowledge-baseRequestBadRequestError
     update-knowledge-base-source_Request:
       oneOf:
       - $ref: '#/components/schemas/UpdateKnowledgeBaseSourceRequest0'
       - $ref: '#/components/schemas/UpdateKnowledgeBaseSourceRequest1'
       - $ref: '#/components/schemas/UpdateKnowledgeBaseSourceRequest2'
       title: update-knowledge-base-source_Request
+    KnowledgeBaseIdDeleteResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties: {}
+      title: KnowledgeBaseIdDeleteResponsesContentApplicationJsonSchemaResponse
     KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
@@ -709,18 +630,59 @@ components:
           items:
             $ref: '#/components/schemas/KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems'
       title: KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponse
-    Delete-knowledge-baseRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Delete-knowledge-baseRequestBadRequestError
-    get-knowledge-base_Response_200:
+    update-knowledge-base-source_Response_200:
       type: object
       properties:
         status:
-          $ref: '#/components/schemas/status'
+          type: string
         response:
-          $ref: '#/components/schemas/KnowledgeBaseIdGetResponsesContentApplicationJsonSchemaResponse'
-      title: get-knowledge-base_Response_200
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesSourceIdPutResponsesContentApplicationJsonSchemaResponse'
+      title: update-knowledge-base-source_Response_200
+    KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Knowledge base name.
+        id:
+          type: string
+          description: Knowledge base ID.
+        rag_use_condition:
+          type: string
+          description: When this knowledge base should be used.
+      title: KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponseKnowledgeBasesItems
+    KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItemsType:
+      type: string
+      enum:
+      - pdf
+      - text
+      - web
+      description: 'Source type: `text` for plain text, `web` for a scraped web page, or `pdf` for a PDF file.'
+      title: KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponseSourcesItemsType
+    Create-knowledge-baseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-knowledge-baseRequestBadRequestError
+    UpdateKnowledgeBaseSourceRequest1:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated source name.
+        url:
+          type: string
+          description: Updated URL for `file` sources.
+      required:
+      - url
+      title: UpdateKnowledgeBaseSourceRequest1
+    KnowledgeBaseIdPutResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        knowledge_base_id:
+          $ref: '#/components/schemas/knowledge_base_id'
+      title: KnowledgeBaseIdPutResponsesContentApplicationJsonSchemaResponse
     attach-knowledge-base_Response_200:
       type: object
       properties:
@@ -729,50 +691,88 @@ components:
         response:
           $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdAttachPostResponsesContentApplicationJsonSchemaResponse'
       title: attach-knowledge-base_Response_200
-    KnowledgeBaseKnowledgeBaseIdDetachPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        body:
-          type: string
-        model_id:
-          type: string
-      title: KnowledgeBaseKnowledgeBaseIdDetachPostResponsesContentApplicationJsonSchemaResponse
-    KnowledgeBaseIdDeleteResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties: {}
-      title: KnowledgeBaseIdDeleteResponsesContentApplicationJsonSchemaResponse
-    listKnowledgeBaseSources_Response_200:
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    delete-knowledge-base_Response_200:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/status'
         response:
-          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesGetResponsesContentApplicationJsonSchemaResponse'
-      title: listKnowledgeBaseSources_Response_200
-    knowledgeBaseSourceDelete_Response_200:
+          $ref: '#/components/schemas/KnowledgeBaseIdDeleteResponsesContentApplicationJsonSchemaResponse'
+      title: delete-knowledge-base_Response_200
+    KnowledgeBaseKnowledgeBaseIdSourcesPostRequestBodyContentApplicationJsonSchemaType:
+      type: string
+      enum:
+      - pdf
+      - text
+      - web
+      description: Source type.
+      title: KnowledgeBaseKnowledgeBaseIdSourcesPostRequestBodyContentApplicationJsonSchemaType
+    KnowledgeBaseKnowledgeBaseIdSourcesSourceIdDeleteResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        id:
+          type: string
+          description: The ID of the deleted source.
+      title: KnowledgeBaseKnowledgeBaseIdSourcesSourceIdDeleteResponsesContentApplicationJsonSchemaResponse
+    attachDocumentToSource_Response_200:
       type: object
       properties:
         status:
           type: string
         response:
-          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesSourceIdDeleteResponsesContentApplicationJsonSchemaResponse'
-      title: knowledgeBaseSourceDelete_Response_200
-    update-knowledge-base_Response_200:
+          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdSourcesPostResponsesContentApplicationJsonSchemaResponse'
+      required:
+      - status
+      - response
+      title: attachDocumentToSource_Response_200
+    list-knowledge-bases_Response_200:
       type: object
       properties:
         status:
-          type: string
+          $ref: '#/components/schemas/status'
         response:
-          $ref: '#/components/schemas/KnowledgeBaseIdPutResponsesContentApplicationJsonSchemaResponse'
-      title: update-knowledge-base_Response_200
-    detach-knowledge-base_Response_200:
+          $ref: '#/components/schemas/KnowledgeBaseGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-knowledge-bases_Response_200
+    Update-knowledge-baseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-knowledge-baseRequestBadRequestError
+    create-knowledge-base_Response_200:
       type: object
       properties:
         status:
-          type: string
+          $ref: '#/components/schemas/status'
         response:
-          $ref: '#/components/schemas/KnowledgeBaseKnowledgeBaseIdDetachPostResponsesContentApplicationJsonSchemaResponse'
-      title: detach-knowledge-base_Response_200
+          $ref: '#/components/schemas/KnowledgeBasePostResponsesContentApplicationJsonSchemaResponse'
+      title: create-knowledge-base_Response_200
+    Update-knowledge-base-sourceRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-knowledge-base-sourceRequestBadRequestError
+    KnowledgeBaseKnowledgeBaseIdAttachPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        knowledge_base_id:
+          $ref: '#/components/schemas/knowledge_base_id'
+        model_id:
+          type: string
+      title: KnowledgeBaseKnowledgeBaseIdAttachPostResponsesContentApplicationJsonSchemaResponse
+    KnowledgeBasePostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        body:
+          type: string
+        knowledge_base_id:
+          $ref: '#/components/schemas/knowledge_base_id'
+      title: KnowledgeBasePostResponsesContentApplicationJsonSchemaResponse
   securitySchemes:
     sec0:
       type: http
