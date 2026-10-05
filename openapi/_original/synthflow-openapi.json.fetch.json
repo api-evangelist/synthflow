@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.synthflow.ai/openapi.yml",
+ "requested_url": "https://docs.synthflow.ai/openapi.yml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 468202,
+ "sha256": "9877bae5f5acdb59cc9c8e47ad1366b145c5a6574dedbd60e454ccd29e1009bd",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.935), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
