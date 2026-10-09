@@ -317,3 +317,16 @@ x-evidence:
     detail: '1 tool: searchDocs'
   - url: https://docs.synthflow.ai/mcp-server
     status: 200
+rfc9728:
+  endpoint: https://mcp.synthflow.ai/mcp
+  metadata_url: https://mcp.synthflow.ai/.well-known/oauth-protected-resource/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.synthflow.ai/mcp
+    authorization_servers:
+    - https://kind-prelude-27.authkit.app
+    bearer_methods_supported:
+    - header

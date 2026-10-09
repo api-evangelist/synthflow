@@ -101,3 +101,16 @@ x-evidence:
   probes:
     - {url: 'https://synthflow.ai/pricing', status: 200}
     - {url: 'https://docs.synthflow.ai/concurrency-calling-limits.md', status: 200}
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units: []
+  plans:
+  - name: Enterprise
+    access: enterprise
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
