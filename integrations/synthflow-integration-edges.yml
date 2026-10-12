@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/synthflow/integrations
+- https://n8n.io/integrations/synthflow/
+- https://composio.dev/toolkits/synthflow
+- https://monid.ai/tools/synthflow
+checked:
+- https://composio.dev/toolkits/synthflow
+- https://monid.ai/tools/synthflow
+- https://n8n.io/integrations/synthflow/
+- https://zapier.com/apps/synthflow/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
