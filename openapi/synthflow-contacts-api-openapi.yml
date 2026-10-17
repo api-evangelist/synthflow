@@ -173,66 +173,6 @@ paths:
                   $ref: '#/components/schemas/ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata'
 components:
   schemas:
-    ContactsContactIdGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        phone_number:
-          type: string
-        email:
-          type: string
-        contact_metadata:
-          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaResponseContactMetadata'
-        workspace_id:
-          type: string
-        created_at:
-          type: string
-        updated_at:
-          type: string
-        memory_store_ids:
-          type: array
-          items:
-            description: Any type
-      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaResponse
-    ContactsContactIdGetResponsesContentApplicationJsonSchemaResponseContactMetadata:
-      type: object
-      properties:
-        company:
-          type: string
-      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaResponseContactMetadata
-    getAContact_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaResponse'
-      title: getAContact_Response_200
-    ContactsGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItems'
-        total:
-          type: integer
-        page_size:
-          type: integer
-        page_number:
-          type: integer
-      title: ContactsGetResponsesContentApplicationJsonSchemaResponse
-    list-contacts_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-contacts_Response_200
     ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItems:
       type: object
       properties:
@@ -257,6 +197,66 @@ components:
           items:
             description: Any type
       title: ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItems
+    getAContact_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: getAContact_Response_200
+    ContactsGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItems'
+        total:
+          type: integer
+        page_size:
+          type: integer
+        page_number:
+          type: integer
+      title: ContactsGetResponsesContentApplicationJsonSchemaResponse
+    ContactsContactIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        phone_number:
+          type: string
+        email:
+          type: string
+        contact_metadata:
+          $ref: '#/components/schemas/ContactsContactIdGetResponsesContentApplicationJsonSchemaResponseContactMetadata'
+        workspace_id:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        memory_store_ids:
+          type: array
+          items:
+            description: Any type
+      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaResponse
+    list-contacts_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ContactsGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-contacts_Response_200
+    ContactsContactIdGetResponsesContentApplicationJsonSchemaResponseContactMetadata:
+      type: object
+      properties:
+        company:
+          type: string
+      title: ContactsContactIdGetResponsesContentApplicationJsonSchemaResponseContactMetadata
     deleteAContact_Response_200:
       type: object
       properties:
@@ -267,23 +267,10 @@ components:
       type: object
       properties: {}
       title: ContactsGetResponsesContentApplicationJsonSchemaResponseItemsItemsContactMetadata
-    ContactsPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        id:
-          type: string
-      title: ContactsPostResponsesContentApplicationJsonSchemaResponse
     ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata:
       type: object
       properties: {}
       title: ContactsContactIdPatchRequestBodyContentApplicationJsonSchemaContactMetadata
-    ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata:
-      type: object
-      properties:
-        company:
-          type: string
-      description: Additional metadata for the contact.
-      title: ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata
     Contacts_create-a-contact_Response_200:
       type: object
       properties:
@@ -298,6 +285,19 @@ components:
         status:
           type: string
       title: Contacts_update-a-contact_Response_200
+    ContactsPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        id:
+          type: string
+      title: ContactsPostResponsesContentApplicationJsonSchemaResponse
+    ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata:
+      type: object
+      properties:
+        company:
+          type: string
+      description: Additional metadata for the contact.
+      title: ContactsPostRequestBodyContentApplicationJsonSchemaContactMetadata
   securitySchemes:
     sec0:
       type: http

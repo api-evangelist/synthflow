@@ -341,15 +341,29 @@ paths:
                 $ref: '#/components/schemas/Detach-phone-number-from-assistantRequestNotFoundError'
 components:
   schemas:
-    AgentPatienceLevel:
+    transcriber_speech_recognition:
       type: string
       enum:
-      - low
-      - medium
-      - high
-      description: Patience level of the agent.
-      title: AgentPatienceLevel
-    AssistantsModelIdPhoneNumbersPutResponsesContentApplicationJsonSchemaDetail:
+      - faster
+      - high_accuracy
+      description: Speech recognition mode for transcription speed vs quality.
+      title: transcriber_speech_recognition
+    AgentEndCallReasonsV2Items:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The condition that triggers call termination.
+        closing_message_mode:
+          $ref: '#/components/schemas/AgentEndCallReasonsV2ItemsClosingMessageMode'
+          description: 'Controls how the farewell message is generated. static: message is spoken verbatim. prompt: message is an instruction to the LLM. none: LLM generates its own farewell.'
+        closing_message:
+          type: string
+          description: The closing message content. Interpretation depends on closing_message_mode.
+      required:
+      - reason
+      title: AgentEndCallReasonsV2Items
+    AssistantsModelIdPhoneNumbersPhoneNumberSlugDeleteResponsesContentApplicationJsonSchemaDetail:
       type: object
       properties:
         status:
@@ -365,8 +379,50 @@ components:
       - description
       - request_id
       - category
-      title: AssistantsModelIdPhoneNumbersPutResponsesContentApplicationJsonSchemaDetail
-    AgentMinWordsToInterrupt:
+      title: AssistantsModelIdPhoneNumbersPhoneNumberSlugDeleteResponsesContentApplicationJsonSchemaDetail
+    AgentNoiseCancellation:
+      type: string
+      enum:
+      - standard
+      - advanced
+      description: Removes background noise on the customer's side (like chatter in a café or keyboard clicks) to make their voice clearer and easier for the agent to understand.
+      title: AgentNoiseCancellation
+    AssistantsModelIdDeleteResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+      title: AssistantsModelIdDeleteResponsesContentApplicationJsonSchemaResponse
+    voice_use_speaker_boost:
+      type: boolean
+      description: Amplifies the voice’s likeness to the original speaker, which can slightly slow down the response time.
+      title: voice_use_speaker_boost
+    AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessage:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether voicemail message leaving is enabled.
+        mode:
+          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessageMode'
+          description: The mode used to generate the voicemail message.
+        exact_message:
+          type: string
+          description: The exact message to leave on the voicemail. Used when mode is `exact_message`.
+        prompt:
+          type: string
+          description: A prompt used to generate the voicemail message. Used when mode is `prompt`.
+      description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
+      title: AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessage
+    get-assistant_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: get-assistant_Response_200
+    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentMinWordsToInterrupt:
       type: string
       enum:
       - '0'
@@ -376,243 +432,44 @@ components:
       - '4'
       - '5'
       description: You can set how many words the human must speak before the AI will stop speaking and listening.
-      title: AgentMinWordsToInterrupt
-    create-assistant_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/AssistantsPostResponsesContentApplicationJsonSchemaResponse'
-        details:
-          $ref: '#/components/schemas/AssistantsPostResponsesContentApplicationJsonSchemaDetails'
-      title: create-assistant_Response_200
-    greeting_message_human_talk_timeout:
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentMinWordsToInterrupt
+    voice_style:
       type: integer
-      description: 'The maximum number of seconds the agent waits for the human to speak first when `greeting_message_mode` is set to `human`. If the human does not speak within this time, the agent will start the conversation automatically.
-
-        '
-      title: greeting_message_human_talk_timeout
-    attach-phone-numbers-to-assistant_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-      title: attach-phone-numbers-to-assistant_Response_200
-    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsInputVariablesItemsValuesItems:
-      type: object
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        example:
-          type:
-          - string
-          - 'null'
-        required:
-          type:
-          - boolean
-          - 'null'
-      required:
-      - name
-      - type
-      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsInputVariablesItemsValuesItems
-    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2Items:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The condition that triggers call termination.
-        closing_message_mode:
-          $ref: '#/components/schemas/AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2ItemsClosingMessageMode'
-          description: 'Controls how the farewell message is generated. static: message is spoken verbatim. prompt: message is an instruction to the LLM. none: LLM generates its own farewell.'
-        closing_message:
-          type: string
-          description: The closing message content. Interpretation depends on closing_message_mode.
-      required:
-      - reason
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2Items
-    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsMaxDuration:
-      type: object
-      properties:
-        duration_seconds:
-          type: integer
-          description: Maximum length of the call in seconds.
-        is_enabled:
-          type: boolean
-          description: Whether there's a limit on call length.
-      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsMaxDuration
-    allowed_idle_time_seconds:
-      type: integer
-      description: The agent will disconnect after this period.
-      title: allowed_idle_time_seconds
-    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessage:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether voicemail message leaving is enabled.
-        mode:
-          $ref: '#/components/schemas/AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessageMode'
-          description: The mode used to generate the voicemail message.
-        exact_message:
-          type: string
-          description: The exact message to leave on the voicemail. Used when mode is `exact_message`.
-        prompt:
-          type: string
-          description: A prompt used to generate the voicemail message. Used when mode is `prompt`.
-      description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
-      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessage
-    language:
+      description: Range 0 to 1. Enhances the distinct characteristics of the original voice, but may slow down processing and make the voice less stable.
+      title: voice_style
+    AgentFallbackProvider:
       type: string
       enum:
-      - multi
-      - en-US
-      - bg
-      - cs
-      - de-DE
-      - el
-      - fi
-      - fr-FR
-      - es-ES
-      - hu
-      - it
-      - fr
-      - pt-BR
-      - nl-NL
-      - hi
-      - zh-CN
-      - 'no'
-      - sv-SE
-      - da
-      - da-DK
-      - id
-      - ja
-      - ko
-      - ms
-      - ro
-      - ru
-      - sk
-      - tr
-      - uk
-      - vi
-      - th
-      - pl
-      description: This agent's language. For the list of available languages, see <a href="/about-supported-languages">Supported languages</a>
-      title: language
-    voice_stability:
-      type: integer
-      description: Range is 0 to 1. Lower settings may make the voice sound more expressive but less predictable, while higher settings make it sound steadier but less emotional.
-      title: voice_stability
-    AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsMaxDuration:
-      type: object
-      properties:
-        duration_seconds:
-          type: integer
-          description: Maximum length of the call in seconds.
-        is_enabled:
-          type: boolean
-          description: Whether there's a limit on call length.
-      title: AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsMaxDuration
-    AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetail:
-      type: object
-      properties:
-        status:
-          type: string
-        description:
-          type: string
-        request_id:
-          type: string
-        category:
-          type: string
-      required:
-      - status
-      - description
-      - request_id
-      - category
-      title: AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetail
-    AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessageMode:
+      - elevenlabs
+      - deepgram
+      - synthflow
+      description: The provider for the fallback voice (elevenlabs, deepgram, or synthflow).
+      title: AgentFallbackProvider
+    AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessageMode:
       type: string
       enum:
       - exact_message
       - prompt
       description: The mode used to generate the voicemail message.
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessageMode
-    prompt:
-      type: string
-      description: Add variables in curly brackets. For example, <code>{your-variable}</code>.
-      title: prompt
-    initial_pause_seconds:
-      type: integer
-      description: Duration before the agent starts speaking.
-      title: initial_pause_seconds
-    voice_prompt:
-      type: string
-      description: Slightly alters the agent's intonation, talking speed or sentiment for a subtle yet noticeable effect.
-      title: voice_prompt
-    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessageMode:
-      type: string
-      enum:
-      - exact_message
-      - prompt
-      description: The mode used to generate the voicemail message.
-      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessageMode
-    update-assistant_Response_200:
+      title: AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessageMode
+    AttachPhoneNumbersToAssistantRequest1:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/AssistantsModelIdPutResponsesContentApplicationJsonSchemaResponse'
-        details:
-          $ref: '#/components/schemas/AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetails'
-      title: update-assistant_Response_200
-    Update-assistantRequestBadRequestError:
-      type: object
-      properties:
-        detail:
-          $ref: '#/components/schemas/AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetail'
-      title: Update-assistantRequestBadRequestError
-    get-assistant_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponse'
-      title: get-assistant_Response_200
-    name:
-      type: string
-      description: Agent name.
-      title: name
-    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/pagination'
-        assistants:
+        phone_number_slugs:
           type: array
           items:
-            $ref: '#/components/schemas/AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItems'
-      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponse
-    AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessageMode:
+            type: string
+          description: Phone number slugs.
+      required:
+      - phone_number_slugs
+      title: AttachPhoneNumbersToAssistantRequest1
+    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentNoiseCancellation:
       type: string
       enum:
-      - exact_message
-      - prompt
-      description: The mode used to generate the voicemail message.
-      title: AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessageMode
-    Detach-phone-number-from-assistantRequestBadRequestError:
-      type: object
-      properties:
-        detail:
-          $ref: '#/components/schemas/AssistantsModelIdPhoneNumbersPhoneNumberSlugDeleteResponsesContentApplicationJsonSchemaDetail'
-      title: Detach-phone-number-from-assistantRequestBadRequestError
+      - standard
+      - advanced
+      description: Removes background noise on the customer's side (like chatter in a café or keyboard clicks) to make their voice clearer and easier for the agent to understand.
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentNoiseCancellation
     timezone:
       type: string
       enum:
@@ -1042,250 +899,6 @@ components:
       default: Europe/Berlin
       description: The agent's timezone.
       title: timezone
-    attach-phone-numbers-to-assistant_Request:
-      oneOf:
-      - $ref: '#/components/schemas/AttachPhoneNumbersToAssistantRequest0'
-      - $ref: '#/components/schemas/AttachPhoneNumbersToAssistantRequest1'
-      title: attach-phone-numbers-to-assistant_Request
-    transcriber_keywords:
-      type: array
-      items:
-        type: string
-      description: Add business terms to improve accuracy and recognition.
-      title: transcriber_keywords
-    AssistantsPostResponsesContentApplicationJsonSchemaDetail:
-      type: object
-      properties:
-        status:
-          type: string
-        description:
-          type: string
-        request_id:
-          type: string
-        category:
-          type: string
-      required:
-      - status
-      - description
-      - request_id
-      - category
-      title: AssistantsPostResponsesContentApplicationJsonSchemaDetail
-    AttachedPhoneNumber:
-      type: object
-      properties:
-        number:
-          type: string
-          description: Phone number to attach to an outbound agent.
-        sid:
-          type:
-          - string
-          - 'null'
-          description: Twilio phone number SID.
-        slug:
-          type: string
-          description: Internal phone number slug.
-      required:
-      - number
-      - sid
-      - slug
-      title: AttachedPhoneNumber
-    AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessage:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether voicemail message leaving is enabled.
-        mode:
-          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessageMode'
-          description: The mode used to generate the voicemail message.
-        exact_message:
-          type: string
-          description: The exact message to leave on the voicemail. Used when mode is `exact_message`.
-        prompt:
-          type: string
-          description: A prompt used to generate the voicemail message. Used when mode is `prompt`.
-      description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
-      title: AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessage
-    transcriber_provider:
-      type: string
-      enum:
-      - deepgram
-      - deepgram-nova-3
-      - synthflow-stt
-      description: Speech-to-text provider used for transcription.
-      title: transcriber_provider
-    AssistantsModelIdPhoneNumbersPhoneNumberSlugDeleteResponsesContentApplicationJsonSchemaDetail:
-      type: object
-      properties:
-        status:
-          type: string
-        description:
-          type: string
-        request_id:
-          type: string
-        category:
-          type: string
-      required:
-      - status
-      - description
-      - request_id
-      - category
-      title: AssistantsModelIdPhoneNumbersPhoneNumberSlugDeleteResponsesContentApplicationJsonSchemaDetail
-    AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetails:
-      type: object
-      properties:
-        phone:
-          type: string
-          description: The phone number attached to the agent.
-        voice:
-          type: string
-          description: The agent's voice.
-      title: AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetails
-    transcriber_speech_recognition:
-      type: string
-      enum:
-      - faster
-      - high_accuracy
-      description: Speech recognition mode for transcription speed vs quality.
-      title: transcriber_speech_recognition
-    Create-assistantRequestBadRequestError:
-      type: object
-      properties:
-        detail:
-          $ref: '#/components/schemas/AssistantsPostResponsesContentApplicationJsonSchemaDetail'
-      title: Create-assistantRequestBadRequestError
-    AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistants:
-      type: object
-      properties:
-        end_call_reasons:
-          type: array
-          items:
-            type: string
-          description: Optional. Some GET responses include `end_call_reasons` at the top level of each assistant object (in addition to `agent.end_call_reasons`). To configure end-call reasons, set **`agent.end_call_reasons`** on create or update requests; a top-level `end_call_reasons` on those requests is ignored.
-        description:
-          type: string
-          description: Agent description.
-        phone_number:
-          type: string
-          description: The phone number attached to the agent.
-        external_webhook_url:
-          type: string
-          description: URL of the webhook that should receive data after the call, such as the transcript.
-        is_recording:
-          type: boolean
-          description: Whether the conversation should be recorded.
-        max_duration:
-          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsMaxDuration'
-        voicemail_message:
-          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessage'
-          description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
-        type:
-          $ref: '#/components/schemas/type'
-        name:
-          $ref: '#/components/schemas/name'
-        agent:
-          $ref: '#/components/schemas/Agent'
-        model_id:
-          type: string
-          description: The ID of the agent.
-      title: AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistants
-    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentPatienceLevel:
-      type: string
-      enum:
-      - low
-      - medium
-      - high
-      description: Patience level of the agent.
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentPatienceLevel
-    AttachPhoneNumbersToAssistantRequest0:
-      type: object
-      properties:
-        phone_numbers:
-          type: array
-          items:
-            type: string
-          description: Phone numbers array.
-      required:
-      - phone_numbers
-      title: AttachPhoneNumbersToAssistantRequest0
-    AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessage:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether voicemail message leaving is enabled.
-        mode:
-          $ref: '#/components/schemas/AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessageMode'
-          description: The mode used to generate the voicemail message.
-        exact_message:
-          type: string
-          description: The exact message to leave on the voicemail. Used when mode is `exact_message`.
-        prompt:
-          type: string
-          description: A prompt used to generate the voicemail message. Used when mode is `prompt`.
-      description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
-      title: AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessage
-    model_id:
-      type: string
-      description: Agent ID. You can find it on the agent’s page in your dashboard.
-      title: model_id
-    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentMinWordsToInterrupt:
-      type: string
-      enum:
-      - '0'
-      - '1'
-      - '2'
-      - '3'
-      - '4'
-      - '5'
-      description: You can set how many words the human must speak before the AI will stop speaking and listening.
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentMinWordsToInterrupt
-    AgentEndCallReasonsV2ItemsClosingMessageMode:
-      type: string
-      enum:
-      - static
-      - prompt
-      - none
-      description: 'Controls how the farewell message is generated. static: message is spoken verbatim. prompt: message is an instruction to the LLM. none: LLM generates its own farewell.'
-      title: AgentEndCallReasonsV2ItemsClosingMessageMode
-    List-assistantRequestBadRequestError:
-      type: object
-      properties: {}
-      title: List-assistantRequestBadRequestError
-    Detach-phone-number-from-assistantRequestNotFoundError:
-      type: object
-      properties:
-        detail:
-          $ref: '#/components/schemas/AssistantsModelIdPhoneNumbersPhoneNumberSlugDeleteResponsesContentApplicationJsonSchemaDetail'
-      title: Detach-phone-number-from-assistantRequestNotFoundError
-    Get-assistantRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Get-assistantRequestBadRequestError
-    voice_optimise_streaming_latency:
-      type: integer
-      description: Range 0 to 4. Optimises streaming latency
-      title: voice_optimise_streaming_latency
-    AssistantsPostRequestBodyContentApplicationJsonSchemaMaxDuration:
-      type: object
-      properties:
-        duration_seconds:
-          type: integer
-          description: Maximum length of the call in seconds.
-        is_enabled:
-          type: boolean
-          description: Whether there's a limit on call length.
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaMaxDuration
-    AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaMaxDuration:
-      type: object
-      properties:
-        duration_seconds:
-          type: integer
-          description: Maximum length of the call in seconds.
-        is_enabled:
-          type: boolean
-          description: Whether there's a limit on call length.
-      title: AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaMaxDuration
     AssistantsPostRequestBodyContentApplicationJsonSchemaAgent:
       type: object
       properties:
@@ -1412,109 +1025,16 @@ components:
           type: boolean
           description: Whether the agent should ask for consent to record the call.
       title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgent
-    AssistantsModelIdPutResponsesContentApplicationJsonSchemaResponse:
+    List-assistantRequestBadRequestError:
       type: object
-      properties:
-        model_id:
-          $ref: '#/components/schemas/model_id'
-      title: AssistantsModelIdPutResponsesContentApplicationJsonSchemaResponse
-    delete-assistant_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/AssistantsModelIdDeleteResponsesContentApplicationJsonSchemaResponse'
-      title: delete-assistant_Response_200
-    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentVoiceSynthesizer:
-      type: string
-      enum:
-      - eleven_multilingual_v2
-      - eleven_turbo_v2
-      - eleven_turbo_v2_5
-      - eleven_flash_v2
-      - eleven_flash_v2_5
-      - eleven_v3
-      description: The engine used to synthesize voice.
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentVoiceSynthesizer
-    list-assistant_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-assistant_Response_200
+      properties: {}
+      title: List-assistantRequestBadRequestError
     detach-phone-number-from-assistant_Response_200:
       type: object
       properties:
         status:
           type: string
       title: detach-phone-number-from-assistant_Response_200
-    Delete-assistantRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Delete-assistantRequestBadRequestError
-    AgentEndCallReasonsV2Items:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: The condition that triggers call termination.
-        closing_message_mode:
-          $ref: '#/components/schemas/AgentEndCallReasonsV2ItemsClosingMessageMode'
-          description: 'Controls how the farewell message is generated. static: message is spoken verbatim. prompt: message is an instruction to the LLM. none: LLM generates its own farewell.'
-        closing_message:
-          type: string
-          description: The closing message content. Interpretation depends on closing_message_mode.
-      required:
-      - reason
-      title: AgentEndCallReasonsV2Items
-    Attach-phone-numbers-to-assistantRequestNotFoundError:
-      type: object
-      properties:
-        detail:
-          $ref: '#/components/schemas/AssistantsModelIdPhoneNumbersPutResponsesContentApplicationJsonSchemaDetail'
-      title: Attach-phone-numbers-to-assistantRequestNotFoundError
-    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoise:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: If enabled, the agent will add background noise.
-        type:
-          $ref: '#/components/schemas/AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoiseType'
-          description: What kind of background noise should be present.
-        volume:
-          type: integer
-          description: How loud the background noise should be.
-      description: Add background noise to make the call more natural.
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoise
-    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoiseType:
-      type: string
-      enum:
-      - cafe
-      - office
-      description: What kind of background noise should be present.
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoiseType
-    AgentBackgroundNoise:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: If enabled, the agent will add background noise.
-        type:
-          $ref: '#/components/schemas/AgentBackgroundNoiseType'
-          description: What kind of background noise should be present.
-        volume:
-          type: integer
-          description: How loud the background noise should be.
-      description: Add background noise to make the call more natural.
-      title: AgentBackgroundNoise
-    voice_style:
-      type: integer
-      description: Range 0 to 1. Enhances the distinct characteristics of the original voice, but may slow down processing and make the voice less stable.
-      title: voice_style
     AgentVoiceSynthesizer:
       type: string
       enum:
@@ -1526,6 +1046,315 @@ components:
       - eleven_v3
       description: The engine used to synthesize voice.
       title: AgentVoiceSynthesizer
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    voice_similarity_boost:
+      type: integer
+      description: Range 0 to 1. Determines how closely the AI matches the original voice. Higher settings potentially including unwanted noise from the original recording.
+      title: voice_similarity_boost
+    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentFallbackProvider:
+      type: string
+      enum:
+      - elevenlabs
+      - deepgram
+      - synthflow
+      description: The provider for the fallback voice (elevenlabs, deepgram, or synthflow).
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentFallbackProvider
+    AgentMinWordsToInterrupt:
+      type: string
+      enum:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      description: You can set how many words the human must speak before the AI will stop speaking and listening.
+      title: AgentMinWordsToInterrupt
+    AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsMaxDuration:
+      type: object
+      properties:
+        duration_seconds:
+          type: integer
+          description: Maximum length of the call in seconds.
+        is_enabled:
+          type: boolean
+          description: Whether there's a limit on call length.
+      title: AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsMaxDuration
+    AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetails:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: The phone number attached to the agent.
+        voice:
+          type: string
+          description: The agent's voice.
+      title: AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetails
+    update-assistant_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/AssistantsModelIdPutResponsesContentApplicationJsonSchemaResponse'
+        details:
+          $ref: '#/components/schemas/AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetails'
+      title: update-assistant_Response_200
+    attach-phone-numbers-to-assistant_Request:
+      oneOf:
+      - $ref: '#/components/schemas/AttachPhoneNumbersToAssistantRequest0'
+      - $ref: '#/components/schemas/AttachPhoneNumbersToAssistantRequest1'
+      title: attach-phone-numbers-to-assistant_Request
+    greeting_message:
+      type: string
+      description: The greeting message the agent will open the conversation with. You can add variables in curly brackets (for example, <code>{your-variable}</code>).
+      title: greeting_message
+    attach-phone-numbers-to-assistant_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+      title: attach-phone-numbers-to-assistant_Response_200
+    voice_stability:
+      type: integer
+      description: Range is 0 to 1. Lower settings may make the voice sound more expressive but less predictable, while higher settings make it sound steadier but less emotional.
+      title: voice_stability
+    AssistantsPostResponsesContentApplicationJsonSchemaDetail:
+      type: object
+      properties:
+        status:
+          type: string
+        description:
+          type: string
+        request_id:
+          type: string
+        category:
+          type: string
+      required:
+      - status
+      - description
+      - request_id
+      - category
+      title: AssistantsPostResponsesContentApplicationJsonSchemaDetail
+    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsMaxDuration:
+      type: object
+      properties:
+        duration_seconds:
+          type: integer
+          description: Maximum length of the call in seconds.
+        is_enabled:
+          type: boolean
+          description: Whether there's a limit on call length.
+      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsMaxDuration
+    delete-assistant_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/AssistantsModelIdDeleteResponsesContentApplicationJsonSchemaResponse'
+      title: delete-assistant_Response_200
+    Delete-assistantRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-assistantRequestBadRequestError
+    pagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      title: pagination
+    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentVoiceSynthesizer:
+      type: string
+      enum:
+      - eleven_multilingual_v2
+      - eleven_turbo_v2
+      - eleven_turbo_v2_5
+      - eleven_flash_v2
+      - eleven_flash_v2_5
+      - eleven_v3
+      description: The engine used to synthesize voice.
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentVoiceSynthesizer
+    AssistantsPostResponsesContentApplicationJsonSchemaDetails:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: The phone number attached to this agent.
+        voice:
+          type: string
+          description: This agent's voice.
+      title: AssistantsPostResponsesContentApplicationJsonSchemaDetails
+    AssistantsPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        model_id:
+          $ref: '#/components/schemas/model_id'
+      title: AssistantsPostResponsesContentApplicationJsonSchemaResponse
+    language:
+      type: string
+      enum:
+      - multi
+      - en-US
+      - bg
+      - cs
+      - de-DE
+      - el
+      - fi
+      - fr-FR
+      - es-ES
+      - hu
+      - it
+      - fr
+      - pt-BR
+      - nl-NL
+      - hi
+      - zh-CN
+      - 'no'
+      - sv-SE
+      - da
+      - da-DK
+      - id
+      - ja
+      - ko
+      - ms
+      - ro
+      - ru
+      - sk
+      - tr
+      - uk
+      - vi
+      - th
+      - pl
+      description: This agent's language. For the list of available languages, see <a href="/about-supported-languages">Supported languages</a>
+      title: language
+    Detach-phone-number-from-assistantRequestNotFoundError:
+      type: object
+      properties:
+        detail:
+          $ref: '#/components/schemas/AssistantsModelIdPhoneNumbersPhoneNumberSlugDeleteResponsesContentApplicationJsonSchemaDetail'
+      title: Detach-phone-number-from-assistantRequestNotFoundError
+    greeting_message_human_talk_timeout:
+      type: integer
+      description: 'The maximum number of seconds the agent waits for the human to speak first when `greeting_message_mode` is set to `human`. If the human does not speak within this time, the agent will start the conversation automatically.
+
+        '
+      title: greeting_message_human_talk_timeout
+    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsInputVariablesItemsValuesItems:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        example:
+          type:
+          - string
+          - 'null'
+        required:
+          type:
+          - boolean
+          - 'null'
+      required:
+      - name
+      - type
+      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsInputVariablesItemsValuesItems
+    AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessage:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether voicemail message leaving is enabled.
+        mode:
+          $ref: '#/components/schemas/AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessageMode'
+          description: The mode used to generate the voicemail message.
+        exact_message:
+          type: string
+          description: The exact message to leave on the voicemail. Used when mode is `exact_message`.
+        prompt:
+          type: string
+          description: A prompt used to generate the voicemail message. Used when mode is `prompt`.
+      description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessage
+    AssistantsPostRequestBodyContentApplicationJsonSchemaMaxDuration:
+      type: object
+      properties:
+        duration_seconds:
+          type: integer
+          description: Maximum length of the call in seconds.
+        is_enabled:
+          type: boolean
+          description: Whether there's a limit on call length.
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaMaxDuration
+    model_id:
+      type: string
+      description: Agent ID. You can find it on the agent’s page in your dashboard.
+      title: model_id
+    Update-assistantRequestBadRequestError:
+      type: object
+      properties:
+        detail:
+          $ref: '#/components/schemas/AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetail'
+      title: Update-assistantRequestBadRequestError
+    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2Items:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: The condition that triggers call termination.
+        closing_message_mode:
+          $ref: '#/components/schemas/AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2ItemsClosingMessageMode'
+          description: 'Controls how the farewell message is generated. static: message is spoken verbatim. prompt: message is an instruction to the LLM. none: LLM generates its own farewell.'
+        closing_message:
+          type: string
+          description: The closing message content. Interpretation depends on closing_message_mode.
+      required:
+      - reason
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2Items
+    AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessage:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether voicemail message leaving is enabled.
+        mode:
+          $ref: '#/components/schemas/AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessageMode'
+          description: The mode used to generate the voicemail message.
+        exact_message:
+          type: string
+          description: The exact message to leave on the voicemail. Used when mode is `exact_message`.
+        prompt:
+          type: string
+          description: A prompt used to generate the voicemail message. Used when mode is `prompt`.
+      description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
+      title: AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessage
+    initial_pause_seconds:
+      type: integer
+      description: Duration before the agent starts speaking.
+      title: initial_pause_seconds
+    allowed_idle_time_seconds:
+      type: integer
+      description: The agent will disconnect after this period.
+      title: allowed_idle_time_seconds
+    AgentEndCallReasonsV2ItemsClosingMessageMode:
+      type: string
+      enum:
+      - static
+      - prompt
+      - none
+      description: 'Controls how the farewell message is generated. static: message is spoken verbatim. prompt: message is an instruction to the LLM. none: LLM generates its own farewell.'
+      title: AgentEndCallReasonsV2ItemsClosingMessageMode
     AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsInputVariablesItems:
       type: object
       properties:
@@ -1546,6 +1375,225 @@ components:
       - action_id
       - values
       title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsInputVariablesItems
+    voice_prompt:
+      type: string
+      description: Slightly alters the agent's intonation, talking speed or sentiment for a subtle yet noticeable effect.
+      title: voice_prompt
+    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/pagination'
+        assistants:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItems'
+      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponse
+    AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistants:
+      type: object
+      properties:
+        end_call_reasons:
+          type: array
+          items:
+            type: string
+          description: Optional. Some GET responses include `end_call_reasons` at the top level of each assistant object (in addition to `agent.end_call_reasons`). To configure end-call reasons, set **`agent.end_call_reasons`** on create or update requests; a top-level `end_call_reasons` on those requests is ignored.
+        description:
+          type: string
+          description: Agent description.
+        phone_number:
+          type: string
+          description: The phone number attached to the agent.
+        external_webhook_url:
+          type: string
+          description: URL of the webhook that should receive data after the call, such as the transcript.
+        is_recording:
+          type: boolean
+          description: Whether the conversation should be recorded.
+        max_duration:
+          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsMaxDuration'
+        voicemail_message:
+          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessage'
+          description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
+        type:
+          $ref: '#/components/schemas/type'
+        name:
+          $ref: '#/components/schemas/name'
+        agent:
+          $ref: '#/components/schemas/Agent'
+        model_id:
+          type: string
+          description: The ID of the agent.
+      title: AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistants
+    llm:
+      type: string
+      enum:
+      - gpt-4.1
+      - gpt-4.1-nano
+      - gpt-4.1-mini
+      - gpt-5-mini
+      - gpt-5-nano
+      - gpt-5.1
+      - gpt-5.2
+      - gpt-5.4
+      - gpt-5.4-mini
+      - gpt-5.4-nano
+      - synthflow
+      description: The LLM powering this agent.
+      title: llm
+    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentPatienceLevel:
+      type: string
+      enum:
+      - low
+      - medium
+      - high
+      description: Patience level of the agent.
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentPatienceLevel
+    AssistantsModelIdPhoneNumbersPutResponsesContentApplicationJsonSchemaDetail:
+      type: object
+      properties:
+        status:
+          type: string
+        description:
+          type: string
+        request_id:
+          type: string
+        category:
+          type: string
+      required:
+      - status
+      - description
+      - request_id
+      - category
+      title: AssistantsModelIdPhoneNumbersPutResponsesContentApplicationJsonSchemaDetail
+    transcriber_keywords:
+      type: array
+      items:
+        type: string
+      description: Add business terms to improve accuracy and recognition.
+      title: transcriber_keywords
+    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoiseType:
+      type: string
+      enum:
+      - cafe
+      - office
+      description: What kind of background noise should be present.
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoiseType
+    AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessageMode:
+      type: string
+      enum:
+      - exact_message
+      - prompt
+      description: The mode used to generate the voicemail message.
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessageMode
+    create-assistant_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/AssistantsPostResponsesContentApplicationJsonSchemaResponse'
+        details:
+          $ref: '#/components/schemas/AssistantsPostResponsesContentApplicationJsonSchemaDetails'
+      title: create-assistant_Response_200
+    AssistantsGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/pagination'
+        assistants:
+          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistants'
+      title: AssistantsGetResponsesContentApplicationJsonSchemaResponse
+    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoise:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If enabled, the agent will add background noise.
+        type:
+          $ref: '#/components/schemas/AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoiseType'
+          description: What kind of background noise should be present.
+        volume:
+          type: integer
+          description: How loud the background noise should be.
+      description: Add background noise to make the call more natural.
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentBackgroundNoise
+    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2ItemsClosingMessageMode:
+      type: string
+      enum:
+      - static
+      - prompt
+      - none
+      description: 'Controls how the farewell message is generated. static: message is spoken verbatim. prompt: message is an instruction to the LLM. none: LLM generates its own farewell.'
+      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2ItemsClosingMessageMode
+    AgentPatienceLevel:
+      type: string
+      enum:
+      - low
+      - medium
+      - high
+      description: Patience level of the agent.
+      title: AgentPatienceLevel
+    AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetail:
+      type: object
+      properties:
+        status:
+          type: string
+        description:
+          type: string
+        request_id:
+          type: string
+        category:
+          type: string
+      required:
+      - status
+      - description
+      - request_id
+      - category
+      title: AssistantsModelIdPutResponsesContentApplicationJsonSchemaDetail
+    type:
+      type: string
+      enum:
+      - outbound
+      - inbound
+      - widget
+      description: Agent type.
+      title: type
+    voice_id:
+      type: string
+      description: Voice ID for this agent. To retrieve voice IDs, use the Get voices endpoint.
+      title: voice_id
+    list-assistant_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-assistant_Response_200
+    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessage:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether voicemail message leaving is enabled.
+        mode:
+          $ref: '#/components/schemas/AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessageMode'
+          description: The mode used to generate the voicemail message.
+        exact_message:
+          type: string
+          description: The exact message to leave on the voicemail. Used when mode is `exact_message`.
+        prompt:
+          type: string
+          description: A prompt used to generate the voicemail message. Used when mode is `prompt`.
+      description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
+      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessage
+    AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessageMode:
+      type: string
+      enum:
+      - exact_message
+      - prompt
+      description: The mode used to generate the voicemail message.
+      title: AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistantsVoicemailMessageMode
     AgentBackgroundNoiseType:
       type: string
       enum:
@@ -1553,20 +1601,94 @@ components:
       - office
       description: What kind of background noise should be present.
       title: AgentBackgroundNoiseType
-    status:
+    AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessageMode:
       type: string
-      description: Whether the request was successful.
-      title: status
-    AssistantsPostResponsesContentApplicationJsonSchemaDetails:
+      enum:
+      - exact_message
+      - prompt
+      description: The mode used to generate the voicemail message.
+      title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsVoicemailMessageMode
+    AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaMaxDuration:
       type: object
       properties:
-        phone:
-          type: string
-          description: The phone number attached to this agent.
-        voice:
-          type: string
-          description: This agent's voice.
-      title: AssistantsPostResponsesContentApplicationJsonSchemaDetails
+        duration_seconds:
+          type: integer
+          description: Maximum length of the call in seconds.
+        is_enabled:
+          type: boolean
+          description: Whether there's a limit on call length.
+      title: AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaMaxDuration
+    AttachPhoneNumbersToAssistantRequest0:
+      type: object
+      properties:
+        phone_numbers:
+          type: array
+          items:
+            type: string
+          description: Phone numbers array.
+      required:
+      - phone_numbers
+      title: AttachPhoneNumbersToAssistantRequest0
+    greeting_message_mode:
+      type: string
+      enum:
+      - human
+      - agent_static
+      - agent_dynamic
+      description: 'Controls how the agent delivers the initial greeting. `human`: the agent waits for the human to speak first. `agent_static`: the agent speaks `greeting_message` once the call is established. `agent_dynamic`: the agent generates a greeting from the prompt and speaks it once the call is established. Note: `voicemail_message` requires this to be set to `human`. Changing away from `human` while `voicemail_message` is enabled will fail.
+
+        '
+      title: greeting_message_mode
+    Detach-phone-number-from-assistantRequestBadRequestError:
+      type: object
+      properties:
+        detail:
+          $ref: '#/components/schemas/AssistantsModelIdPhoneNumbersPhoneNumberSlugDeleteResponsesContentApplicationJsonSchemaDetail'
+      title: Detach-phone-number-from-assistantRequestBadRequestError
+    Create-assistantRequestBadRequestError:
+      type: object
+      properties:
+        detail:
+          $ref: '#/components/schemas/AssistantsPostResponsesContentApplicationJsonSchemaDetail'
+      title: Create-assistantRequestBadRequestError
+    prompt:
+      type: string
+      description: Add variables in curly brackets. For example, <code>{your-variable}</code>.
+      title: prompt
+    AgentBackgroundNoise:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: If enabled, the agent will add background noise.
+        type:
+          $ref: '#/components/schemas/AgentBackgroundNoiseType'
+          description: What kind of background noise should be present.
+        volume:
+          type: integer
+          description: How loud the background noise should be.
+      description: Add background noise to make the call more natural.
+      title: AgentBackgroundNoise
+    ring_pause_seconds:
+      type: integer
+      description: Ring time before the agent answers the call.
+      title: ring_pause_seconds
+    name:
+      type: string
+      description: Agent name.
+      title: name
+    Get-assistantRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-assistantRequestBadRequestError
+    transcriber_provider:
+      type: string
+      enum:
+      - deepgram
+      - deepgram-nova-3
+      - synthflow-stt
+      description: Speech-to-text provider used for transcription.
+      title: transcriber_provider
     Agent:
       type: object
       properties:
@@ -1687,134 +1809,12 @@ components:
           type: string
           description: The model to be used by the fallback provider.
       title: Agent
-    ring_pause_seconds:
-      type: integer
-      description: Ring time before the agent answers the call.
-      title: ring_pause_seconds
-    voice_similarity_boost:
-      type: integer
-      description: Range 0 to 1. Determines how closely the AI matches the original voice. Higher settings potentially including unwanted noise from the original recording.
-      title: voice_similarity_boost
-    voice_id:
-      type: string
-      description: Voice ID for this agent. To retrieve voice IDs, use the Get voices endpoint.
-      title: voice_id
-    AgentNoiseCancellation:
-      type: string
-      enum:
-      - standard
-      - advanced
-      description: Removes background noise on the customer's side (like chatter in a café or keyboard clicks) to make their voice clearer and easier for the agent to understand.
-      title: AgentNoiseCancellation
-    AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessage:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether voicemail message leaving is enabled.
-        mode:
-          $ref: '#/components/schemas/AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessageMode'
-          description: The mode used to generate the voicemail message.
-        exact_message:
-          type: string
-          description: The exact message to leave on the voicemail. Used when mode is `exact_message`.
-        prompt:
-          type: string
-          description: A prompt used to generate the voicemail message. Used when mode is `prompt`.
-      description: Configuration for the message left when a voicemail is detected. Requires `greeting_message_mode` to be set to `human`.
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaVoicemailMessage
-    AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessageMode:
-      type: string
-      enum:
-      - exact_message
-      - prompt
-      description: The mode used to generate the voicemail message.
-      title: AssistantsModelIdPutRequestBodyContentApplicationJsonSchemaVoicemailMessageMode
-    AssistantsModelIdDeleteResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        answer:
-          type: string
-      title: AssistantsModelIdDeleteResponsesContentApplicationJsonSchemaResponse
-    llm:
-      type: string
-      enum:
-      - gpt-4.1
-      - gpt-4.1-nano
-      - gpt-4.1-mini
-      - gpt-5-mini
-      - gpt-5-nano
-      - gpt-5.1
-      - gpt-5.2
-      - gpt-5.4
-      - gpt-5.4-mini
-      - gpt-5.4-nano
-      - synthflow
-      description: The LLM powering this agent.
-      title: llm
-    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentFallbackProvider:
-      type: string
-      enum:
-      - elevenlabs
-      - deepgram
-      - synthflow
-      description: The provider for the fallback voice (elevenlabs, deepgram, or synthflow).
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentFallbackProvider
-    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentNoiseCancellation:
-      type: string
-      enum:
-      - standard
-      - advanced
-      description: Removes background noise on the customer's side (like chatter in a café or keyboard clicks) to make their voice clearer and easier for the agent to understand.
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentNoiseCancellation
-    voice_use_speaker_boost:
-      type: boolean
-      description: Amplifies the voice’s likeness to the original speaker, which can slightly slow down the response time.
-      title: voice_use_speaker_boost
-    AgentFallbackProvider:
-      type: string
-      enum:
-      - elevenlabs
-      - deepgram
-      - synthflow
-      description: The provider for the fallback voice (elevenlabs, deepgram, or synthflow).
-      title: AgentFallbackProvider
-    greeting_message:
-      type: string
-      description: The greeting message the agent will open the conversation with. You can add variables in curly brackets (for example, <code>{your-variable}</code>).
-      title: greeting_message
-    AssistantsPostResponsesContentApplicationJsonSchemaResponse:
+    AssistantsModelIdPutResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
         model_id:
           $ref: '#/components/schemas/model_id'
-      title: AssistantsPostResponsesContentApplicationJsonSchemaResponse
-    AssistantsGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/pagination'
-        assistants:
-          $ref: '#/components/schemas/AssistantsGetResponsesContentApplicationJsonSchemaResponseAssistants'
-      title: AssistantsGetResponsesContentApplicationJsonSchemaResponse
-    greeting_message_mode:
-      type: string
-      enum:
-      - human
-      - agent_static
-      - agent_dynamic
-      description: 'Controls how the agent delivers the initial greeting. `human`: the agent waits for the human to speak first. `agent_static`: the agent speaks `greeting_message` once the call is established. `agent_dynamic`: the agent generates a greeting from the prompt and speaks it once the call is established. Note: `voicemail_message` requires this to be set to `human`. Changing away from `human` while `voicemail_message` is enabled will fail.
-
-        '
-      title: greeting_message_mode
-    type:
-      type: string
-      enum:
-      - outbound
-      - inbound
-      - widget
-      description: Agent type.
-      title: type
+      title: AssistantsModelIdPutResponsesContentApplicationJsonSchemaResponse
     AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItems:
       type: object
       properties:
@@ -1865,35 +1865,35 @@ components:
             $ref: '#/components/schemas/AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItemsInputVariablesItems'
           description: Action input variables grouped by action ID. Returns an empty array when `include_actions=false`.
       title: AssistantsModelIdGetResponsesContentApplicationJsonSchemaResponseAssistantsItems
-    AttachPhoneNumbersToAssistantRequest1:
+    AttachedPhoneNumber:
       type: object
       properties:
-        phone_number_slugs:
-          type: array
-          items:
-            type: string
-          description: Phone number slugs.
+        number:
+          type: string
+          description: Phone number to attach to an outbound agent.
+        sid:
+          type:
+          - string
+          - 'null'
+          description: Twilio phone number SID.
+        slug:
+          type: string
+          description: Internal phone number slug.
       required:
-      - phone_number_slugs
-      title: AttachPhoneNumbersToAssistantRequest1
-    pagination:
+      - number
+      - sid
+      - slug
+      title: AttachedPhoneNumber
+    voice_optimise_streaming_latency:
+      type: integer
+      description: Range 0 to 4. Optimises streaming latency
+      title: voice_optimise_streaming_latency
+    Attach-phone-numbers-to-assistantRequestNotFoundError:
       type: object
       properties:
-        total_records:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-      title: pagination
-    AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2ItemsClosingMessageMode:
-      type: string
-      enum:
-      - static
-      - prompt
-      - none
-      description: 'Controls how the farewell message is generated. static: message is spoken verbatim. prompt: message is an instruction to the LLM. none: LLM generates its own farewell.'
-      title: AssistantsPostRequestBodyContentApplicationJsonSchemaAgentEndCallReasonsV2ItemsClosingMessageMode
+        detail:
+          $ref: '#/components/schemas/AssistantsModelIdPhoneNumbersPutResponsesContentApplicationJsonSchemaDetail'
+      title: Attach-phone-numbers-to-assistantRequestNotFoundError
   securitySchemes:
     sec0:
       type: http

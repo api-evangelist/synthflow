@@ -315,38 +315,55 @@ paths:
                 $ref: '#/components/schemas/Get-phone-callRequestNotFoundError'
 components:
   schemas:
-    Get-phone-callRequestNotFoundError:
+    CallsGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
-        detail:
-          $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaDetail'
-      title: Get-phone-callRequestNotFoundError
-    CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsCollectedVariables:
+        pagination:
+          $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaResponsePagination'
+          description: Pagination information for the response
+        calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaResponseCallsItems'
+      title: CallsGetResponsesContentApplicationJsonSchemaResponse
+    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsExecutedActions:
+      type: object
+      properties: {}
+      description: Actions that were executed during the call.
+      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsExecutedActions
+    model_id:
+      type: string
+      description: Agent ID. You can find it on the agent’s page in your dashboard.
+      title: model_id
+    get-ws-media-base-url_Response_200:
       type: object
       properties:
-        value:
-          description: The collected value of the variable (string, number, boolean, or null if not collected).
-        collected:
-          type: boolean
-          description: Whether this variable was successfully collected.
-      title: CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsCollectedVariables
-    start-ws-media-call_Response_200:
-      type: object
-      properties:
-        callId:
-          type: string
-          description: Call ID for looking up the call later.
-        sid:
-          type: string
-          description: 'Session id for connect-then-bind. Returned when `wsMediaServerName` is set; send it as `{ "type": "bind", "sid": "..." }` over the WebSocket you already opened to attach your connection to the call. Empty for the legacy single-node flow.'
-        wsMediaUrl:
+        wsMediaBaseUrl:
           type: string
           format: uri
-          description: Short-lived WebSocket URL with the session id attached. Used directly by the legacy single-node flow; connect-then-bind clients ignore it and bind `sid` over the base URL connection instead.
+          description: Secure WebSocket base URL for streaming call audio, without a session id.
       required:
-      - callId
-      - wsMediaUrl
-      title: start-ws-media-call_Response_200
+      - wsMediaBaseUrl
+      title: get-ws-media-base-url_Response_200
+    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsStatus:
+      type: string
+      enum:
+      - pending
+      - ringing
+      - in-progress
+      - completed
+      - no-answer
+      - busy
+      - failed
+      - canceled
+      - user-canceled
+      - hangup_on_voicemail
+      - left_voicemail
+      - spam
+      - paused
+      - registered
+      description: The current status of the call.
+      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsStatus
     CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsCollectedVariables:
       type: object
       properties:
@@ -356,17 +373,36 @@ components:
           type: boolean
           description: Whether this variable was successfully collected.
       title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsCollectedVariables
-    Start-ws-media-callRequestUnauthorizedError:
+    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsPromptVariables:
       type: object
       properties: {}
-      title: Start-ws-media-callRequestUnauthorizedError
-    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyHangup:
-      type: string
-      enum:
-      - caller
-      - callee
-      description: Indicates which party ended the call.
-      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyHangup
+      description: Prompt variables.
+      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsPromptVariables
+    Get-ws-media-base-urlRequestUnauthorizedError:
+      type: object
+      properties: {}
+      title: Get-ws-media-base-urlRequestUnauthorizedError
+    Get-ws-media-base-urlRequestServiceUnavailableError:
+      type: object
+      properties: {}
+      title: Get-ws-media-base-urlRequestServiceUnavailableError
+    Start-ws-media-callRequestBadGatewayError:
+      type: object
+      properties:
+        callId:
+          type: string
+          description: Call ID, if a call was created before the room join failed.
+        error:
+          type: string
+      title: Start-ws-media-callRequestBadGatewayError
+    CallsPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+        call_id:
+          type: string
+      title: CallsPostResponsesContentApplicationJsonSchemaResponse
     CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyDisconnectReason:
       type: string
       enum:
@@ -388,6 +424,63 @@ components:
           type: integer
           description: How long it will take to initialize the call, in seconds.
       title: voice-call_Response_200
+    start-ws-media-call_Response_200:
+      type: object
+      properties:
+        callId:
+          type: string
+          description: Call ID for looking up the call later.
+        sid:
+          type: string
+          description: 'Session id for connect-then-bind. Returned when `wsMediaServerName` is set; send it as `{ "type": "bind", "sid": "..." }` over the WebSocket you already opened to attach your connection to the call. Empty for the legacy single-node flow.'
+        wsMediaUrl:
+          type: string
+          format: uri
+          description: Short-lived WebSocket URL with the session id attached. Used directly by the legacy single-node flow; connect-then-bind clients ignore it and bind `sid` over the base URL connection instead.
+      required:
+      - callId
+      - wsMediaUrl
+      title: start-ws-media-call_Response_200
+    list-calls_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-calls_Response_200
+    CallsPostRequestBodyContentApplicationJsonSchemaCustomVariablesItems:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      title: CallsPostRequestBodyContentApplicationJsonSchemaCustomVariablesItems
+    CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyHangup:
+      type: string
+      enum:
+      - caller
+      - callee
+      title: CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyHangup
+    call_id:
+      type: string
+      description: Call ID. You can find it on the logs page in your dashboard.
+      title: call_id
+    Start-ws-media-callRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Start-ws-media-callRequestBadRequestError
+    List-callsRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-callsRequestBadRequestError
+    Get-phone-callRequestNotFoundError:
+      type: object
+      properties:
+        detail:
+          $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaDetail'
+      title: Get-phone-callRequestNotFoundError
     CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsTypeOfCall:
       type: string
       enum:
@@ -400,132 +493,14 @@ components:
       properties: {}
       description: Actions executed during the call
       title: CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsExecutedActions
-    Voice-callRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Voice-callRequestBadRequestError
-    Start-ws-media-callRequestServiceUnavailableError:
-      type: object
-      properties: {}
-      title: Start-ws-media-callRequestServiceUnavailableError
-    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsStatus:
-      type: string
-      enum:
-      - pending
-      - ringing
-      - in-progress
-      - completed
-      - no-answer
-      - busy
-      - failed
-      - canceled
-      - user-canceled
-      - hangup_on_voicemail
-      - left_voicemail
-      - spam
-      - paused
-      - registered
-      description: The current status of the call.
-      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsStatus
-    get-ws-media-base-url_Response_200:
+    get-phone-call_Response_200:
       type: object
       properties:
-        wsMediaBaseUrl:
-          type: string
-          format: uri
-          description: Secure WebSocket base URL for streaming call audio, without a session id.
-      required:
-      - wsMediaBaseUrl
-      title: get-ws-media-base-url_Response_200
-    CallsGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaResponsePagination'
-          description: Pagination information for the response
-        calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaResponseCallsItems'
-      title: CallsGetResponsesContentApplicationJsonSchemaResponse
-    CallsCallIdGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaResponsePagination'
-          description: Pagination information for the results.
-        calls:
-          type: array
-          items:
-            $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItems'
-      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponse
-    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsEndCallReason:
-      type: string
-      enum:
-      - human_pick_up_cut_off
-      - voicemail
-      - voicemail_cut_off
-      - voicemail_message_left
-      - agent_ended_call
-      - human_ended_call
-      - custom_end_call
-      - user_canceled
-      - timeout
-      - error
-      description: The reason the call ended from the AI agent's perspective.
-      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsEndCallReason
-    Get-ws-media-base-urlRequestUnauthorizedError:
-      type: object
-      properties: {}
-      title: Get-ws-media-base-urlRequestUnauthorizedError
-    List-callsRequestBadRequestError:
-      type: object
-      properties: {}
-      title: List-callsRequestBadRequestError
-    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsPromptVariables:
-      type: object
-      properties: {}
-      description: Prompt variables.
-      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsPromptVariables
-    CallsGetResponsesContentApplicationJsonSchemaResponsePagination:
-      type: object
-      properties:
-        total_records:
-          type: integer
-          description: Total number of call records
-        limit:
-          type: integer
-          description: Maximum number of records per page
-        offset:
-          type: integer
-          description: Starting index for the current page
-      description: Pagination information for the response
-      title: CallsGetResponsesContentApplicationJsonSchemaResponsePagination
-    CallsPostRequestBodyContentApplicationJsonSchemaCustomVariablesItems:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-      title: CallsPostRequestBodyContentApplicationJsonSchemaCustomVariablesItems
-    CallsOutboundTestWsMediaPostRequestBodyContentApplicationJsonSchemaWsMediaFraming:
-      type: string
-      enum:
-      - rtp
-      - payload
-      default: rtp
-      description: Wire format for the WebSocket media stream. `rtp` (default) sends full RTP packets; `payload` sends raw codec payloads (RTP header stripped), which is simpler for external AI/STT/TTS clients. Use `payload` with `pcma`/`pcmu` — avoid `payload` with `opus` (see the integration guide for why).
-      title: CallsOutboundTestWsMediaPostRequestBodyContentApplicationJsonSchemaWsMediaFraming
-    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsExecutedActions:
-      type: object
-      properties: {}
-      description: Actions that were executed during the call.
-      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsExecutedActions
-    model_id:
-      type: string
-      description: Agent ID. You can find it on the agent’s page in your dashboard.
-      title: model_id
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: get-phone-call_Response_200
     CallsCallIdGetResponsesContentApplicationJsonSchemaDetail:
       type: object
       properties:
@@ -543,49 +518,53 @@ components:
       - request_id
       - category
       title: CallsCallIdGetResponsesContentApplicationJsonSchemaDetail
-    CallsPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        answer:
-          type: string
-        call_id:
-          type: string
-      title: CallsPostResponsesContentApplicationJsonSchemaResponse
-    status:
-      type: string
-      description: Whether the request was successful.
-      title: status
-    Get-ws-media-base-urlRequestServiceUnavailableError:
+    Start-ws-media-callRequestServiceUnavailableError:
       type: object
       properties: {}
-      title: Get-ws-media-base-urlRequestServiceUnavailableError
+      title: Start-ws-media-callRequestServiceUnavailableError
     Get-phone-callRequestBadRequestError:
       type: object
       properties:
         detail:
           $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaDetail'
       title: Get-phone-callRequestBadRequestError
-    list-calls_Response_200:
+    CallsCallIdGetResponsesContentApplicationJsonSchemaResponsePagination:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-calls_Response_200
-    call_id:
+        total_records:
+          type: integer
+          description: The total number of call records matching the query.
+        limit:
+          type: integer
+          description: The maximum number of records returned per request.
+        offset:
+          type: integer
+          description: The number of records skipped from the beginning of the results.
+      description: Pagination information for the results.
+      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponsePagination
+    CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyDisconnectReason:
       type: string
-      description: Call ID. You can find it on the logs page in your dashboard.
-      title: call_id
-    Start-ws-media-callRequestBadGatewayError:
+      enum:
+      - unknown
+      - callee_hangup
+      - caller_hangup
+      - error
+      - forbidden
+      title: CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyDisconnectReason
+    CallsGetResponsesContentApplicationJsonSchemaResponsePagination:
       type: object
       properties:
-        callId:
-          type: string
-          description: Call ID, if a call was created before the room join failed.
-        error:
-          type: string
-      title: Start-ws-media-callRequestBadGatewayError
+        total_records:
+          type: integer
+          description: Total number of call records
+        limit:
+          type: integer
+          description: Maximum number of records per page
+        offset:
+          type: integer
+          description: Starting index for the current page
+      description: Pagination information for the response
+      title: CallsGetResponsesContentApplicationJsonSchemaResponsePagination
     CallsGetResponsesContentApplicationJsonSchemaResponseCallsItems:
       type: object
       properties:
@@ -706,12 +685,70 @@ components:
               $ref: '#/components/schemas/CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsCollectedVariables'
           description: Collected variables (slots) from the conversation flow, keyed by agent ID. May be null if not available.
       title: CallsGetResponsesContentApplicationJsonSchemaResponseCallsItems
-    CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyHangup:
+    CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsCollectedVariables:
+      type: object
+      properties:
+        value:
+          description: The collected value of the variable (string, number, boolean, or null if not collected).
+        collected:
+          type: boolean
+          description: Whether this variable was successfully collected.
+      title: CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsCollectedVariables
+    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyHangup:
       type: string
       enum:
       - caller
       - callee
-      title: CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyHangup
+      description: Indicates which party ended the call.
+      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyHangup
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    Start-ws-media-callRequestUnauthorizedError:
+      type: object
+      properties: {}
+      title: Start-ws-media-callRequestUnauthorizedError
+    CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsEndCallReason:
+      type: string
+      enum:
+      - human_pick_up_cut_off
+      - voicemail
+      - voicemail_cut_off
+      - voicemail_message_left
+      - agent_ended_call
+      - human_ended_call
+      - custom_end_call
+      - user_canceled
+      - timeout
+      - error
+      description: The reason the call ended from the AI agent's perspective.
+      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsEndCallReason
+    CallsCallIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaResponsePagination'
+          description: Pagination information for the results.
+        calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItems'
+      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponse
+    CallsOutboundTestWsMediaPostRequestBodyContentApplicationJsonSchemaWsMediaCodec:
+      type: string
+      enum:
+      - opus
+      - pcma
+      - pcmu
+      - l16
+      default: opus
+      description: Codec to use for the WebSocket media stream. `l16` is raw big-endian 16-bit PCM at 16 kHz.
+      title: CallsOutboundTestWsMediaPostRequestBodyContentApplicationJsonSchemaWsMediaCodec
+    Voice-callRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Voice-callRequestBadRequestError
     CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItems:
       type: object
       properties:
@@ -799,51 +836,14 @@ components:
               $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItemsCollectedVariables'
           description: Collected variables (slots) from the conversation flow, keyed by agent ID. May be null if not available.
       title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponseCallsItems
-    CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyDisconnectReason:
+    CallsOutboundTestWsMediaPostRequestBodyContentApplicationJsonSchemaWsMediaFraming:
       type: string
       enum:
-      - unknown
-      - callee_hangup
-      - caller_hangup
-      - error
-      - forbidden
-      title: CallsGetResponsesContentApplicationJsonSchemaResponseCallsItemsTelephonyDisconnectReason
-    Start-ws-media-callRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Start-ws-media-callRequestBadRequestError
-    CallsCallIdGetResponsesContentApplicationJsonSchemaResponsePagination:
-      type: object
-      properties:
-        total_records:
-          type: integer
-          description: The total number of call records matching the query.
-        limit:
-          type: integer
-          description: The maximum number of records returned per request.
-        offset:
-          type: integer
-          description: The number of records skipped from the beginning of the results.
-      description: Pagination information for the results.
-      title: CallsCallIdGetResponsesContentApplicationJsonSchemaResponsePagination
-    get-phone-call_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/CallsCallIdGetResponsesContentApplicationJsonSchemaResponse'
-      title: get-phone-call_Response_200
-    CallsOutboundTestWsMediaPostRequestBodyContentApplicationJsonSchemaWsMediaCodec:
-      type: string
-      enum:
-      - opus
-      - pcma
-      - pcmu
-      - l16
-      default: opus
-      description: Codec to use for the WebSocket media stream. `l16` is raw big-endian 16-bit PCM at 16 kHz.
-      title: CallsOutboundTestWsMediaPostRequestBodyContentApplicationJsonSchemaWsMediaCodec
+      - rtp
+      - payload
+      default: rtp
+      description: Wire format for the WebSocket media stream. `rtp` (default) sends full RTP packets; `payload` sends raw codec payloads (RTP header stripped), which is simpler for external AI/STT/TTS clients. Use `payload` with `pcma`/`pcmu` — avoid `payload` with `opus` (see the integration guide for why).
+      title: CallsOutboundTestWsMediaPostRequestBodyContentApplicationJsonSchemaWsMediaFraming
   securitySchemes:
     sec0:
       type: http

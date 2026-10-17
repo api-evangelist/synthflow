@@ -272,69 +272,6 @@ components:
       required:
       - servers
       title: DiscoverToolsResponse
-    MCPServerIn:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stable config ID. Omit for new entries (auto-generated).
-        mcp_url:
-          type: string
-          format: uri
-          description: The HTTPS URL of the MCP server (SSE endpoint)
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-          description: Custom headers to send with MCP requests (e.g. Authorization, API keys)
-      required:
-      - mcp_url
-      title: MCPServerIn
-    InvokeMCPToolRequest:
-      type: object
-      properties:
-        namespaced_tool:
-          type: string
-          description: 'Fully qualified tool name: {namespace}__{tool_name}'
-        arguments:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Tool arguments matching the tool's input_schema
-        timeout_ms:
-          type: integer
-          description: Optional caller-controlled timeout in milliseconds
-      required:
-      - namespaced_tool
-      title: InvokeMCPToolRequest
-    MCPToolDefinition:
-      type: object
-      properties:
-        namespaced_tool:
-          type: string
-          description: 'Fully qualified tool name: {namespace}__{tool_name}'
-        original_tool_name:
-          type: string
-          description: Tool name as returned by the MCP server
-        tool_description:
-          type:
-          - string
-          - 'null'
-          description: Description returned by MCP server
-        input_schema:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-          description: JSON Schema for the tool's input parameters
-      required:
-      - namespaced_tool
-      - original_tool_name
-      description: A tool returned by MCP discovery (enriched with namespace)
-      title: MCPToolDefinition
     MCPServerOut:
       type: object
       properties:
@@ -387,17 +324,6 @@ components:
       - namespace
       - tools
       title: ServerDiscoveryResult
-    AgentMCPConfigIn:
-      type: object
-      properties:
-        servers:
-          type: array
-          items:
-            $ref: '#/components/schemas/MCPServerIn'
-          description: List of MCP server configurations
-      required:
-      - servers
-      title: AgentMCPConfigIn
     InvokeMCPToolResponse:
       type: object
       properties:
@@ -411,6 +337,54 @@ components:
           type: string
           description: Error message if the invocation failed
       title: InvokeMCPToolResponse
+    MCPServerIn:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable config ID. Omit for new entries (auto-generated).
+        mcp_url:
+          type: string
+          format: uri
+          description: The HTTPS URL of the MCP server (SSE endpoint)
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: Custom headers to send with MCP requests (e.g. Authorization, API keys)
+      required:
+      - mcp_url
+      title: MCPServerIn
+    InvokeMCPToolRequest:
+      type: object
+      properties:
+        namespaced_tool:
+          type: string
+          description: 'Fully qualified tool name: {namespace}__{tool_name}'
+        arguments:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Tool arguments matching the tool's input_schema
+        timeout_ms:
+          type: integer
+          description: Optional caller-controlled timeout in milliseconds
+      required:
+      - namespaced_tool
+      title: InvokeMCPToolRequest
+    AgentMCPConfigIn:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/MCPServerIn'
+          description: List of MCP server configurations
+      required:
+      - servers
+      title: AgentMCPConfigIn
     AgentMCPConfigOut:
       type: object
       properties:
@@ -422,6 +396,32 @@ components:
       required:
       - servers
       title: AgentMCPConfigOut
+    MCPToolDefinition:
+      type: object
+      properties:
+        namespaced_tool:
+          type: string
+          description: 'Fully qualified tool name: {namespace}__{tool_name}'
+        original_tool_name:
+          type: string
+          description: Tool name as returned by the MCP server
+        tool_description:
+          type:
+          - string
+          - 'null'
+          description: Description returned by MCP server
+        input_schema:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: JSON Schema for the tool's input parameters
+      required:
+      - namespaced_tool
+      - original_tool_name
+      description: A tool returned by MCP discovery (enriched with namespace)
+      title: MCPToolDefinition
   securitySchemes:
     sec0:
       type: http

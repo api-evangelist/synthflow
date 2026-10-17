@@ -360,114 +360,24 @@ paths:
               - model_id
 components:
   schemas:
-    ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItems:
-      type: object
-      properties:
-        action_id:
-          type: string
-        action_type:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        parameters_hard_coded:
-          $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded'
-      title: ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItems
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsActionType:
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm:
       type: string
       enum:
-      - REAL_TIME_BOOKING
-      - INFORMATION_EXTRACTOR
-      - LIVE_TRANSFER
-      - SEND_SMS
-      - INCALL_SMS
-      - INCALL_WHATSAPP
-      - CUSTOM_ACTION
-      - CUSTOM_EVAL
-      description: Action type.
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsActionType
-    ActionsActionIdPutResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        action_id:
-          type: string
-      title: ActionsActionIdPutResponsesContentApplicationJsonSchemaResponse
-    Update-actionRequestBadRequestError:
+      - confirmed
+      - new
+      description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm
+    Attach-actionRequestBadRequestError:
       type: object
       properties: {}
-      title: Update-actionRequestBadRequestError
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomAction:
-      type: object
-      properties:
-        http_mode:
-          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHttpMode'
-          default: GET
-          description: Select the method that will be used
-        url:
-          type: string
-          description: URL to be used by the action
-        name:
-          type: string
-          description: Name of the action
-        description:
-          type: string
-          description: Description of the action
-        run_action_before_call_start:
-          type: boolean
-          description: Actions that will run before the call, like phone number
-        speech_while_using_the_tool:
-          type: string
-          description: A message spoken verbatim to the caller while the action is being executed. Use this to fill silence during processing (e.g. "Let me look that up for you").
-        action_sound:
-          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionActionSound'
-          description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
-        integration:
-          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionIntegration'
-          description: The possible integrations that can be selected to retrieve information
-        custom_auth:
-          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth'
-        variables_before_the_call:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems'
-        variables_during_the_call:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems'
-        headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems'
-        query_parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems'
-        agent_speak_naturally:
-          type: boolean
-          description: If disabled, the agent will strictly stick to your pre-written messages. If enabled, it may say something that accounts for the previous context of the conversation.
-        message_delay:
-          type: string
-          description: What the agent should say if the action reaches the delay threshold.
-        message_delay_time:
-          type: integer
-          description: Delay threshold, in seconds.
-        message_error:
-          type: string
-          description: What the agent should say if the action failed.
-        json_body_stringified:
-          type: string
-          description: A json stringified of the payload/body that will be used for the action
-        prompt:
-          type: string
-          description: The prompt that will be used in case it is set
-        message_before_action_starts:
-          type: string
-          description: A message spoken verbatim to the caller before the action is triggered. Rarely needed. Use only when compliance or regulatory requirements mandate a specific disclosure before an action runs (e.g. "This call may be recorded").
-        failure_timeout:
-          type: integer
-          description: How long to wait for the custom action to complete before timing out (in seconds)
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomAction
+      title: Attach-actionRequestBadRequestError
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsExample:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsExample
     ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems:
       type: object
       properties:
@@ -481,229 +391,28 @@ components:
       - key
       - value
       title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariables:
+    HumanAvailabilityIntervalPublic:
       type: object
       properties:
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItems'
-          description: Variables that the action expects as runtime input.
-        assistants:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItems'
-          description: Assistants attached to this action, including per-assistant input variable mappings.
-      description: Input variable details for this action, including variable definitions and attached assistant IDs.
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariables
-    Get-actionRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Get-actionRequestBadRequestError
-    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom:
-      type: object
-      properties:
-        event_id:
+        from:
           type: string
-          description: The event id can be obtained from the cal.com calendar
-        integration:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration'
-          description: The selected option will be the meeting type that will be created when the booking is done
-        sms_boolean:
-          type: boolean
-          default: false
-          description: If the value is true the SMS message from the sms_message field will be send
-        sms_message:
+          description: Start time in HH:MM 24-hour format.
+        to:
           type: string
-          description: Text to be sent in the sms
-        user_email:
-          type: string
-          description: Email that will be used to create the meeting
+          description: End time in HH:MM 24-hour format.
       required:
-      - event_id
-      - user_email
-      description: 'Important: You need to be connected to the Cal.com integration'
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems:
+      - from
+      - to
+      description: One availability interval in 24-hour format.
+      title: HumanAvailabilityIntervalPublic
+    initialize-action_Response_200:
       type: object
       properties:
-        key:
+        status:
           type: string
-          description: Key name
-        value:
-          type: string
-          description: Value that will be assigned to the key
-      required:
-      - key
-      - value
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems
-    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorOpenQuestion:
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The title that will identify the action
-        description:
-          type: string
-          description: The description of what the action is expected to do
-        examples:
-          type: array
-          items:
-            type: string
-          description: Examples of possible answers that can match the description of the action
-      required:
-      - identifier
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorOpenQuestion
-    ActionsInitializePostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        answer:
-          type: string
-      title: ActionsInitializePostResponsesContentApplicationJsonSchemaResponse
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHttpMode:
-      type: string
-      enum:
-      - GET
-      - POST
-      - PATCH
-      - PUT
-      default: GET
-      description: Select the method that will be used
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHttpMode
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItems:
-      type: object
-      properties:
-        action_id:
-          type: string
-          description: Action ID.
-        action_type:
-          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsActionType'
-          description: Action type.
-        name:
-          type: string
-          description: Action name.
-        description:
-          type: string
-          description: Action description.
-        assistants:
-          type: array
-          items:
-            type: string
-          description: Assistant IDs assigned to this action. Returned when `include_assistants=true`.
-        input_variables:
-          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariables'
-          description: Input variable details for this action, including variable definitions and attached assistant IDs.
-        parameters_hard_coded:
-          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded'
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItems
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallWhatsapp:
-      type: object
-      properties:
-        content_sid:
-          type: string
-          description: Twilio Content template SID (for example `HX...`) used for the outbound WhatsApp message.
-        content_variables:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Values that fill the template placeholders. Keys match the numeric placeholders in the template body (for example `{"1": "<user_name>"}`).'
-        wait_for_reply:
-          type: boolean
-          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
-        timeout_seconds:
-          type: integer
-          description: Maximum time to wait for a reply when `wait_for_reply` is true.
-        fallback_message:
-          type: string
-          description: Message the agent speaks if the timeout fires with no reply.
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallWhatsapp
-    ActionsPostRequestBodyContentApplicationJsonSchemaSendSms:
-      type: object
-      properties:
-        content:
-          type: string
-          description: The content/text of the SMS message
-        instructions:
-          type: string
-          description: The instructions that will trigger the SMS message to be sent
-      required:
-      - content
-      - instructions
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaSendSms
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth:
-      type: object
-      properties:
-        is_needed:
-          type: boolean
-          default: false
-          description: If authorization to use the set URL and method are required set to true
-        location:
-          type: string
-          description: 'Section where the authorization will be used like: header'
-        key:
-          type: string
-          default: Bearer
-          description: The authorization type. Default is Bearer
-        value:
-          type: string
-          description: The value of the token that will be used with the authentication type
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionActionSound:
-      type: string
-      enum:
-      - ''
-      - typing
-      - ambient-background
-      - modern-jazz
-      - inspirational-symphony-classical-music
-      description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionActionSound
-    ActionsPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        action_id:
-          type: string
-        action_type:
-          type: string
-        prompt_variables:
-          type: array
-          items:
-            description: Any type
-      title: ActionsPostResponsesContentApplicationJsonSchemaResponse
-    ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded:
-      type: object
-      properties:
-        sms_message_text:
-          type: string
-      title: ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestionCategory:
-      type: string
-      enum:
-      - pass_fail
-      - numeric
-      - descriptive
-      - likert_scale
-      description: Custom evalution category.
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestionCategory
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm:
-      type: string
-      enum:
-      - confirmed
-      - new
-      description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm
-    ? ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItems
-    : type: object
-      properties:
-        variable_name:
-          type: string
-        source:
-          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsSource'
-        hardcoded_value:
-          type: string
-        llm_config:
-          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsLlmConfig'
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItems
+        response:
+          $ref: '#/components/schemas/ActionsInitializePostResponsesContentApplicationJsonSchemaResponse'
+      title: initialize-action_Response_200
     ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone:
       type: string
       enum:
@@ -1132,119 +841,64 @@ components:
       - US/Pacific
       description: '[List of possible time zones](/time-zones).'
       title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone
-    LiveTransferUpdatePhoneBookConfig:
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHttpMode:
+      type: string
+      enum:
+      - GET
+      - POST
+      - PATCH
+      - PUT
+      default: GET
+      description: Select the method that will be used
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHttpMode
+    ActionsActionIdDeleteResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
-        transfer_mode:
-          $ref: '#/components/schemas/LiveTransferUpdatePhoneBookConfigTransferMode'
-          description: Transfer mode.
-        message_to_transfer_target:
+        answer:
           type: string
-          description: The message the human agent will hear after the call is transferred to them.
-        phone_book_id:
+      title: ActionsActionIdDeleteResponsesContentApplicationJsonSchemaResponse
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestionCategory:
+      type: string
+      enum:
+      - pass_fail
+      - numeric
+      - descriptive
+      - likert_scale
+      description: Custom evalution category.
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestionCategory
+    ActionsPostRequestBodyContentApplicationJsonSchemaIncallWhatsapp:
+      type: object
+      properties:
+        content_sid:
           type: string
-          description: Phone book ID.
-        instructions:
-          type: string
-          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
-        timeout:
+          description: Twilio Content template SID (for example `HX...`) used for the outbound WhatsApp message.
+        content_variables:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Values that fill the template placeholders. Keys match the numeric placeholders in the template body (for example `{"1": "<user_name>"}`).'
+        wait_for_reply:
+          type: boolean
+          default: false
+          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
+        timeout_seconds:
           type: integer
-          description: How long to wait for the transfer call to happen before stop trying to do the transfer
-        digits:
+          description: Maximum time to wait for a reply when `wait_for_reply` is true.
+        fallback_message:
           type: string
-          description: Extension digits for the transfer call
-        initiating_msg:
-          type: string
-          description: Message that the agent will say before starting the transfer call
-        goodbye_msg:
-          type: string
-          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
-        failed_msg:
-          type: string
-          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
-        enable_background_music:
-          type: boolean
-        stop_recording_after_transfer:
-          type: boolean
-          description: Whether the call should stop being recorded once it's transferred.
-        human_detection:
-          type: boolean
-          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
-        human_detection_timeout_seconds:
-          type: integer
-          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
-        summarization_prompt:
-          type: string
-          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
-        preserve_caller_id:
-          type: boolean
-          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
-        screened:
-          type: boolean
-          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
-        human_availability:
-          $ref: '#/components/schemas/HumanAvailabilityPublic'
+          description: Message the agent speaks if the timeout fires with no reply.
       required:
-      - transfer_mode
-      - phone_book_id
-      - instructions
-      - initiating_msg
-      title: LiveTransferUpdatePhoneBookConfig
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsExample:
-      oneOf:
-      - type: string
-      - type: number
-        format: double
-      - type: boolean
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsExample
-    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration:
-      type: string
-      enum:
-      - GMeet
-      - Zoom
-      description: The selected option will be the meeting type that will be created when the booking is done
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration
-    get-action_Response_200:
+      - content_sid
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaIncallWhatsapp
+    update-action_Response_200:
       type: object
       properties:
         status:
           type: string
         response:
-          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponse'
-      title: get-action_Response_200
-    initialize-action_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/ActionsInitializePostResponsesContentApplicationJsonSchemaResponse'
-      title: initialize-action_Response_200
-    ? ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsLlmConfig
-    : type: object
-      properties:
-        description:
-          type: string
-          description: Description of the variable.
-        example:
-          type: string
-          description: Example of the variable.
-        required:
-          type: boolean
-          description: Whether the variable is required.
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsLlmConfig
-    List-actionsRequestBadRequestError:
-      type: object
-      properties: {}
-      title: List-actionsRequestBadRequestError
-    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsSource:
-      type: string
-      enum:
-      - llm
-      - hardcoded
-      description: Source used to populate the variable.
-      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsSource
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaInformationExtractor:
+          $ref: '#/components/schemas/ActionsActionIdPutResponsesContentApplicationJsonSchemaResponse'
+      title: update-action_Response_200
+    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorOpenQuestion:
       type: object
       properties:
         identifier:
@@ -1253,27 +907,14 @@ components:
         description:
           type: string
           description: The description of what the action is expected to do
-        choices:
-          type: array
-          items:
-            type: string
-          description: The possible choices that will answer the expected description of the action
         examples:
           type: array
           items:
             type: string
           description: Examples of possible answers that can match the description of the action
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaInformationExtractor
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaSendSms:
-      type: object
-      properties:
-        content:
-          type: string
-          description: The content/text of the SMS message
-        instructions:
-          type: string
-          description: The instructions that will trigger the SMS message to be sent
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaSendSms
+      required:
+      - identifier
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorOpenQuestion
     ? ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsSource
     : type: string
       enum:
@@ -1284,22 +925,209 @@ components:
       - fsm_variables
       - action_results
       title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsSource
-    create-action_Response_200:
+    Create-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-actionRequestBadRequestError
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallWhatsapp:
+      type: object
+      properties:
+        content_sid:
+          type: string
+          description: Twilio Content template SID (for example `HX...`) used for the outbound WhatsApp message.
+        content_variables:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Values that fill the template placeholders. Keys match the numeric placeholders in the template body (for example `{"1": "<user_name>"}`).'
+        wait_for_reply:
+          type: boolean
+          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
+        timeout_seconds:
+          type: integer
+          description: Maximum time to wait for a reply when `wait_for_reply` is true.
+        fallback_message:
+          type: string
+          description: Message the agent speaks if the timeout fires with no reply.
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallWhatsapp
+    detach-action_Response_200:
       type: object
       properties:
         status:
-          type: string
+          $ref: '#/components/schemas/status'
         response:
-          $ref: '#/components/schemas/ActionsPostResponsesContentApplicationJsonSchemaResponse'
-      title: create-action_Response_200
-    attach-action_Response_200:
+          $ref: '#/components/schemas/ActionsDetachPostResponsesContentApplicationJsonSchemaResponse'
+      title: detach-action_Response_200
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomAction:
       type: object
       properties:
-        status:
+        http_mode:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHttpMode'
+          description: Select the method that will be used
+        url:
           type: string
-        response:
-          $ref: '#/components/schemas/ActionsAttachPostResponsesContentApplicationJsonSchemaResponse'
-      title: attach-action_Response_200
+          description: URL to be used by the action
+        run_action_before_call_start:
+          type: boolean
+          description: Actions that will run before the call, like phone number
+        name:
+          type: string
+          description: Name of the action
+        description:
+          type: string
+          description: Description of the action
+        speech_while_using_the_tool:
+          type: string
+          description: A message spoken verbatim to the caller while the action is being executed. Use this to fill silence during processing (e.g. "Let me look that up for you").
+        action_sound:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionActionSound'
+          description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
+        integration:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionIntegration'
+          description: The possible integrations that can be selected to retrieve information
+        failure_timeout:
+          type: integer
+          description: How long to wait for the custom action to complete before timing out (in seconds)
+        custom_auth:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth'
+        variables_before_the_call:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems'
+        variables_during_the_call:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems'
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems'
+        query_parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems'
+        agent_speak_naturally:
+          type: boolean
+          description: If disabled, the agent will strictly stick to your pre-written messages. If enabled, it may say something that accounts for the previous context of the conversation.
+        message_delay:
+          type: string
+          description: What the agent should say if the action reaches the delay threshold.
+        message_delay_time:
+          type: integer
+          description: Delay threshold, in seconds.
+        message_error:
+          type: string
+          description: What the agent should say if the action failed.
+        json_body_stringified:
+          type: string
+          description: A json stringified of the payload/body that will be used for the action
+        prompt:
+          type: string
+          description: The prompt that will be used in case it is set
+        message_before_action_starts:
+          type: string
+          description: A message spoken verbatim to the caller before the action is triggered. Rarely needed. Use only when compliance or regulatory requirements mandate a specific disclosure before an action runs (e.g. "This call may be recorded").
+      required:
+      - http_mode
+      - url
+      - run_action_before_call_start
+      - name
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomAction
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl:
+      type: object
+      properties:
+        autoconfirm:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm'
+          description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
+        booking_title:
+          type: string
+          description: The title that will be displayed in the Synthflow app for the created action
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl:
+      type: object
+      properties:
+        calendar_id:
+          type: string
+          description: Calendar ID from the GHL calendar. Can be obtained from GHL in calendars > Calendar Settings
+        autoconfirm:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm'
+          description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
+        booking_title:
+          type: string
+          description: The title that will be displayed in the Synthflow app for the created action
+      required:
+      - calendar_id
+      - autoconfirm
+      - booking_title
+      description: 'Important: You need to be connected to the GHL integration'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl
+    Get-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-actionRequestBadRequestError
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom:
+      type: object
+      properties:
+        integration:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration'
+          description: The selected option will be the meeting type that will be created when the booking is done
+        sms_boolean:
+          type: boolean
+          description: If the value is true the SMS message from the sms_message field will be send
+        sms_message:
+          type: string
+          description: Text to be sent in the sms
+        user_email:
+          type: string
+          description: Email that will be used to create the meeting
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHttpMode:
+      type: string
+      enum:
+      - GET
+      - POST
+      - PATCH
+      - PUT
+      default: GET
+      description: Select the method that will be used
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHttpMode
+    ActionsPostRequestBodyContentApplicationJsonSchemaIncallSms:
+      type: object
+      properties:
+        message_body:
+          type: string
+          description: The SMS body sent to the caller. Supports placeholder variables like `<user_name>`.
+        wait_for_reply:
+          type: boolean
+          default: false
+          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
+        timeout_seconds:
+          type: integer
+          description: Maximum time to wait for a reply when `wait_for_reply` is true.
+        fallback_message:
+          type: string
+          description: Message the agent speaks if the timeout fires with no reply.
+        message_before_action:
+          type: string
+          description: Message the agent speaks before the SMS is sent.
+      required:
+      - message_body
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaIncallSms
+    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractor:
+      type: object
+      properties:
+        YES_NO:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorYesNo'
+        SINGLE_CHOICE:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorSingleChoice'
+        OPEN_QUESTION:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorOpenQuestion'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractor
+    ActionsPostRequestBodyContentApplicationJsonSchemaLiveTransfer:
+      oneOf:
+      - $ref: '#/components/schemas/LiveTransferCreateDirectPhoneConfig'
+      - $ref: '#/components/schemas/LiveTransferCreatePhoneBookConfig'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaLiveTransfer
     timezone:
       type: string
       enum:
@@ -1729,101 +1557,50 @@ components:
       default: Europe/Berlin
       description: The agent's timezone.
       title: timezone
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom:
+    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsLlmConfig:
       type: object
       properties:
-        integration:
-          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration'
-          description: The selected option will be the meeting type that will be created when the booking is done
-        sms_boolean:
-          type: boolean
-          description: If the value is true the SMS message from the sms_message field will be send
-        sms_message:
-          type: string
-          description: Text to be sent in the sms
-        user_email:
-          type: string
-          description: Email that will be used to create the meeting
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom
-    ActionsDetachPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties: {}
-      title: ActionsDetachPostResponsesContentApplicationJsonSchemaResponse
-    HumanAvailabilityScheduleItemPublicWeekday:
-      type: string
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      description: Lowercase full weekday name.
-      title: HumanAvailabilityScheduleItemPublicWeekday
-    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItems:
-      type: object
-      properties:
-        variable_name:
-          type: string
-          description: Input variable name defined in the action.
-        source:
-          $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsSource'
-          description: Source used to populate the variable.
-        hardcoded_value:
+        description:
           type:
           - string
           - 'null'
-          description: Value used when source is `hardcoded`.
+          description: Description of the variable.
+        example:
+          type:
+          - string
+          - 'null'
+          description: Example of the variable.
+        required:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the variable is required.
+      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsLlmConfig
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    ? ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItems
+    : type: object
+      properties:
+        variable_name:
+          type: string
+        source:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsSource'
+        hardcoded_value:
+          type: string
         llm_config:
-          oneOf:
-          - $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsLlmConfig'
-          - type: 'null'
-      required:
-      - variable_name
-      - source
-      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItems
-    ActionsPostRequestBodyContentApplicationJsonSchemaIncallSms:
-      type: object
-      properties:
-        message_body:
-          type: string
-          description: The SMS body sent to the caller. Supports placeholder variables like `<user_name>`.
-        wait_for_reply:
-          type: boolean
-          default: false
-          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
-        timeout_seconds:
-          type: integer
-          description: Maximum time to wait for a reply when `wait_for_reply` is true.
-        fallback_message:
-          type: string
-          description: Message the agent speaks if the timeout fires with no reply.
-        message_before_action:
-          type: string
-          description: Message the agent speaks before the SMS is sent.
-      required:
-      - message_body
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaIncallSms
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth:
-      type: object
-      properties:
-        is_needed:
-          type: boolean
-          default: false
-          description: If authorization to use the set URL and method are required set to true
-        location:
-          type: string
-          description: 'Section where the authorization will be used like: header'
-        key:
-          type: string
-          default: Bearer
-          description: The authorization type. Default is Bearer
-        value:
-          type: string
-          description: The value of the token that will be used with the authentication type
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth
-    ActionsInitializePostRequestBodyContentApplicationJsonSchemaVariablesItems:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsLlmConfig'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItems
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsType:
+      type: string
+      enum:
+      - string
+      - integer
+      - number
+      - boolean
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsType
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems:
       type: object
       properties:
         key:
@@ -1835,39 +1612,7 @@ components:
       required:
       - key
       - value
-      title: ActionsInitializePostRequestBodyContentApplicationJsonSchemaVariablesItems
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl:
-      type: object
-      properties:
-        autoconfirm:
-          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm'
-          description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
-        booking_title:
-          type: string
-          description: The title that will be displayed in the Synthflow app for the created action
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl
-    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorYesNo:
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The title that will identify the action
-        description:
-          type: string
-          description: The description of what the action is expected to do
-      required:
-      - identifier
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorYesNo
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHttpMode:
-      type: string
-      enum:
-      - GET
-      - POST
-      - PATCH
-      - PUT
-      default: GET
-      description: Select the method that will be used
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHttpMode
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems
     ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestion:
       type: object
       properties:
@@ -1884,183 +1629,25 @@ components:
           type: string
           description: The expected result, which depends on the category. For pass_fail evaluations, the expected result is either true or false. For numeric evaluations, it is an integer between 1 and 10.
       title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestion
-    HumanAvailabilityPublic:
-      type: object
-      properties:
-        timezone:
-          $ref: '#/components/schemas/timezone'
-          description: IANA timezone identifier for schedule evaluation.
-        schedule:
-          type: array
-          items:
-            $ref: '#/components/schemas/HumanAvailabilityScheduleItemPublic'
-          description: List of weekday schedules. A weekday can appear only once.
-        unavailable_message:
-          type: string
-          description: Message the agent says when transfer is attempted outside configured availability.
-        active:
-          type: boolean
-          description: Enables or disables availability checks.
-      required:
-      - timezone
-      - schedule
-      - active
-      description: Human availability schedule used by live transfer actions.
-      title: HumanAvailabilityPublic
-    Initialize-actionRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Initialize-actionRequestBadRequestError
-    Attach-actionRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Attach-actionRequestBadRequestError
     Detach-actionRequestBadRequestError:
       type: object
       properties: {}
       title: Detach-actionRequestBadRequestError
-    ActionsGetResponsesContentApplicationJsonSchemaResponsePagination:
+    delete-action_Response_200:
       type: object
       properties:
-        total_records:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-      title: ActionsGetResponsesContentApplicationJsonSchemaResponsePagination
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsActionIdDeleteResponsesContentApplicationJsonSchemaResponse'
+      title: delete-action_Response_200
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm:
       type: string
       enum:
-      - string
-      - int
-      - float
-      - bool
-      - list
-      - money
-      - phone_number
-      - email
-      - datetime
-      - utc_datetime
-      default: string
-      description: Type of the variable
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomEval:
-      type: object
-      properties:
-        question:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestion'
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomEval
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionIntegration:
-      type: string
-      enum:
-      - ghl
-      - hubspot
-      - salesforce
-      - salesforce-sandbox
-      description: The possible integrations that can be selected to retrieve information
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionIntegration
-    LiveTransferCreatePhoneBookConfig:
-      type: object
-      properties:
-        transfer_mode:
-          $ref: '#/components/schemas/LiveTransferCreatePhoneBookConfigTransferMode'
-          description: Transfer mode.
-        phone_book_id:
-          type: string
-          description: Phone book ID.
-        message_to_transfer_target:
-          type: string
-          description: The message the human agent will hear after the call is transferred to them.
-        instructions:
-          type: string
-          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
-        timeout:
-          type: integer
-          description: How long to wait for the transfer call to happen before stop trying to do the transfer
-        digits:
-          type: string
-          description: Extension digits for the transfer call
-        initiating_msg:
-          type: string
-          description: Message that the agent will say before starting the transfer call
-        goodbye_msg:
-          type: string
-          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
-        failed_msg:
-          type: string
-          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
-        stop_recording_after_transfer:
-          type: boolean
-          description: Whether the call should stop being recorded once it's transferred.
-        human_detection:
-          type: boolean
-          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
-        human_detection_timeout_seconds:
-          type: integer
-          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
-        summarization_prompt:
-          type: string
-          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
-        preserve_caller_id:
-          type: boolean
-          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
-        screened:
-          type: boolean
-          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
-        human_availability:
-          $ref: '#/components/schemas/HumanAvailabilityPublic'
-      required:
-      - transfer_mode
-      - phone_book_id
-      - instructions
-      - initiating_msg
-      title: LiveTransferCreatePhoneBookConfig
-    ActionsPostRequestBodyContentApplicationJsonSchemaLiveTransfer:
-      oneOf:
-      - $ref: '#/components/schemas/LiveTransferCreateDirectPhoneConfig'
-      - $ref: '#/components/schemas/LiveTransferCreatePhoneBookConfig'
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaLiveTransfer
-    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractor:
-      type: object
-      properties:
-        YES_NO:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorYesNo'
-        SINGLE_CHOICE:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorSingleChoice'
-        OPEN_QUESTION:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorOpenQuestion'
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractor
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems:
-      type: object
-      properties:
-        key:
-          type: string
-          description: Key name
-        value:
-          type: string
-          description: Value that will be assigned to the key
-      required:
-      - key
-      - value
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems
-    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorSingleChoice:
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The title that will identify the action
-        description:
-          type: string
-          description: The description of what the action is expected to do
-        choices:
-          type: array
-          items:
-            type: string
-          description: The possible choices that will answer the expected description of the action
-      required:
-      - identifier
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorSingleChoice
+      - confirmed
+      - new
+      description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm
     ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBooking:
       type: object
       properties:
@@ -2085,67 +1672,220 @@ components:
         GHL:
           $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl'
       title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBooking
-    HumanAvailabilityIntervalPublic:
+    List-actionsRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-actionsRequestBadRequestError
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItems:
       type: object
       properties:
-        from:
+        action_id:
           type: string
-          description: Start time in HH:MM 24-hour format.
-        to:
-          type: string
-          description: End time in HH:MM 24-hour format.
-      required:
-      - from
-      - to
-      description: One availability interval in 24-hour format.
-      title: HumanAvailabilityIntervalPublic
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems:
-      type: object
-      properties:
+          description: Action ID.
+        action_type:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsActionType'
+          description: Action type.
         name:
           type: string
-          description: Name of the variable that will be used during the call
+          description: Action name.
         description:
           type: string
-          description: Description of the functionality of the variable
-        example:
-          type: string
-          description: Example of the value/answer that can be given to fill the variable
-        type:
-          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType'
-          default: string
-          description: Type of the variable
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems:
-      type: object
-      properties:
-        key:
-          type: string
-          description: Key name
-        value:
-          type: string
-          description: Value that will be assigned to the key
-      required:
-      - key
-      - value
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems
-    HumanAvailabilityScheduleItemPublic:
-      type: object
-      properties:
-        weekday:
-          $ref: '#/components/schemas/HumanAvailabilityScheduleItemPublicWeekday'
-          description: Lowercase full weekday name.
-        interval:
+          description: Action description.
+        assistants:
           type: array
           items:
-            $ref: '#/components/schemas/HumanAvailabilityIntervalPublic'
-          description: Exactly one interval object per weekday.
+            type: string
+          description: Assistant IDs assigned to this action. Returned when `include_assistants=true`.
+        input_variables:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariables'
+          description: Input variable details for this action, including variable definitions and attached assistant IDs.
+        parameters_hard_coded:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItems
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomAction:
+      type: object
+      properties:
+        http_mode:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHttpMode'
+          default: GET
+          description: Select the method that will be used
+        url:
+          type: string
+          description: URL to be used by the action
+        name:
+          type: string
+          description: Name of the action
+        description:
+          type: string
+          description: Description of the action
+        run_action_before_call_start:
+          type: boolean
+          description: Actions that will run before the call, like phone number
+        speech_while_using_the_tool:
+          type: string
+          description: A message spoken verbatim to the caller while the action is being executed. Use this to fill silence during processing (e.g. "Let me look that up for you").
+        action_sound:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionActionSound'
+          description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
+        integration:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionIntegration'
+          description: The possible integrations that can be selected to retrieve information
+        custom_auth:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth'
+        variables_before_the_call:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems'
+        variables_during_the_call:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems'
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems'
+        query_parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems'
+        agent_speak_naturally:
+          type: boolean
+          description: If disabled, the agent will strictly stick to your pre-written messages. If enabled, it may say something that accounts for the previous context of the conversation.
+        message_delay:
+          type: string
+          description: What the agent should say if the action reaches the delay threshold.
+        message_delay_time:
+          type: integer
+          description: Delay threshold, in seconds.
+        message_error:
+          type: string
+          description: What the agent should say if the action failed.
+        json_body_stringified:
+          type: string
+          description: A json stringified of the payload/body that will be used for the action
+        prompt:
+          type: string
+          description: The prompt that will be used in case it is set
+        message_before_action_starts:
+          type: string
+          description: A message spoken verbatim to the caller before the action is triggered. Rarely needed. Use only when compliance or regulatory requirements mandate a specific disclosure before an action runs (e.g. "This call may be recorded").
+        failure_timeout:
+          type: integer
+          description: How long to wait for the custom action to complete before timing out (in seconds)
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomAction
+    LiveTransferUpdateDirectPhoneConfigTransferMode:
+      type: string
+      enum:
+      - cold_transfer
+      - warm_transfer
+      - warm_transfer_with_context
+      description: Transfer mode.
+      title: LiveTransferUpdateDirectPhoneConfigTransferMode
+    LiveTransferUpdatePhoneBookConfigTransferMode:
+      type: string
+      enum:
+      - cold_transfer
+      - warm_transfer
+      - warm_transfer_with_context
+      description: Transfer mode.
+      title: LiveTransferUpdatePhoneBookConfigTransferMode
+    ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded:
+      type: object
+      properties:
+        sms_message_text:
+          type: string
+      title: ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded
+    ActionsActionIdPutResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        action_id:
+          type: string
+      title: ActionsActionIdPutResponsesContentApplicationJsonSchemaResponse
+    create-action_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsPostResponsesContentApplicationJsonSchemaResponse'
+      title: create-action_Response_200
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariables:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItems'
+          description: Variables that the action expects as runtime input.
+        assistants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItems'
+          description: Assistants attached to this action, including per-assistant input variable mappings.
+      description: Input variable details for this action, including variable definitions and attached assistant IDs.
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariables
+    Initialize-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Initialize-actionRequestBadRequestError
+    ActionsAttachPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties: {}
+      title: ActionsAttachPostResponsesContentApplicationJsonSchemaResponse
+    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorSingleChoice:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The title that will identify the action
+        description:
+          type: string
+          description: The description of what the action is expected to do
+        choices:
+          type: array
+          items:
+            type: string
+          description: The possible choices that will answer the expected description of the action
       required:
-      - weekday
-      - interval
-      description: Availability for a single weekday. Exactly one interval is currently supported.
-      title: HumanAvailabilityScheduleItemPublic
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType:
+      - identifier
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorSingleChoice
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth:
+      type: object
+      properties:
+        is_needed:
+          type: boolean
+          default: false
+          description: If authorization to use the set URL and method are required set to true
+        location:
+          type: string
+          description: 'Section where the authorization will be used like: header'
+        key:
+          type: string
+          default: Bearer
+          description: The authorization type. Default is Bearer
+        value:
+          type: string
+          description: The value of the token that will be used with the authentication type
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth:
+      type: object
+      properties:
+        is_needed:
+          type: boolean
+          default: false
+          description: If authorization to use the set URL and method are required set to true
+        location:
+          type: string
+          description: 'Section where the authorization will be used like: header'
+        key:
+          type: string
+          default: Bearer
+          description: The authorization type. Default is Bearer
+        value:
+          type: string
+          description: The value of the token that will be used with the authentication type
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType:
       type: string
       enum:
       - string
@@ -2160,144 +1900,53 @@ components:
       - utc_datetime
       default: string
       description: Type of the variable
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems:
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType
+    ActionsGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
-        key:
-          type: string
-          description: Key name
-        value:
-          type: string
-          description: Value that will be assigned to the key
-      required:
-      - key
-      - value
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems
-    status:
-      type: string
-      description: Whether the request was successful.
-      title: status
-    update-action_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/ActionsActionIdPutResponsesContentApplicationJsonSchemaResponse'
-      title: update-action_Response_200
-    LiveTransferUpdateDirectPhoneConfig:
-      type: object
-      properties:
-        transfer_mode:
-          $ref: '#/components/schemas/LiveTransferUpdateDirectPhoneConfigTransferMode'
-          description: Transfer mode.
-        message_to_transfer_target:
-          type: string
-          description: The message the human agent will hear after the call is transferred to them.
-        phone:
-          type: string
-          description: Phone number to be called for transferring the call
-        instructions:
-          type: string
-          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
-        timeout:
-          type: integer
-          description: How long to wait for the transfer call to happen before stop trying to do the transfer
-        digits:
-          type: string
-          description: Extension digits for the transfer call
-        initiating_msg:
-          type: string
-          description: Message that the agent will say before starting the transfer call
-        goodbye_msg:
-          type: string
-          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
-        failed_msg:
-          type: string
-          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
-        enable_background_music:
-          type: boolean
-        stop_recording_after_transfer:
-          type: boolean
-          description: Whether the call should stop being recorded once it's transferred.
-        human_detection:
-          type: boolean
-          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
-        human_detection_timeout_seconds:
-          type: integer
-          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
-        summarization_prompt:
-          type: string
-          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
-        preserve_caller_id:
-          type: boolean
-          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
-        screened:
-          type: boolean
-          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
-        human_availability:
-          $ref: '#/components/schemas/HumanAvailabilityPublic'
-      required:
-      - transfer_mode
-      - phone
-      - instructions
-      - initiating_msg
-      title: LiveTransferUpdateDirectPhoneConfig
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsAttachmentType:
+        pagination:
+          $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponsePagination'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItems'
+      title: ActionsGetResponsesContentApplicationJsonSchemaResponse
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionActionSound:
       type: string
       enum:
-      - before
-      - during
-      - after
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsAttachmentType
-    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBooking:
+      - ''
+      - typing
+      - ambient-background
+      - modern-jazz
+      - inspirational-symphony-classical-music
+      description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionActionSound
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomEval:
       type: object
       properties:
-        first_appt_date:
-          type: string
-          format: date
-          description: The initial date that will be the used to start searching for booking appointments, the format is YYYY-MM-DD
-        max_time_slots:
-          type: integer
-          default: 3
-          description: The amount of slots that the agent will recommend per day when trying to book an appointment. The limit is 3
-        min_hours_diff:
-          type: integer
-          default: 3
-          description: The difference in hours between appointments that will be suggested by the agent.
-        no_of_days:
-          type: integer
-          default: 3
-          description: Number of days that the agent will suggest appointments
-        timezone:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone'
-          description: '[List of possible time zones](/time-zones). The default is Europe/Berlin'
-        CALCOM:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom'
-          description: 'Important: You need to be connected to the Cal.com integration'
-        GHL:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl'
-          description: 'Important: You need to be connected to the GHL integration'
-      required:
-      - first_appt_date
-      - max_time_slots
-      - min_hours_diff
-      - no_of_days
-      - timezone
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBooking
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItems:
+        question:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomEvalQuestion'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomEval
+    ActionsPostResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
-        name:
+        action_id:
           type: string
-        type:
-          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsType'
-        description:
+        action_type:
           type: string
-        example:
-          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsExample'
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItems
+        prompt_variables:
+          type: array
+          items:
+            description: Any type
+      title: ActionsPostResponsesContentApplicationJsonSchemaResponse
+    LiveTransferCreatePhoneBookConfigTransferMode:
+      type: string
+      enum:
+      - cold_transfer
+      - warm_transfer
+      - warm_transfer_with_context
+      description: Transfer mode.
+      title: LiveTransferCreatePhoneBookConfigTransferMode
     ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone:
       type: string
       enum:
@@ -2726,53 +2375,113 @@ components:
       - US/Pacific
       description: '[List of possible time zones](/time-zones). The default is Europe/Berlin'
       title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone
-    LiveTransferUpdatePhoneBookConfigTransferMode:
-      type: string
-      enum:
-      - cold_transfer
-      - warm_transfer
-      - warm_transfer_with_context
-      description: Transfer mode.
-      title: LiveTransferUpdatePhoneBookConfigTransferMode
-    LiveTransferCreatePhoneBookConfigTransferMode:
-      type: string
-      enum:
-      - cold_transfer
-      - warm_transfer
-      - warm_transfer_with_context
-      description: Transfer mode.
-      title: LiveTransferCreatePhoneBookConfigTransferMode
-    delete-action_Response_200:
+    Update-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-actionRequestBadRequestError
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItems:
       type: object
       properties:
-        status:
+        model_id:
           type: string
-        response:
-          $ref: '#/components/schemas/ActionsActionIdDeleteResponsesContentApplicationJsonSchemaResponse'
-      title: delete-action_Response_200
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsType:
+        attachment_type:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsAttachmentType'
+        input_variables_mapping:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItems'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItems
+    ActionsInitializePostRequestBodyContentApplicationJsonSchemaVariablesItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsInitializePostRequestBodyContentApplicationJsonSchemaVariablesItems
+    ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItems:
+      type: object
+      properties:
+        action_id:
+          type: string
+        action_type:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        parameters_hard_coded:
+          $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded'
+      title: ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItems
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType:
       type: string
       enum:
       - string
-      - integer
-      - number
-      - boolean
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsType
-    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsAttachmentType:
-      type: string
-      enum:
-      - before
-      - during
-      - after
-      default: during
-      description: When this action is available in the conversation. Optional and defaults to `during` when omitted or null.
-      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsAttachmentType
-    ActionsActionIdDeleteResponsesContentApplicationJsonSchemaResponse:
+      - int
+      - float
+      - bool
+      - list
+      - money
+      - phone_number
+      - email
+      - datetime
+      - utc_datetime
+      default: string
+      description: Type of the variable
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType
+    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItems:
       type: object
       properties:
-        answer:
+        variable_name:
           type: string
-      title: ActionsActionIdDeleteResponsesContentApplicationJsonSchemaResponse
+          description: Input variable name defined in the action.
+        source:
+          $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsSource'
+          description: Source used to populate the variable.
+        hardcoded_value:
+          type:
+          - string
+          - 'null'
+          description: Value used when source is `hardcoded`.
+        llm_config:
+          oneOf:
+          - $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsLlmConfig'
+          - type: 'null'
+      required:
+      - variable_name
+      - source
+      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItems
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the variable that will be used during the call
+        description:
+          type: string
+          description: Description of the functionality of the variable
+        example:
+          type: string
+          description: Example of the value/answer that can be given to fill the variable
+        type:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType'
+          default: string
+          description: Type of the variable
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionIntegration:
+      type: string
+      enum:
+      - ghl
+      - hubspot
+      - salesforce
+      - salesforce-sandbox
+      description: The possible integrations that can be selected to retrieve information
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionIntegration
     LiveTransferCreateDirectPhoneConfig:
       type: object
       properties:
@@ -2829,137 +2538,234 @@ components:
       - instructions
       - initiating_msg
       title: LiveTransferCreateDirectPhoneConfig
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaLiveTransfer:
-      oneOf:
-      - $ref: '#/components/schemas/LiveTransferUpdateDirectPhoneConfig'
-      - $ref: '#/components/schemas/LiveTransferUpdatePhoneBookConfig'
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaLiveTransfer
-    LiveTransferUpdateDirectPhoneConfigTransferMode:
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsActionType:
+      type: string
+      enum:
+      - REAL_TIME_BOOKING
+      - INFORMATION_EXTRACTOR
+      - LIVE_TRANSFER
+      - SEND_SMS
+      - INCALL_SMS
+      - INCALL_WHATSAPP
+      - CUSTOM_ACTION
+      - CUSTOM_EVAL
+      description: Action type.
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsActionType
+    HumanAvailabilityScheduleItemPublic:
+      type: object
+      properties:
+        weekday:
+          $ref: '#/components/schemas/HumanAvailabilityScheduleItemPublicWeekday'
+          description: Lowercase full weekday name.
+        interval:
+          type: array
+          items:
+            $ref: '#/components/schemas/HumanAvailabilityIntervalPublic'
+          description: Exactly one interval object per weekday.
+      required:
+      - weekday
+      - interval
+      description: Availability for a single weekday. Exactly one interval is currently supported.
+      title: HumanAvailabilityScheduleItemPublic
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItems:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsType'
+        description:
+          type: string
+        example:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItemsExample'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesValuesItems
+    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsAttachmentType:
+      type: string
+      enum:
+      - before
+      - during
+      - after
+      default: during
+      description: When this action is available in the conversation. Optional and defaults to `during` when omitted or null.
+      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsAttachmentType
+    LiveTransferUpdateDirectPhoneConfig:
+      type: object
+      properties:
+        transfer_mode:
+          $ref: '#/components/schemas/LiveTransferUpdateDirectPhoneConfigTransferMode'
+          description: Transfer mode.
+        message_to_transfer_target:
+          type: string
+          description: The message the human agent will hear after the call is transferred to them.
+        phone:
+          type: string
+          description: Phone number to be called for transferring the call
+        instructions:
+          type: string
+          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
+        timeout:
+          type: integer
+          description: How long to wait for the transfer call to happen before stop trying to do the transfer
+        digits:
+          type: string
+          description: Extension digits for the transfer call
+        initiating_msg:
+          type: string
+          description: Message that the agent will say before starting the transfer call
+        goodbye_msg:
+          type: string
+          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
+        failed_msg:
+          type: string
+          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
+        enable_background_music:
+          type: boolean
+        stop_recording_after_transfer:
+          type: boolean
+          description: Whether the call should stop being recorded once it's transferred.
+        human_detection:
+          type: boolean
+          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
+        human_detection_timeout_seconds:
+          type: integer
+          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
+        summarization_prompt:
+          type: string
+          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
+        preserve_caller_id:
+          type: boolean
+          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
+        screened:
+          type: boolean
+          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
+        human_availability:
+          $ref: '#/components/schemas/HumanAvailabilityPublic'
+      required:
+      - transfer_mode
+      - phone
+      - instructions
+      - initiating_msg
+      title: LiveTransferUpdateDirectPhoneConfig
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBooking:
+      type: object
+      properties:
+        first_appt_date:
+          type: string
+          format: date
+          description: The initial date that will be the used to start searching for booking appointments, the format is YYYY-MM-DD
+        max_time_slots:
+          type: integer
+          default: 3
+          description: The amount of slots that the agent will recommend per day when trying to book an appointment. The limit is 3
+        min_hours_diff:
+          type: integer
+          default: 3
+          description: The difference in hours between appointments that will be suggested by the agent.
+        no_of_days:
+          type: integer
+          default: 3
+          description: Number of days that the agent will suggest appointments
+        timezone:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingTimezone'
+          description: '[List of possible time zones](/time-zones). The default is Europe/Berlin'
+        CALCOM:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom'
+          description: 'Important: You need to be connected to the Cal.com integration'
+        GHL:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl'
+          description: 'Important: You need to be connected to the GHL integration'
+      required:
+      - first_appt_date
+      - max_time_slots
+      - min_hours_diff
+      - no_of_days
+      - timezone
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBooking
+    LiveTransferCreateDirectPhoneConfigTransferMode:
       type: string
       enum:
       - cold_transfer
       - warm_transfer
       - warm_transfer_with_context
       description: Transfer mode.
-      title: LiveTransferUpdateDirectPhoneConfigTransferMode
-    list-actions_Response_200:
+      title: LiveTransferCreateDirectPhoneConfigTransferMode
+    attach-action_Response_200:
       type: object
       properties:
         status:
           type: string
         response:
-          $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-actions_Response_200
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItems:
+          $ref: '#/components/schemas/ActionsAttachPostResponsesContentApplicationJsonSchemaResponse'
+      title: attach-action_Response_200
+    ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorYesNo:
       type: object
       properties:
-        model_id:
+        identifier:
           type: string
-        attachment_type:
-          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsAttachmentType'
-        input_variables_mapping:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItems'
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItems
-    detach-action_Response_200:
+          description: The title that will identify the action
+        description:
+          type: string
+          description: The description of what the action is expected to do
+      required:
+      - identifier
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaInformationExtractorYesNo
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallSms:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/ActionsDetachPostResponsesContentApplicationJsonSchemaResponse'
-      title: detach-action_Response_200
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration:
+        message_body:
+          type: string
+          description: The SMS body sent to the caller. Supports placeholder variables like `<user_name>`.
+        wait_for_reply:
+          type: boolean
+          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
+        timeout_seconds:
+          type: integer
+          description: Maximum time to wait for a reply when `wait_for_reply` is true.
+        fallback_message:
+          type: string
+          description: Message the agent speaks if the timeout fires with no reply.
+        message_before_action:
+          type: string
+          description: Message the agent speaks before the SMS is sent.
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallSms
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration:
       type: string
       enum:
       - GMeet
       - Zoom
       description: The selected option will be the meeting type that will be created when the booking is done
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomAction:
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration
+    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsSource:
+      type: string
+      enum:
+      - llm
+      - hardcoded
+      description: Source used to populate the variable.
+      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsSource
+    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom:
       type: object
       properties:
-        http_mode:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHttpMode'
-          description: Select the method that will be used
-        url:
+        event_id:
           type: string
-          description: URL to be used by the action
-        run_action_before_call_start:
-          type: boolean
-          description: Actions that will run before the call, like phone number
-        name:
-          type: string
-          description: Name of the action
-        description:
-          type: string
-          description: Description of the action
-        speech_while_using_the_tool:
-          type: string
-          description: A message spoken verbatim to the caller while the action is being executed. Use this to fill silence during processing (e.g. "Let me look that up for you").
-        action_sound:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionActionSound'
-          description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
+          description: The event id can be obtained from the cal.com calendar
         integration:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionIntegration'
-          description: The possible integrations that can be selected to retrieve information
-        failure_timeout:
-          type: integer
-          description: How long to wait for the custom action to complete before timing out (in seconds)
-        custom_auth:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionCustomAuth'
-        variables_before_the_call:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems'
-        variables_during_the_call:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems'
-        headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems'
-        query_parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems'
-        agent_speak_naturally:
+          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration'
+          description: The selected option will be the meeting type that will be created when the booking is done
+        sms_boolean:
           type: boolean
-          description: If disabled, the agent will strictly stick to your pre-written messages. If enabled, it may say something that accounts for the previous context of the conversation.
-        message_delay:
+          default: false
+          description: If the value is true the SMS message from the sms_message field will be send
+        sms_message:
           type: string
-          description: What the agent should say if the action reaches the delay threshold.
-        message_delay_time:
-          type: integer
-          description: Delay threshold, in seconds.
-        message_error:
+          description: Text to be sent in the sms
+        user_email:
           type: string
-          description: What the agent should say if the action failed.
-        json_body_stringified:
-          type: string
-          description: A json stringified of the payload/body that will be used for the action
-        prompt:
-          type: string
-          description: The prompt that will be used in case it is set
-        message_before_action_starts:
-          type: string
-          description: A message spoken verbatim to the caller before the action is triggered. Rarely needed. Use only when compliance or regulatory requirements mandate a specific disclosure before an action runs (e.g. "This call may be recorded").
+          description: Email that will be used to create the meeting
       required:
-      - http_mode
-      - url
-      - run_action_before_call_start
-      - name
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomAction
-    ActionsAttachPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties: {}
-      title: ActionsAttachPostResponsesContentApplicationJsonSchemaResponse
-    Create-actionRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Create-actionRequestBadRequestError
+      - event_id
+      - user_email
+      description: 'Important: You need to be connected to the Cal.com integration'
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcom
     ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems:
       type: object
       properties:
@@ -2973,6 +2779,128 @@ components:
       - key
       - value
       title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionHeadersItems
+    ActionsInitializePostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+      title: ActionsInitializePostResponsesContentApplicationJsonSchemaResponse
+    ? ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsLlmConfig
+    : type: object
+      properties:
+        description:
+          type: string
+          description: Description of the variable.
+        example:
+          type: string
+          description: Example of the variable.
+        required:
+          type: boolean
+          description: Whether the variable is required.
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsInputVariablesMappingItemsLlmConfig
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaInformationExtractor:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The title that will identify the action
+        description:
+          type: string
+          description: The description of what the action is expected to do
+        choices:
+          type: array
+          items:
+            type: string
+          description: The possible choices that will answer the expected description of the action
+        examples:
+          type: array
+          items:
+            type: string
+          description: Examples of possible answers that can match the description of the action
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaInformationExtractor
+    ActionsGetResponsesContentApplicationJsonSchemaResponsePagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      title: ActionsGetResponsesContentApplicationJsonSchemaResponsePagination
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItems'
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponse
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesBeforeTheCallItems
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the variable that will be used during the call
+        description:
+          type: string
+          description: Description of the functionality of the variable
+        example:
+          type: string
+          description: Example of the value/answer that can be given to fill the variable
+        type:
+          $ref: '#/components/schemas/ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType'
+          default: string
+          description: Type of the variable
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsAttachmentType:
+      type: string
+      enum:
+      - before
+      - during
+      - after
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsInputVariablesAssistantsItemsAttachmentType
+    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded:
+      type: object
+      properties:
+        sms_message_text:
+          type: string
+      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionIntegration:
+      type: string
+      enum:
+      - ghl
+      - hubspot
+      - salesforce
+      - salesforce-sandbox
+      description: The possible integrations that can be selected to retrieve information
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionIntegration
     ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItems:
       type: object
       properties:
@@ -2999,12 +2927,127 @@ components:
             $ref: '#/components/schemas/ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItems'
           description: Per-assistant mapping for this action's input variables.
       title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItems
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded:
+    get-action_Response_200:
       type: object
       properties:
-        sms_message_text:
+        status:
           type: string
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItemsParametersHardCoded
+        response:
+          $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponse'
+      title: get-action_Response_200
+    HumanAvailabilityPublic:
+      type: object
+      properties:
+        timezone:
+          $ref: '#/components/schemas/timezone'
+          description: IANA timezone identifier for schedule evaluation.
+        schedule:
+          type: array
+          items:
+            $ref: '#/components/schemas/HumanAvailabilityScheduleItemPublic'
+          description: List of weekday schedules. A weekday can appear only once.
+        unavailable_message:
+          type: string
+          description: Message the agent says when transfer is attempted outside configured availability.
+        active:
+          type: boolean
+          description: Enables or disables availability checks.
+      required:
+      - timezone
+      - schedule
+      - active
+      description: Human availability schedule used by live transfer actions.
+      title: HumanAvailabilityPublic
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaLiveTransfer:
+      oneOf:
+      - $ref: '#/components/schemas/LiveTransferUpdateDirectPhoneConfig'
+      - $ref: '#/components/schemas/LiveTransferUpdatePhoneBookConfig'
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaLiveTransfer
+    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key name
+        value:
+          type: string
+          description: Value that will be assigned to the key
+      required:
+      - key
+      - value
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionQueryParametersItems
+    LiveTransferCreatePhoneBookConfig:
+      type: object
+      properties:
+        transfer_mode:
+          $ref: '#/components/schemas/LiveTransferCreatePhoneBookConfigTransferMode'
+          description: Transfer mode.
+        phone_book_id:
+          type: string
+          description: Phone book ID.
+        message_to_transfer_target:
+          type: string
+          description: The message the human agent will hear after the call is transferred to them.
+        instructions:
+          type: string
+          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
+        timeout:
+          type: integer
+          description: How long to wait for the transfer call to happen before stop trying to do the transfer
+        digits:
+          type: string
+          description: Extension digits for the transfer call
+        initiating_msg:
+          type: string
+          description: Message that the agent will say before starting the transfer call
+        goodbye_msg:
+          type: string
+          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
+        failed_msg:
+          type: string
+          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
+        stop_recording_after_transfer:
+          type: boolean
+          description: Whether the call should stop being recorded once it's transferred.
+        human_detection:
+          type: boolean
+          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
+        human_detection_timeout_seconds:
+          type: integer
+          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
+        summarization_prompt:
+          type: string
+          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
+        preserve_caller_id:
+          type: boolean
+          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
+        screened:
+          type: boolean
+          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
+        human_availability:
+          $ref: '#/components/schemas/HumanAvailabilityPublic'
+      required:
+      - transfer_mode
+      - phone_book_id
+      - instructions
+      - initiating_msg
+      title: LiveTransferCreatePhoneBookConfig
+    list-actions_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-actions_Response_200
+    Delete-actionRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-actionRequestBadRequestError
+    ActionsDetachPostResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties: {}
+      title: ActionsDetachPostResponsesContentApplicationJsonSchemaResponse
     ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionActionSound:
       type: string
       enum:
@@ -3015,149 +3058,106 @@ components:
       - inspirational-symphony-classical-music
       description: Optional background audio played while this custom action executes. Defaults to no background audio. Omit the field, use `null`, or use an empty string to disable playback.
       title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionActionSound
-    ActionsActionIdGetResponsesContentApplicationJsonSchemaResponse:
+    HumanAvailabilityScheduleItemPublicWeekday:
+      type: string
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      description: Lowercase full weekday name.
+      title: HumanAvailabilityScheduleItemPublicWeekday
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaSendSms:
       type: object
       properties:
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsActionIdGetResponsesContentApplicationJsonSchemaResponseActionsItems'
-      title: ActionsActionIdGetResponsesContentApplicationJsonSchemaResponse
-    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl:
+        content:
+          type: string
+          description: The content/text of the SMS message
+        instructions:
+          type: string
+          description: The instructions that will trigger the SMS message to be sent
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaSendSms
+    ActionsPostRequestBodyContentApplicationJsonSchemaSendSms:
       type: object
       properties:
-        calendar_id:
+        content:
           type: string
-          description: Calendar ID from the GHL calendar. Can be obtained from GHL in calendars > Calendar Settings
-        autoconfirm:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm'
-          description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
-        booking_title:
+          description: The content/text of the SMS message
+        instructions:
           type: string
-          description: The title that will be displayed in the Synthflow app for the created action
+          description: The instructions that will trigger the SMS message to be sent
       required:
-      - calendar_id
-      - autoconfirm
-      - booking_title
-      description: 'Important: You need to be connected to the GHL integration'
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhl
-    Delete-actionRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Delete-actionRequestBadRequestError
-    ActionsPostRequestBodyContentApplicationJsonSchemaIncallWhatsapp:
+      - content
+      - instructions
+      title: ActionsPostRequestBodyContentApplicationJsonSchemaSendSms
+    LiveTransferUpdatePhoneBookConfig:
       type: object
       properties:
-        content_sid:
+        transfer_mode:
+          $ref: '#/components/schemas/LiveTransferUpdatePhoneBookConfigTransferMode'
+          description: Transfer mode.
+        message_to_transfer_target:
           type: string
-          description: Twilio Content template SID (for example `HX...`) used for the outbound WhatsApp message.
-        content_variables:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Values that fill the template placeholders. Keys match the numeric placeholders in the template body (for example `{"1": "<user_name>"}`).'
-        wait_for_reply:
-          type: boolean
-          default: false
-          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
-        timeout_seconds:
+          description: The message the human agent will hear after the call is transferred to them.
+        phone_book_id:
+          type: string
+          description: Phone book ID.
+        instructions:
+          type: string
+          description: 'What words can trigger the transfer call, for example: like I want to talk with a manager'
+        timeout:
           type: integer
-          description: Maximum time to wait for a reply when `wait_for_reply` is true.
-        fallback_message:
+          description: How long to wait for the transfer call to happen before stop trying to do the transfer
+        digits:
           type: string
-          description: Message the agent speaks if the timeout fires with no reply.
+          description: Extension digits for the transfer call
+        initiating_msg:
+          type: string
+          description: Message that the agent will say before starting the transfer call
+        goodbye_msg:
+          type: string
+          description: Message that the agent will say before leaving the call and connecting you with the transfer call number to start the conversation
+        failed_msg:
+          type: string
+          description: The message that the agent will say in case the person that should answer the phone is not able to answer before the timeout
+        enable_background_music:
+          type: boolean
+        stop_recording_after_transfer:
+          type: boolean
+          description: Whether the call should stop being recorded once it's transferred.
+        human_detection:
+          type: boolean
+          description: If true, the agent will detect whether the transfer target is a human, and once detected, will complete the transfer to the target.
+        human_detection_timeout_seconds:
+          type: integer
+          description: Time in seconds to wait for human detection before giving up. Used in conjunction with human_detection. Minimum 30 seconds, maximum 1800 seconds (30 minutes).
+        summarization_prompt:
+          type: string
+          description: Custom prompt used to generate the warm transfer context summary for the warm transfer leg.
+        preserve_caller_id:
+          type: boolean
+          description: If true, the transfer target will see the caller's phone number instead of the agent's phone number. Only works for numbers purchased through a Synthflow Twilio account; for other numbers the call will fail.
+        screened:
+          type: boolean
+          description: If true, the transfer target will first speak with the AI agent, who can answer questions about the caller and the transcript. The transfer target can then choose to accept or decline the transfer.
+        human_availability:
+          $ref: '#/components/schemas/HumanAvailabilityPublic'
       required:
-      - content_sid
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaIncallWhatsapp
-    ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm:
+      - transfer_mode
+      - phone_book_id
+      - instructions
+      - initiating_msg
+      title: LiveTransferUpdatePhoneBookConfig
+    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration:
       type: string
       enum:
-      - confirmed
-      - new
-      description: If confirmed is selected the meeting will be automatically accepted and you don't have to do anything, otherwise you have to go to GHL calendar and confirm the meeting
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaRealTimeBookingGhlAutoconfirm
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallSms:
-      type: object
-      properties:
-        message_body:
-          type: string
-          description: The SMS body sent to the caller. Supports placeholder variables like `<user_name>`.
-        wait_for_reply:
-          type: boolean
-          description: When true, the agent pauses until the caller replies, the timeout elapses, or the call ends. When false, the call continues and any reply is injected into the transcript when it arrives.
-        timeout_seconds:
-          type: integer
-          description: Maximum time to wait for a reply when `wait_for_reply` is true.
-        fallback_message:
-          type: string
-          description: Message the agent speaks if the timeout fires with no reply.
-        message_before_action:
-          type: string
-          description: Message the agent speaks before the SMS is sent.
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaIncallSms
-    ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the variable that will be used during the call
-        description:
-          type: string
-          description: Description of the functionality of the variable
-        example:
-          type: string
-          description: Example of the value/answer that can be given to fill the variable
-        type:
-          $ref: '#/components/schemas/ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItemsType'
-          default: string
-          description: Type of the variable
-      title: ActionsPostRequestBodyContentApplicationJsonSchemaCustomActionVariablesDuringTheCallItems
-    ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionIntegration:
-      type: string
-      enum:
-      - ghl
-      - hubspot
-      - salesforce
-      - salesforce-sandbox
-      description: The possible integrations that can be selected to retrieve information
-      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaCustomActionIntegration
-    LiveTransferCreateDirectPhoneConfigTransferMode:
-      type: string
-      enum:
-      - cold_transfer
-      - warm_transfer
-      - warm_transfer_with_context
-      description: Transfer mode.
-      title: LiveTransferCreateDirectPhoneConfigTransferMode
-    ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsLlmConfig:
-      type: object
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-          description: Description of the variable.
-        example:
-          type:
-          - string
-          - 'null'
-          description: Example of the variable.
-        required:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the variable is required.
-      title: ActionsAttachPostRequestBodyContentApplicationJsonSchemaItemsItemsInputVariablesMappingItemsLlmConfig
-    ActionsGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponsePagination'
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionsGetResponsesContentApplicationJsonSchemaResponseActionsItems'
-      title: ActionsGetResponsesContentApplicationJsonSchemaResponse
+      - GMeet
+      - Zoom
+      description: The selected option will be the meeting type that will be created when the booking is done
+      title: ActionsActionIdPutRequestBodyContentApplicationJsonSchemaRealTimeBookingCalcomIntegration
   securitySchemes:
     sec0:
       type: http

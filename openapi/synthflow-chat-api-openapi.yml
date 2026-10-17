@@ -237,46 +237,6 @@ paths:
               $ref: '#/components/schemas/OutboundChatRequest'
 components:
   schemas:
-    FsmAgentLogExecutionStats:
-      type: object
-      properties:
-        commands_executed:
-          type: integer
-          description: Number of commands executed.
-        state_transitions:
-          type: integer
-          description: Number of state transitions.
-        total_events:
-          type: integer
-          description: Total number of events executed.
-      description: Statistics about FSM execution.
-      title: FsmAgentLogExecutionStats
-    Chat_send-chat-message_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/ChatMessageResponse'
-      title: Chat_send-chat-message_Response_200
-    FsmAgentLogVariables:
-      type: object
-      properties:
-        value:
-          $ref: '#/components/schemas/FsmAgentLogVariablesValue'
-          description: The collected value of the variable.
-        collected:
-          type: boolean
-          description: Whether this variable was successfully collected during the conversation.
-      title: FsmAgentLogVariables
-    Create-chatRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Create-chatRequestBadRequestError
-    List-chatsRequestBadRequestError:
-      type: object
-      properties: {}
-      title: List-chatsRequestBadRequestError
     OutboundChatRequest:
       type: object
       properties:
@@ -311,6 +271,241 @@ components:
       - from_number
       description: Request to start an outbound SMS or WhatsApp chat conversation.
       title: OutboundChatRequest
+    FsmAgentLogVariables:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/FsmAgentLogVariablesValue'
+          description: The collected value of the variable.
+        collected:
+          type: boolean
+          description: Whether this variable was successfully collected during the conversation.
+      title: FsmAgentLogVariables
+    FsmAgentLogExecutionStats:
+      type: object
+      properties:
+        commands_executed:
+          type: integer
+          description: Number of commands executed.
+        state_transitions:
+          type: integer
+          description: Number of state transitions.
+        total_events:
+          type: integer
+          description: Total number of events executed.
+      description: Statistics about FSM execution.
+      title: FsmAgentLogExecutionStats
+    ChatGetResponsesContentApplicationJsonSchemaResponseChatsItems:
+      type: object
+      properties:
+        chat_id:
+          type: string
+          format: uuid
+        chat_status:
+          $ref: '#/components/schemas/ChatGetResponsesContentApplicationJsonSchemaResponseChatsItemsChatStatus'
+        start_timestamp:
+          type: string
+          format: date-time
+      required:
+      - chat_id
+      - chat_status
+      - start_timestamp
+      title: ChatGetResponsesContentApplicationJsonSchemaResponseChatsItems
+    ChatGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        chats:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatGetResponsesContentApplicationJsonSchemaResponseChatsItems'
+        has_more:
+          type: boolean
+          description: Indicates whether there are more chats available.
+        next_cursor:
+          type: string
+          description: Cursor to use for pagination to retrieve the next page of results.
+      required:
+      - chats
+      - has_more
+      - next_cursor
+      title: ChatGetResponsesContentApplicationJsonSchemaResponse
+    Chat_list-chats_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/ChatGetResponsesContentApplicationJsonSchemaResponse'
+      title: Chat_list-chats_Response_200
+    Chat_send-chat-message_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/ChatMessageResponse'
+      title: Chat_send-chat-message_Response_200
+    OutboundChatTemplate:
+      type: object
+      properties:
+        content_sid:
+          type: string
+          description: The SID of an approved Twilio Content Template.
+        variables:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Template variable substitutions keyed by placeholder number.
+      required:
+      - content_sid
+      description: Twilio Content Template to use for outbound WhatsApp delivery.
+      title: OutboundChatTemplate
+    Chat_get-chat_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/ChatResponse'
+      title: Chat_get-chat_Response_200
+    Delete-chatRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-chatRequestBadRequestError
+    Create-chatRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-chatRequestBadRequestError
+    FsmAgentLogVariablesValue:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      - type: object
+        additionalProperties:
+          description: Any type
+      description: The collected value of the variable.
+      title: FsmAgentLogVariablesValue
+    FsmEventEventType:
+      type: string
+      enum:
+      - fsm_started
+      - state_executed
+      - utterance_sent
+      - state_transition
+      - turn_changed
+      - user_input
+      - command_executed
+      - command_received
+      - command_failed
+      - action_executed
+      - action_failed
+      - transition
+      - error
+      description: Type of the event.
+      title: FsmEventEventType
+    FSMEvent:
+      type: object
+      properties:
+        event_type:
+          $ref: '#/components/schemas/FsmEventEventType'
+          description: Type of the event.
+        state_id:
+          type: string
+          description: ID of the state where the event occurred.
+        timestamp:
+          type: integer
+          description: Unix timestamp in milliseconds when the event occurred.
+        details:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: Additional details specific to the event type.
+      required:
+      - event_type
+      - state_id
+      - timestamp
+      - details
+      description: A single FSM event.
+      title: FSMEvent
+    FsmAgentLogFsmMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the FSM.
+      description: Metadata about the FSM.
+      title: FsmAgentLogFsmMetadata
+    ChatResponseChatStatus:
+      type: string
+      enum:
+      - ongoing
+      - completed
+      - cancelled
+      description: Current status of the chat session.
+      title: ChatResponseChatStatus
+    ChatMessageResponse:
+      type: object
+      properties:
+        agent_message:
+          type: string
+          description: The response message from the agent.
+        current_state:
+          type: string
+          description: The current state of the agent.
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of when the message was sent.
+        turn_number:
+          type: integer
+          description: The turn number in the conversation.
+      required:
+      - agent_message
+      - current_state
+      - timestamp
+      - turn_number
+      description: Response from sending a message in a chat.
+      title: ChatMessageResponse
+    Send-chat-messageRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Send-chat-messageRequestBadRequestError
+    OutboundChatRequestChannel:
+      type: string
+      enum:
+      - sms
+      - whatsapp
+      description: Outbound messaging channel.
+      title: OutboundChatRequestChannel
+    Chat_create-chat_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/ChatResponse'
+      title: Chat_create-chat_Response_200
+    OutboundChatResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/OutboundChatResponseResponse'
+      required:
+      - status
+      - response
+      description: Response returned after an outbound chat conversation is created.
+      title: OutboundChatResponse
+    ChatGetResponsesContentApplicationJsonSchemaResponseChatsItemsChatStatus:
+      type: string
+      enum:
+      - ongoing
+      - completed
+      - cancelled
+      title: ChatGetResponsesContentApplicationJsonSchemaResponseChatsItemsChatStatus
     ChatMessage:
       type: object
       properties:
@@ -344,215 +539,48 @@ components:
         status:
           $ref: '#/components/schemas/status'
       title: Chat_delete-chat_Response_200
-    Chat_list-chats_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/ChatGetResponsesContentApplicationJsonSchemaResponse'
-      title: Chat_list-chats_Response_200
-    Delete-chatRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Delete-chatRequestBadRequestError
-    OutboundChatTemplate:
-      type: object
-      properties:
-        content_sid:
-          type: string
-          description: The SID of an approved Twilio Content Template.
-        variables:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Template variable substitutions keyed by placeholder number.
-      required:
-      - content_sid
-      description: Twilio Content Template to use for outbound WhatsApp delivery.
-      title: OutboundChatTemplate
-    OutboundChatResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/OutboundChatResponseResponse'
-      required:
-      - status
-      - response
-      description: Response returned after an outbound chat conversation is created.
-      title: OutboundChatResponse
-    Send-chat-messageRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Send-chat-messageRequestBadRequestError
-    ChatResponseChatStatus:
-      type: string
-      enum:
-      - ongoing
-      - completed
-      - cancelled
-      description: Current status of the chat session.
-      title: ChatResponseChatStatus
-    FsmAgentLogFsmMetadata:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the FSM.
-      description: Metadata about the FSM.
-      title: FsmAgentLogFsmMetadata
-    FSMEvent:
-      type: object
-      properties:
-        event_type:
-          $ref: '#/components/schemas/FsmEventEventType'
-          description: Type of the event.
-        state_id:
-          type: string
-          description: ID of the state where the event occurred.
-        timestamp:
-          type: integer
-          description: Unix timestamp in milliseconds when the event occurred.
-        details:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: Additional details specific to the event type.
-      required:
-      - event_type
-      - state_id
-      - timestamp
-      - details
-      description: A single FSM event.
-      title: FSMEvent
-    FsmAgentLogVariablesValue:
-      oneOf:
-      - type: string
-      - type: number
-        format: double
-      - type: boolean
-      - type: object
-        additionalProperties:
-          description: Any type
-      description: The collected value of the variable.
-      title: FsmAgentLogVariablesValue
-    OutboundChatRequestChannel:
-      type: string
-      enum:
-      - sms
-      - whatsapp
-      description: Outbound messaging channel.
-      title: OutboundChatRequestChannel
-    Get-chatRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Get-chatRequestBadRequestError
-    ChatResponseInitialMessage:
-      type: object
-      properties:
-        agent_message:
-          type: string
-          description: The message content from the agent.
-        current_state:
-          type: string
-          description: The current state of the agent.
-        timestamp:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp of when the message was sent.
-        turn_number:
-          type: integer
-          description: The turn number in the conversation.
-      description: The initial message sent by the agent when the chat was created.
-      title: ChatResponseInitialMessage
-    ChatMessageResponse:
-      type: object
-      properties:
-        agent_message:
-          type: string
-          description: The response message from the agent.
-        current_state:
-          type: string
-          description: The current state of the agent.
-        timestamp:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp of when the message was sent.
-        turn_number:
-          type: integer
-          description: The turn number in the conversation.
-      required:
-      - agent_message
-      - current_state
-      - timestamp
-      - turn_number
-      description: Response from sending a message in a chat.
-      title: ChatMessageResponse
-    status:
-      type: string
-      description: Whether the request was successful.
-      title: status
-    ChatGetResponsesContentApplicationJsonSchemaResponseChatsItems:
+    ChatResponse:
       type: object
       properties:
         chat_id:
           type: string
           format: uuid
+          description: Unique identifier for the chat session.
         chat_status:
-          $ref: '#/components/schemas/ChatGetResponsesContentApplicationJsonSchemaResponseChatsItemsChatStatus'
+          $ref: '#/components/schemas/ChatResponseChatStatus'
+          description: Current status of the chat session.
+        conversation_history:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+          description: List of messages in the conversation.
+        initial_message:
+          oneOf:
+          - $ref: '#/components/schemas/ChatResponseInitialMessage'
+          - type: 'null'
+          description: The initial message sent by the agent when the chat was created.
         start_timestamp:
           type: string
           format: date-time
+          description: ISO 8601 timestamp of when the chat session started.
+        transcript:
+          type: string
+          description: Full transcript of the conversation.
+        fsm_log:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/FSMAgentLog'
+          description: Finite State Machine (FSM) execution log for the chat session.
       required:
       - chat_id
       - chat_status
+      - conversation_history
       - start_timestamp
-      title: ChatGetResponsesContentApplicationJsonSchemaResponseChatsItems
-    ChatGetResponsesContentApplicationJsonSchemaResponseChatsItemsChatStatus:
-      type: string
-      enum:
-      - ongoing
-      - completed
-      - cancelled
-      title: ChatGetResponsesContentApplicationJsonSchemaResponseChatsItemsChatStatus
-    ChatGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        chats:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChatGetResponsesContentApplicationJsonSchemaResponseChatsItems'
-        has_more:
-          type: boolean
-          description: Indicates whether there are more chats available.
-        next_cursor:
-          type: string
-          description: Cursor to use for pagination to retrieve the next page of results.
-      required:
-      - chats
-      - has_more
-      - next_cursor
-      title: ChatGetResponsesContentApplicationJsonSchemaResponse
-    OutboundChatResponseResponse:
-      type: object
-      properties:
-        conversation_id:
-          type: string
-          format: uuid
-          description: Unique identifier for the created conversation.
-      required:
-      - conversation_id
-      title: OutboundChatResponseResponse
-    Chat_create-chat_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/ChatResponse'
-      title: Chat_create-chat_Response_200
+      - transcript
+      description: Chat session details.
+      title: ChatResponse
     FSMAgentLog:
       type: object
       properties:
@@ -598,78 +626,50 @@ components:
       - variables
       description: FSM execution log for a specific agent in the chat session.
       title: FSMAgentLog
-    FsmEventEventType:
-      type: string
-      enum:
-      - fsm_started
-      - state_executed
-      - utterance_sent
-      - state_transition
-      - turn_changed
-      - user_input
-      - command_executed
-      - command_received
-      - command_failed
-      - action_executed
-      - action_failed
-      - transition
-      - error
-      description: Type of the event.
-      title: FsmEventEventType
-    Chat_get-chat_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/ChatResponse'
-      title: Chat_get-chat_Response_200
-    ChatResponse:
-      type: object
-      properties:
-        chat_id:
-          type: string
-          format: uuid
-          description: Unique identifier for the chat session.
-        chat_status:
-          $ref: '#/components/schemas/ChatResponseChatStatus'
-          description: Current status of the chat session.
-        conversation_history:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChatMessage'
-          description: List of messages in the conversation.
-        initial_message:
-          oneOf:
-          - $ref: '#/components/schemas/ChatResponseInitialMessage'
-          - type: 'null'
-          description: The initial message sent by the agent when the chat was created.
-        start_timestamp:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp of when the chat session started.
-        transcript:
-          type: string
-          description: Full transcript of the conversation.
-        fsm_log:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/FSMAgentLog'
-          description: Finite State Machine (FSM) execution log for the chat session.
-      required:
-      - chat_id
-      - chat_status
-      - conversation_history
-      - start_timestamp
-      - transcript
-      description: Chat session details.
-      title: ChatResponse
     Create-outbound-chatRequestBadRequestError:
       type: object
       properties: {}
       title: Create-outbound-chatRequestBadRequestError
+    OutboundChatResponseResponse:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          format: uuid
+          description: Unique identifier for the created conversation.
+      required:
+      - conversation_id
+      title: OutboundChatResponseResponse
+    List-chatsRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-chatsRequestBadRequestError
+    Get-chatRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-chatRequestBadRequestError
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    ChatResponseInitialMessage:
+      type: object
+      properties:
+        agent_message:
+          type: string
+          description: The message content from the agent.
+        current_state:
+          type: string
+          description: The current state of the agent.
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp of when the message was sent.
+        turn_number:
+          type: integer
+          description: The turn number in the conversation.
+      description: The initial message sent by the agent when the chat was created.
+      title: ChatResponseInitialMessage
   securitySchemes:
     sec0:
       type: http

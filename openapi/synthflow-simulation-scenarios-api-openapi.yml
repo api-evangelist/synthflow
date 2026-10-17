@@ -227,6 +227,50 @@ paths:
                 $ref: '#/components/schemas/Delete-simulation-scenarioRequestNotFoundError'
 components:
   schemas:
+    Delete-simulation-scenarioRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-simulation-scenarioRequestBadRequestError
+    Get-simulation-scenarioRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Get-simulation-scenarioRequestNotFoundError
+    Update-simulation-scenarioRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Update-simulation-scenarioRequestNotFoundError
+    create-simulation-scenario_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationScenarioReadOut'
+      title: create-simulation-scenario_Response_200
+    List-simulation-scenariosRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-simulation-scenariosRequestBadRequestError
+    list-simulation-scenarios_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/PaginatedSimulationScenariosList'
+      title: list-simulation-scenarios_Response_200
+    update-simulation-scenario_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationScenarioReadOut'
+      title: update-simulation-scenario_Response_200
+    Create-simulation-scenarioRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Create-simulation-scenarioRequestBadRequestError
     SimulationScenarioCreateIn:
       type: object
       properties:
@@ -240,60 +284,10 @@ components:
       - name
       - description
       title: SimulationScenarioCreateIn
-    Delete-simulation-scenarioRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Delete-simulation-scenarioRequestNotFoundError
-    Create-simulation-scenarioRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Create-simulation-scenarioRequestBadRequestError
     status:
       type: string
       description: Whether the request was successful.
       title: status
-    get-simulation-scenario_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationScenarioReadOut'
-      title: get-simulation-scenario_Response_200
-    Delete-simulation-scenarioRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Delete-simulation-scenarioRequestBadRequestError
-    SimulationScenarioUpdateIn:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of the simulation scenario
-        description:
-          type:
-          - string
-          - 'null'
-          description: Description of the simulation scenario
-      title: SimulationScenarioUpdateIn
-    Get-simulation-scenarioRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Get-simulation-scenarioRequestBadRequestError
-    list-simulation-scenarios_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/PaginatedSimulationScenariosList'
-      title: list-simulation-scenarios_Response_200
-    List-simulation-scenariosRequestBadRequestError:
-      type: object
-      properties: {}
-      title: List-simulation-scenariosRequestBadRequestError
     SimulationScenarioReadOut:
       type: object
       properties:
@@ -319,10 +313,40 @@ components:
           format: date-time
           description: When the simulation scenario was last updated
       title: SimulationScenarioReadOut
-    Get-simulation-scenarioRequestNotFoundError:
+    Delete-simulation-scenarioRequestNotFoundError:
       type: object
       properties: {}
-      title: Get-simulation-scenarioRequestNotFoundError
+      title: Delete-simulation-scenarioRequestNotFoundError
+    get-simulation-scenario_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationScenarioReadOut'
+      title: get-simulation-scenario_Response_200
+    SimulationScenarioUpdateIn:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the simulation scenario
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the simulation scenario
+      title: SimulationScenarioUpdateIn
+    Update-simulation-scenarioRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-simulation-scenarioRequestBadRequestError
+    Get-simulation-scenarioRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-simulation-scenarioRequestBadRequestError
     PaginatedSimulationScenariosList:
       type: object
       properties:
@@ -346,30 +370,6 @@ components:
       - page_number
       - page_size
       title: PaginatedSimulationScenariosList
-    Update-simulation-scenarioRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Update-simulation-scenarioRequestNotFoundError
-    Update-simulation-scenarioRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Update-simulation-scenarioRequestBadRequestError
-    create-simulation-scenario_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationScenarioReadOut'
-      title: create-simulation-scenario_Response_200
-    update-simulation-scenario_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationScenarioReadOut'
-      title: update-simulation-scenario_Response_200
   securitySchemes:
     sec0:
       type: http

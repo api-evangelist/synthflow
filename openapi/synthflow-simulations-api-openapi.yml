@@ -278,61 +278,6 @@ paths:
                 $ref: '#/components/schemas/Get-simulationRequestUnprocessableEntityError'
 components:
   schemas:
-    get-simulation-session_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationSessionReadOut'
-      title: get-simulation-session_Response_200
-    SimulationSessionReadOut:
-      type: object
-      properties:
-        simulation_session_id:
-          type: string
-          format: uuid
-        simulations:
-          type: array
-          items:
-            $ref: '#/components/schemas/SimulationReadOut'
-        total_simulations:
-          type: integer
-        completed_simulations:
-          type: integer
-        failed_simulations:
-          type: integer
-        pending_simulations:
-          type: integer
-      description: Simulation session summary.
-      title: SimulationSessionReadOut
-    TimelineItem:
-      type: object
-      properties:
-        sender_type:
-          type:
-          - string
-          - 'null'
-        value:
-          type:
-          - string
-          - 'null'
-        type:
-          type:
-          - string
-          - 'null'
-        timestamp_datetime:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        timestamp:
-          type:
-          - string
-          - 'null'
-          title: float
-      description: Timeline event for a simulation call.
-      title: TimelineItem
     SimulationSuccessCriteriaAnalysis:
       type: object
       properties:
@@ -347,49 +292,10 @@ components:
       - evaluations
       description: Summary of the success criteria evaluation results.
       title: SimulationSuccessCriteriaAnalysis
-    Get-simulationRequestUnprocessableEntityError:
+    Start-simulationRequestUnprocessableEntityError:
       type: object
       properties: {}
-      title: Get-simulationRequestUnprocessableEntityError
-    SimulationErrorInfo:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: integer
-        type:
-          type: string
-      required:
-      - message
-      - code
-      - type
-      description: Error information for failed simulations.
-      title: SimulationErrorInfo
-    Get-simulationRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Get-simulationRequestBadRequestError
-    SimulationSuccessCriteriaEvaluation:
-      type: object
-      properties:
-        success:
-          type: boolean
-        reasoning:
-          type: string
-      required:
-      - success
-      - reasoning
-      description: Evaluation result for a single success criterion.
-      title: SimulationSuccessCriteriaEvaluation
-    start-simulation_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationReadOut'
-      title: start-simulation_Response_200
+      title: Start-simulationRequestUnprocessableEntityError
     SimulationsSessionsGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
@@ -400,81 +306,14 @@ components:
           items:
             $ref: '#/components/schemas/SimulationSessionReadOut'
       title: SimulationsSessionsGetResponsesContentApplicationJsonSchemaResponse
-    List-simulation-sessionsRequestBadRequestError:
-      type: object
-      properties: {}
-      title: List-simulation-sessionsRequestBadRequestError
-    SimulationCreateIn:
-      type: object
-      properties:
-        simulation_case_id:
-          type: string
-          format: uuid
-        simulation_session_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        target_agent_id:
-          type: string
-          format: uuid
-        custom_variables:
-          type: object
-          additionalProperties:
-            description: Any type
-      required:
-      - simulation_case_id
-      - target_agent_id
-      description: Input payload to start a simulation.
-      title: SimulationCreateIn
-    SimulationsGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/pagination'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SimulationReadOut'
-      title: SimulationsGetResponsesContentApplicationJsonSchemaResponse
-    SimulationReadOutCallSuccessType:
-      type: string
-      enum:
-      - all
-      - any
-      title: SimulationReadOutCallSuccessType
-    Get-simulation-sessionRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Get-simulation-sessionRequestNotFoundError
-    get-simulation_Response_200:
+    get-simulation-session_Response_200:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/status'
         response:
-          $ref: '#/components/schemas/SimulationReadOut'
-      title: get-simulation_Response_200
-    list-simulation-sessions_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationsSessionsGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-simulation-sessions_Response_200
-    Get-simulationRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Get-simulationRequestNotFoundError
-    Start-simulationRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Start-simulationRequestNotFoundError
-    Start-simulationRequestUnprocessableEntityError:
-      type: object
-      properties: {}
-      title: Start-simulationRequestUnprocessableEntityError
+          $ref: '#/components/schemas/SimulationSessionReadOut'
+      title: get-simulation-session_Response_200
     SimulationReadOutStatus:
       type: string
       enum:
@@ -482,47 +321,14 @@ components:
       - completed
       - failed
       title: SimulationReadOutStatus
-    status:
-      type: string
-      description: Whether the request was successful.
-      title: status
-    list-simulations_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationsGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-simulations_Response_200
-    List-simulationsRequestUnprocessableEntityError:
+    Get-simulationRequestNotFoundError:
       type: object
       properties: {}
-      title: List-simulationsRequestUnprocessableEntityError
-    pagination:
-      type: object
-      properties:
-        total_records:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-      title: pagination
-    SimulationsGetParametersStatus:
-      type: string
-      enum:
-      - in-progress
-      - completed
-      - failed
-      title: SimulationsGetParametersStatus
-    Get-simulation-sessionRequestUnprocessableEntityError:
+      title: Get-simulationRequestNotFoundError
+    Get-simulationRequestBadRequestError:
       type: object
       properties: {}
-      title: Get-simulation-sessionRequestUnprocessableEntityError
-    Start-simulationRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Start-simulationRequestBadRequestError
+      title: Get-simulationRequestBadRequestError
     SimulationReadOut:
       type: object
       properties:
@@ -617,6 +423,200 @@ components:
           - type: 'null'
       description: Simulation details.
       title: SimulationReadOut
+    SimulationsGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/pagination'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationReadOut'
+      title: SimulationsGetResponsesContentApplicationJsonSchemaResponse
+    TimelineItem:
+      type: object
+      properties:
+        sender_type:
+          type:
+          - string
+          - 'null'
+        value:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+        timestamp_datetime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        timestamp:
+          type:
+          - string
+          - 'null'
+          title: float
+      description: Timeline event for a simulation call.
+      title: TimelineItem
+    SimulationSessionReadOut:
+      type: object
+      properties:
+        simulation_session_id:
+          type: string
+          format: uuid
+        simulations:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationReadOut'
+        total_simulations:
+          type: integer
+        completed_simulations:
+          type: integer
+        failed_simulations:
+          type: integer
+        pending_simulations:
+          type: integer
+      description: Simulation session summary.
+      title: SimulationSessionReadOut
+    list-simulations_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationsGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-simulations_Response_200
+    List-simulationsRequestUnprocessableEntityError:
+      type: object
+      properties: {}
+      title: List-simulationsRequestUnprocessableEntityError
+    SimulationErrorInfo:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        type:
+          type: string
+      required:
+      - message
+      - code
+      - type
+      description: Error information for failed simulations.
+      title: SimulationErrorInfo
+    start-simulation_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationReadOut'
+      title: start-simulation_Response_200
+    SimulationReadOutCallSuccessType:
+      type: string
+      enum:
+      - all
+      - any
+      title: SimulationReadOutCallSuccessType
+    pagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      title: pagination
+    Get-simulation-sessionRequestUnprocessableEntityError:
+      type: object
+      properties: {}
+      title: Get-simulation-sessionRequestUnprocessableEntityError
+    Start-simulationRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Start-simulationRequestBadRequestError
+    get-simulation_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationReadOut'
+      title: get-simulation_Response_200
+    SimulationCreateIn:
+      type: object
+      properties:
+        simulation_case_id:
+          type: string
+          format: uuid
+        simulation_session_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        target_agent_id:
+          type: string
+          format: uuid
+        custom_variables:
+          type: object
+          additionalProperties:
+            description: Any type
+      required:
+      - simulation_case_id
+      - target_agent_id
+      description: Input payload to start a simulation.
+      title: SimulationCreateIn
+    Get-simulation-sessionRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Get-simulation-sessionRequestNotFoundError
+    SimulationsGetParametersStatus:
+      type: string
+      enum:
+      - in-progress
+      - completed
+      - failed
+      title: SimulationsGetParametersStatus
+    SimulationSuccessCriteriaEvaluation:
+      type: object
+      properties:
+        success:
+          type: boolean
+        reasoning:
+          type: string
+      required:
+      - success
+      - reasoning
+      description: Evaluation result for a single success criterion.
+      title: SimulationSuccessCriteriaEvaluation
+    status:
+      type: string
+      description: Whether the request was successful.
+      title: status
+    list-simulation-sessions_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationsSessionsGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-simulation-sessions_Response_200
+    List-simulation-sessionsRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-simulation-sessionsRequestBadRequestError
+    Get-simulationRequestUnprocessableEntityError:
+      type: object
+      properties: {}
+      title: Get-simulationRequestUnprocessableEntityError
+    Start-simulationRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Start-simulationRequestNotFoundError
   securitySchemes:
     sec0:
       type: http

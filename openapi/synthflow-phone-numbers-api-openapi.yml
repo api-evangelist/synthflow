@@ -289,14 +289,6 @@ paths:
               - phone_number
 components:
   schemas:
-    Create-custom-numberRequestForbiddenError:
-      type: object
-      properties: {}
-      title: Create-custom-numberRequestForbiddenError
-    status:
-      type: string
-      description: Whether the request was successful.
-      title: status
     NumbersGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
@@ -307,19 +299,6 @@ components:
           items:
             $ref: '#/components/schemas/NumbersGetResponsesContentApplicationJsonSchemaResponsePhoneNumbersItems'
       title: NumbersGetResponsesContentApplicationJsonSchemaResponse
-    NumbersGetResponsesContentApplicationJsonSchemaResponsePagination:
-      type: object
-      properties:
-        total_records:
-          type: integer
-          description: Total number of phone numbers.
-        limit:
-          type: integer
-          description: Number of phone numbers per page.
-        offset:
-          type: integer
-          description: Index of the first phone number returned.
-      title: NumbersGetResponsesContentApplicationJsonSchemaResponsePagination
     NumbersGetResponsesContentApplicationJsonSchemaResponsePhoneNumbersItems:
       type: object
       properties:
@@ -335,51 +314,44 @@ components:
           type: boolean
           description: Whether the number is available for inbound assignment.
       title: NumbersGetResponsesContentApplicationJsonSchemaResponsePhoneNumbersItems
+    Phone-Numbers_delete-phone-number_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+      title: Phone-Numbers_delete-phone-number_Response_200
+    Delete-phone-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-phone-numberRequestBadRequestError
+    Phone-Numbers_get-numbers_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/NumbersGetResponsesContentApplicationJsonSchemaResponse'
+      title: Phone-Numbers_get-numbers_Response_200
+    Get-numbersRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-numbersRequestBadRequestError
+    Phone-Numbers_create-custom-number_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/CustomNumbersPostResponsesContentApplicationJsonSchemaResponse'
+      title: Phone-Numbers_create-custom-number_Response_200
     Create-custom-numberRequestBadRequestError:
       type: object
       properties: {}
       title: Create-custom-numberRequestBadRequestError
-    NumbersPhoneNumberSlugPatchRequestBodyContentApplicationJsonSchemaProviderName:
+    status:
       type: string
-      enum:
-      - twilio
-      - telnyx
-      - vonage
-      - ring_central
-      - ringcx
-      - custom
-      - zoom
-      - five9
-      description: Telephony provider. When set to a non-auto provider without a SIP domain, the request fails with 400.
-      title: NumbersPhoneNumberSlugPatchRequestBodyContentApplicationJsonSchemaProviderName
-    CustomNumbersPostRequestBodyContentApplicationJsonSchemaProviderName:
-      type: string
-      enum:
-      - twilio
-      - telnyx
-      - vonage
-      - ring_central
-      - ringcx
-      - custom
-      - zoom
-      - five9
-      description: Telephony provider for the imported number. Omit or use `custom` for a bring-your-own SIP trunk. Use `five9`, `ringcx`, or `zoom` for those integrations; SIP domain defaults are applied automatically for those three only.
-      title: CustomNumbersPostRequestBodyContentApplicationJsonSchemaProviderName
-    CustomNumbersPostResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        key:
-          type: string
-          format: uuid
-          description: Unique identifier for the custom phone number.
-        phone_number:
-          type: string
-          description: The imported phone number.
-      title: CustomNumbersPostResponsesContentApplicationJsonSchemaResponse
-    Update-phone-numberRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Update-phone-numberRequestBadRequestError
+      description: Whether the request was successful.
+      title: status
     Phone-Numbers_get-phone-number_Response_200:
       type: object
       properties:
@@ -465,46 +437,74 @@ components:
             format: uuid
           description: List of assistant IDs attached to this phone number.
       title: Phone-Numbers_get-phone-number_Response_200
-    Phone-Numbers_delete-phone-number_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-      title: Phone-Numbers_delete-phone-number_Response_200
-    Delete-phone-numberRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Delete-phone-numberRequestBadRequestError
     Get-phone-numberRequestBadRequestError:
       type: object
       properties: {}
       title: Get-phone-numberRequestBadRequestError
+    NumbersGetResponsesContentApplicationJsonSchemaResponsePagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+          description: Total number of phone numbers.
+        limit:
+          type: integer
+          description: Number of phone numbers per page.
+        offset:
+          type: integer
+          description: Index of the first phone number returned.
+      title: NumbersGetResponsesContentApplicationJsonSchemaResponsePagination
+    NumbersPhoneNumberSlugPatchRequestBodyContentApplicationJsonSchemaProviderName:
+      type: string
+      enum:
+      - twilio
+      - telnyx
+      - vonage
+      - ring_central
+      - ringcx
+      - custom
+      - zoom
+      - five9
+      description: Telephony provider. When set to a non-auto provider without a SIP domain, the request fails with 400.
+      title: NumbersPhoneNumberSlugPatchRequestBodyContentApplicationJsonSchemaProviderName
+    CustomNumbersPostRequestBodyContentApplicationJsonSchemaProviderName:
+      type: string
+      enum:
+      - twilio
+      - telnyx
+      - vonage
+      - ring_central
+      - ringcx
+      - custom
+      - zoom
+      - five9
+      description: Telephony provider for the imported number. Omit or use `custom` for a bring-your-own SIP trunk. Use `five9`, `ringcx`, or `zoom` for those integrations; SIP domain defaults are applied automatically for those three only.
+      title: CustomNumbersPostRequestBodyContentApplicationJsonSchemaProviderName
+    Update-phone-numberRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Update-phone-numberRequestBadRequestError
+    Create-custom-numberRequestForbiddenError:
+      type: object
+      properties: {}
+      title: Create-custom-numberRequestForbiddenError
     Phone-Numbers_update-phone-number_Response_200:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/status'
       title: Phone-Numbers_update-phone-number_Response_200
-    Phone-Numbers_get-numbers_Response_200:
+    CustomNumbersPostResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/NumbersGetResponsesContentApplicationJsonSchemaResponse'
-      title: Phone-Numbers_get-numbers_Response_200
-    Get-numbersRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Get-numbersRequestBadRequestError
-    Phone-Numbers_create-custom-number_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/CustomNumbersPostResponsesContentApplicationJsonSchemaResponse'
-      title: Phone-Numbers_create-custom-number_Response_200
+        key:
+          type: string
+          format: uuid
+          description: Unique identifier for the custom phone number.
+        phone_number:
+          type: string
+          description: The imported phone number.
+      title: CustomNumbersPostResponsesContentApplicationJsonSchemaResponse
   securitySchemes:
     sec0:
       type: http

@@ -315,10 +315,10 @@ paths:
                 $ref: '#/components/schemas/List-simulation-cases-by-agentRequestBadRequestError'
 components:
   schemas:
-    Get-simulation-caseRequestBadRequestError:
+    Update-simulation-caseRequestNotFoundError:
       type: object
       properties: {}
-      title: Get-simulation-caseRequestBadRequestError
+      title: Update-simulation-caseRequestNotFoundError
     SimulationCaseGenerateInIncludeTestsItems:
       type: string
       enum:
@@ -330,73 +330,20 @@ components:
       - conversational_naturalness
       - task_completion
       title: SimulationCaseGenerateInIncludeTestsItems
-    Generate-simulation-casesRequestUnprocessableEntityError:
-      type: object
-      properties: {}
-      title: Generate-simulation-casesRequestUnprocessableEntityError
-    SimulationCaseUpdateIn:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-        prompt:
-          type:
-          - string
-          - 'null'
-        success_criteria:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        call_success_type:
-          oneOf:
-          - $ref: '#/components/schemas/SimulationCaseUpdateInCallSuccessType'
-          - type: 'null'
-        suite_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: ID of the simulation suite to assign this case to.
-      description: Fields that can be updated for a simulation case.
-      title: SimulationCaseUpdateIn
-    Generate-simulation-casesRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Generate-simulation-casesRequestNotFoundError
     SimulationCaseReadOutCallSuccessType:
       type: string
       enum:
       - all
       - any
       title: SimulationCaseReadOutCallSuccessType
-    list-simulation-cases-by-agent_Response_200:
+    Get-simulation-caseRequestNotFoundError:
       type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          type: array
-          items:
-            $ref: '#/components/schemas/SimulationCaseReadOut'
-      title: list-simulation-cases-by-agent_Response_200
-    SimulationCasesPostResponsesContentApplicationJsonSchemaResponse:
+      properties: {}
+      title: Get-simulation-caseRequestNotFoundError
+    List-simulation-cases-by-agentRequestBadRequestError:
       type: object
-      properties:
-        simulation_case:
-          $ref: '#/components/schemas/SimulationCaseReadOut'
-      title: SimulationCasesPostResponsesContentApplicationJsonSchemaResponse
-    list-simulation-cases_Response_200:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/status'
-        response:
-          $ref: '#/components/schemas/SimulationCasesGetResponsesContentApplicationJsonSchemaResponse'
-      title: list-simulation-cases_Response_200
+      properties: {}
+      title: List-simulation-cases-by-agentRequestBadRequestError
     SimulationCaseUpdateInCallSuccessType:
       type: string
       enum:
@@ -407,10 +354,6 @@ components:
       type: object
       properties: {}
       title: Update-simulation-caseRequestBadRequestError
-    Create-simulation-caseRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Create-simulation-caseRequestBadRequestError
     get-simulation-case_Response_200:
       type: object
       properties:
@@ -419,16 +362,47 @@ components:
         response:
           $ref: '#/components/schemas/SimulationCaseReadOut'
       title: get-simulation-case_Response_200
-    List-simulation-cases-by-agentRequestBadRequestError:
+    SimulationCaseCreateIn:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the simulation case.
+        prompt:
+          type: string
+          description: Prompt used during the simulation case.
+        type:
+          $ref: '#/components/schemas/SimulationCaseCreateInType'
+          description: Simulation case type.
+        success_criteria:
+          type: array
+          items:
+            type: string
+          description: Success criteria evaluated for the case.
+        call_success_type:
+          $ref: '#/components/schemas/SimulationCaseCreateInCallSuccessType'
+          description: Success logic for the case.
+        suite_id:
+          type: string
+          format: uuid
+          description: ID of the simulation suite to add this case to. Required for v2 simulation suites.
+        base_agent_id:
+          type:
+          - string
+          - 'null'
+          description: Agent ID to base the generated case on.
+      required:
+      - name
+      - prompt
+      - type
+      - success_criteria
+      - call_success_type
+      description: Input payload to create a simulation case.
+      title: SimulationCaseCreateIn
+    Create-simulation-caseRequestBadRequestError:
       type: object
       properties: {}
-      title: List-simulation-cases-by-agentRequestBadRequestError
-    SimulationCaseReadOutType:
-      type: string
-      enum:
-      - custom
-      - agent_based
-      title: SimulationCaseReadOutType
+      title: Create-simulation-caseRequestBadRequestError
     SimulationCaseReadOut:
       type: object
       properties:
@@ -467,73 +441,63 @@ components:
           format: date-time
       description: Simulation case details.
       title: SimulationCaseReadOut
-    Generate-simulation-casesRequestBadRequestError:
+    SimulationCaseCreateInType:
+      type: string
+      enum:
+      - custom
+      - agent_based
+      description: Simulation case type.
+      title: SimulationCaseCreateInType
+    Delete-simulation-caseRequestNotFoundError:
       type: object
       properties: {}
-      title: Generate-simulation-casesRequestBadRequestError
+      title: Delete-simulation-caseRequestNotFoundError
+    SimulationCaseReadOutType:
+      type: string
+      enum:
+      - custom
+      - agent_based
+      title: SimulationCaseReadOutType
+    list-simulation-cases-by-agent_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationCaseReadOut'
+      title: list-simulation-cases-by-agent_Response_200
     SimulationCasesGetParametersSimulationCaseType:
       type: string
       enum:
       - custom
       - agent_based
       title: SimulationCasesGetParametersSimulationCaseType
-    Update-simulation-caseRequestUnprocessableEntityError:
-      type: object
-      properties: {}
-      title: Update-simulation-caseRequestUnprocessableEntityError
-    Get-simulation-caseRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Get-simulation-caseRequestNotFoundError
-    Delete-simulation-caseRequestBadRequestError:
-      type: object
-      properties: {}
-      title: Delete-simulation-caseRequestBadRequestError
-    Delete-simulation-caseRequestNotFoundError:
-      type: object
-      properties: {}
-      title: Delete-simulation-caseRequestNotFoundError
-    List-simulation-casesRequestBadRequestError:
-      type: object
-      properties: {}
-      title: List-simulation-casesRequestBadRequestError
-    SimulationCaseCreateIn:
+    SimulationCasesPostResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
-        name:
-          type: string
-          description: Name of the simulation case.
-        prompt:
-          type: string
-          description: Prompt used during the simulation case.
-        type:
-          $ref: '#/components/schemas/SimulationCaseCreateInType'
-          description: Simulation case type.
-        success_criteria:
-          type: array
-          items:
-            type: string
-          description: Success criteria evaluated for the case.
-        call_success_type:
-          $ref: '#/components/schemas/SimulationCaseCreateInCallSuccessType'
-          description: Success logic for the case.
-        suite_id:
-          type: string
-          format: uuid
-          description: ID of the simulation suite to add this case to. Required for v2 simulation suites.
-        base_agent_id:
-          type:
-          - string
-          - 'null'
-          description: Agent ID to base the generated case on.
-      required:
-      - name
-      - prompt
-      - type
-      - success_criteria
-      - call_success_type
-      description: Input payload to create a simulation case.
-      title: SimulationCaseCreateIn
+        simulation_case:
+          $ref: '#/components/schemas/SimulationCaseReadOut'
+      title: SimulationCasesPostResponsesContentApplicationJsonSchemaResponse
+    Generate-simulation-casesRequestUnprocessableEntityError:
+      type: object
+      properties: {}
+      title: Generate-simulation-casesRequestUnprocessableEntityError
+    pagination:
+      type: object
+      properties:
+        total_records:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      title: pagination
+    Generate-simulation-casesRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Generate-simulation-casesRequestBadRequestError
     create-simulation-case_Response_200:
       type: object
       properties:
@@ -542,17 +506,92 @@ components:
         response:
           $ref: '#/components/schemas/SimulationCasesPostResponsesContentApplicationJsonSchemaResponse'
       title: create-simulation-case_Response_200
-    Update-simulation-caseRequestNotFoundError:
+    SimulationCaseUpdateIn:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+        prompt:
+          type:
+          - string
+          - 'null'
+        success_criteria:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        call_success_type:
+          oneOf:
+          - $ref: '#/components/schemas/SimulationCaseUpdateInCallSuccessType'
+          - type: 'null'
+        suite_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: ID of the simulation suite to assign this case to.
+      description: Fields that can be updated for a simulation case.
+      title: SimulationCaseUpdateIn
+    SimulationCasesGetResponsesContentApplicationJsonSchemaResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/pagination'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationCaseReadOut'
+      title: SimulationCasesGetResponsesContentApplicationJsonSchemaResponse
+    update-simulation-case_Response_200:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        response:
+          $ref: '#/components/schemas/SimulationCaseReadOut'
+      title: update-simulation-case_Response_200
+    Update-simulation-caseRequestUnprocessableEntityError:
       type: object
       properties: {}
-      title: Update-simulation-caseRequestNotFoundError
-    SimulationCaseCreateInType:
+      title: Update-simulation-caseRequestUnprocessableEntityError
+    SimulationCaseCreateInCallSuccessType:
       type: string
       enum:
-      - custom
-      - agent_based
-      description: Simulation case type.
-      title: SimulationCaseCreateInType
+      - all
+      - any
+      description: Success logic for the case.
+      title: SimulationCaseCreateInCallSuccessType
+    Delete-simulation-caseRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Delete-simulation-caseRequestBadRequestError
+    List-simulation-casesRequestBadRequestError:
+      type: object
+      properties: {}
+      title: List-simulation-casesRequestBadRequestError
+    SimulationCaseGenerateIn:
+      type: object
+      properties:
+        agent_id:
+          type: string
+          description: ID of the agent used to generate cases.
+        suite_id:
+          type: string
+          format: uuid
+          description: ID of the simulation suite to add generated cases to.
+        include_tests:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationCaseGenerateInIncludeTestsItems'
+          description: Tests to include in the generated cases.
+      required:
+      - agent_id
+      - include_tests
+      description: Input payload to generate simulation cases.
+      title: SimulationCaseGenerateIn
     SimulationCaseReadOutBaseAgent:
       type: object
       properties:
@@ -576,69 +615,30 @@ components:
           - string
           - 'null'
       title: SimulationCaseReadOutBaseAgent
-    status:
-      type: string
-      description: Whether the request was successful.
-      title: status
-    update-simulation-case_Response_200:
+    list-simulation-cases_Response_200:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/status'
         response:
-          $ref: '#/components/schemas/SimulationCaseReadOut'
-      title: update-simulation-case_Response_200
-    pagination:
-      type: object
-      properties:
-        total_records:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-      title: pagination
+          $ref: '#/components/schemas/SimulationCasesGetResponsesContentApplicationJsonSchemaResponse'
+      title: list-simulation-cases_Response_200
     Create-simulation-caseRequestUnprocessableEntityError:
       type: object
       properties: {}
       title: Create-simulation-caseRequestUnprocessableEntityError
-    SimulationCasesGetResponsesContentApplicationJsonSchemaResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/pagination'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SimulationCaseReadOut'
-      title: SimulationCasesGetResponsesContentApplicationJsonSchemaResponse
-    SimulationCaseCreateInCallSuccessType:
+    status:
       type: string
-      enum:
-      - all
-      - any
-      description: Success logic for the case.
-      title: SimulationCaseCreateInCallSuccessType
-    SimulationCaseGenerateIn:
+      description: Whether the request was successful.
+      title: status
+    Get-simulation-caseRequestBadRequestError:
       type: object
-      properties:
-        agent_id:
-          type: string
-          description: ID of the agent used to generate cases.
-        suite_id:
-          type: string
-          format: uuid
-          description: ID of the simulation suite to add generated cases to.
-        include_tests:
-          type: array
-          items:
-            $ref: '#/components/schemas/SimulationCaseGenerateInIncludeTestsItems'
-          description: Tests to include in the generated cases.
-      required:
-      - agent_id
-      - include_tests
-      description: Input payload to generate simulation cases.
-      title: SimulationCaseGenerateIn
+      properties: {}
+      title: Get-simulation-caseRequestBadRequestError
+    Generate-simulation-casesRequestNotFoundError:
+      type: object
+      properties: {}
+      title: Generate-simulation-casesRequestNotFoundError
   securitySchemes:
     sec0:
       type: http

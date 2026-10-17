@@ -74,30 +74,18 @@ paths:
                 $ref: '#/components/schemas/Get-voicesRequestBadRequestError'
 components:
   schemas:
-    get-voices_Response_200:
-      type: object
-      properties:
-        status:
-          type: string
-        response:
-          $ref: '#/components/schemas/VoicesGetResponsesContentApplicationJsonSchemaResponse'
-      title: get-voices_Response_200
-    VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsProvider:
+    VoicesGetParametersProvider:
       type: string
       enum:
       - elevenlabs
       - deepgram
       - synthflow
-      description: Voice provider (elevenlabs, deepgram, or synthflow).
-      title: VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsProvider
-    VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsGender:
-      type: string
-      enum:
-      - male
-      - female
-      - neutral
-      description: Voice gender.
-      title: VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsGender
+      default: elevenlabs
+      title: VoicesGetParametersProvider
+    Get-voicesRequestBadRequestError:
+      type: object
+      properties: {}
+      title: Get-voicesRequestBadRequestError
     VoicesGetResponsesContentApplicationJsonSchemaResponse:
       type: object
       properties:
@@ -108,24 +96,6 @@ components:
           items:
             $ref: '#/components/schemas/VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItems'
       title: VoicesGetResponsesContentApplicationJsonSchemaResponse
-    VoicesGetParametersProvider:
-      type: string
-      enum:
-      - elevenlabs
-      - deepgram
-      - synthflow
-      default: elevenlabs
-      title: VoicesGetParametersProvider
-    pagination:
-      type: object
-      properties:
-        total_records:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-      title: pagination
     VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItems:
       type: object
       properties:
@@ -153,10 +123,40 @@ components:
             type: string
           description: ISO language codes supported by this voice.
       title: VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItems
-    Get-voicesRequestBadRequestError:
+    VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsGender:
+      type: string
+      enum:
+      - male
+      - female
+      - neutral
+      description: Voice gender.
+      title: VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsGender
+    VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsProvider:
+      type: string
+      enum:
+      - elevenlabs
+      - deepgram
+      - synthflow
+      description: Voice provider (elevenlabs, deepgram, or synthflow).
+      title: VoicesGetResponsesContentApplicationJsonSchemaResponseVoicesItemsProvider
+    pagination:
       type: object
-      properties: {}
-      title: Get-voicesRequestBadRequestError
+      properties:
+        total_records:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      title: pagination
+    get-voices_Response_200:
+      type: object
+      properties:
+        status:
+          type: string
+        response:
+          $ref: '#/components/schemas/VoicesGetResponsesContentApplicationJsonSchemaResponse'
+      title: get-voices_Response_200
   securitySchemes:
     sec0:
       type: http
