@@ -72,3 +72,15 @@
     detected: '2026-10-18'
   status: not-a-workflow
   arazzo: null
+- slug: synthflow-freshworks-own
+  label: Freshworks (own)
+  partner: freshworks
+  partner_name: Freshworks (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/synthflow_voice_ai_agents
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

@@ -6,6 +6,7 @@ source:
 - https://composio.dev/toolkits/synthflow
 - https://monid.ai/tools/synthflow
 checked:
+- freshworks/integrations/freshworks-integration-edges.yml
 - https://api.nuget.org/v3
 - https://composio.dev/toolkits/synthflow
 - https://crates.io/api/v1
@@ -94,4 +95,20 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Freshworks (own)
+  partner: freshworks
+  partner_match: mirror
+  mirror_match: domain+product
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.freshworks.com/apps/synthflow_voice_ai_agents
+  mirror_of: freshworks/integrations/freshworks-integration-edges.yml
+  apps:
+  - Synthflow AI Agent
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
 templates: []
