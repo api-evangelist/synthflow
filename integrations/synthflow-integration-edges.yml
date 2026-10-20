@@ -20,6 +20,12 @@ checked:
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/synthflow/integrations
 - zoom/integrations/zoom-integration-edges.yml
+- https://api.github.com
+- https://claude-plugins.dev/sitemap.xml
+- https://github.com/VoltAgent/awesome-agent-skills
+- https://officialskills.sh/sitemap.xml
+- https://skillsmp.com/sitemap.xml
+- https://www.skills.sh/sitemap.xml
 summary: null
 marketplace_apps: []
 edges:
@@ -111,4 +117,36 @@ edges:
   listing_count: 1
   detected: '2026-10-19'
   detected_by: mirror-platform-listings.py
+- partner_name: Agent Skills (own GitHub org)
+  partner: null
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: Agent Skills package
+  evidence: https://github.com/SynthFlowAI/synthflow-skills
+  channel: provider-built
+  relationship: compatible
+  shape: agent-skills
+  evidence_kind: own-repo
+  degree: skill-repo
+  report_only: true
+  agent_skills:
+    org: synthflowai
+    current: true
+    repos:
+    - repo: SynthFlowAI/synthflow-skills
+      archived: false
+      lapsed: false
+      pushed: '2026-03-24'
+  contract_reference:
+    register: 'provider''s own GitHub org (GitHub REST API: repo + git tree holds SKILL.md)'
+    spec_file: null
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-repo
+    matched_org: synthflowai
+    matched_by: org-profile-domain:synthflow.ai
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  detected_by: sweep-agent-skills.py
+  first_seen: '2026-10-20'
 templates: []
